@@ -5,6 +5,13 @@ Maps keywords imbedded in template document (keys) to what they will be replaced
 import utility
 
 
+# Maps keywords within the template document to the values that they will be replaced by.
+REPLACEMENT_MAP = {
+    "example string adjective": "incredibly",
+    "blocking text": "These are some blockers that were custom-placed into the document. Nice job!"
+}
+
+
 def get_keywords(paragraph):
     """
     Given a paragraph, returns a list of the keywords held within it. NOTE: Keywords are contained within {{double curly brackets}} in the template document.
@@ -25,3 +32,13 @@ def get_keywords(paragraph):
         keywords.append(keyword)
         
     return keywords
+
+def replace_keywords(paragraph): 
+    """
+    Replaces the keywords in the passed paragraphs within their corresponding values in the replacement map.
+
+    :param paragraph: A string of text that may contain keywords.
+    """   
+    for keyword in get_keywords(paragraph.text):
+        if keyword in REPLACEMENT_MAP.keys():
+            paragraph.text = paragraph.text.replace(f"{{{{{keyword}}}}}", REPLACEMENT_MAP[keyword])
