@@ -5,6 +5,7 @@ Functions realted to scraping the data from an incoming cover sheet.
 import utility
 
 from docx.text.paragraph import Paragraph
+import pandas as pd
 
 # Maps headers on cover sheet to columns in the data
 HEADER_MAP = {
@@ -71,3 +72,16 @@ def read_cover_sheet(document):
                         data[column_title] = 1 if checkbox == "☒" else 0   # stores a 1 if box is checked, else 0
     
     return data
+
+def process_cover_sheets(cover_sheets_list):
+    """
+    Creates a DataFrame object from a list of cover sheets
+    
+    :param cover_sheets_list: A list of Document objects, each of which was created from a separate .docx file containing a cover sheet
+    :return: A DataFrame object with each row representing a cover sheet.
+    """
+    data = []
+    for cover_sheet in cover_sheets_list:
+        data.append(read_cover_sheet(cover_sheet))
+        
+    return pd.DataFrame(data)
