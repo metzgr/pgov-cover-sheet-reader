@@ -45,6 +45,19 @@ def replace_keywords(paragraph):
         if keyword in REPLACEMENT_MAP.keys():
             paragraph.text = paragraph.text.replace(f"{{{{{keyword}}}}}", REPLACEMENT_MAP[keyword])
 
+def replace_placeholder_images(tpl):
+    """
+    Replaces all of the placeholder images of the passed DocxTemplate object with relevant figures.
+
+    :param tpl: A DocxTemplate containing placeholder images.
+    """
+    placeholder_figure_map = {
+
+    }
+
+    for key, value in placeholder_figure_map.keys():
+        tpl.replace_pic(key, value)
+
 def create_summary_document(template_path, df=None, agency=None, year=None, quarter=None):
     """
     Creates a summary document for the passed agency, year and quarter.
@@ -61,6 +74,8 @@ def create_summary_document(template_path, df=None, agency=None, year=None, quar
                 for cell in row.cells:
                     for paragraph in cell.paragraphs: 
                         replace_keywords(paragraph)
+
+    replace_placeholder_images(tpl)
 
     tpl.render({})
     tpl.save("output.docx")
