@@ -51,5 +51,23 @@ def read_cover_sheet(document):
                     for cell in row.cells:
                         for paragraph in cell.paragraphs: 
                             row_text.append(paragraph.text)     # collects all paragraphs in a given cell into a list
+
+                    # storing of checkboxes in data field - continues until all checkboxes are retrieved from cell
+                    while any([i in ["☒", "☐"] for i in row_text]):
+                        try:
+                            checked_index = row_text.index("☒")
+                        except:
+                            checked_index = -1
+
+                        try:
+                            unchecked_index = row_text.index("☐")
+                        except:
+                            unchecked_index = -1
+
+                        index = max(checked_index, unchecked_index)
+                        checkbox = row_text.pop(index)
+                        column_title = row_text.pop(index).lower().replace(" ", "_")    # converts to snake_case
+
+                        data[column_title] = 1 if checkbox == "☒" else 0   # stores a 1 if box is checked, else 0
     
     return data
