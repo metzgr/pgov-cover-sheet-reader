@@ -27,3 +27,14 @@ def iter_block_items(parent):
             yield Paragraph(child, parent)
         elif isinstance(child, CT_Tbl):
             yield Table(child, parent)
+
+def print_table(table):
+    """
+    Prints out each component of the passed Table object in the order in which it appears.
+
+    :param table: A Table object representing a table that holds text.
+    """
+    for row in table.rows: 
+        for cell in row.cells:
+            for paragraph in cell.paragraphs: 
+                print(paragraph.text)
