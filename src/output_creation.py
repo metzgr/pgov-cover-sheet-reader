@@ -4,6 +4,8 @@ Maps keywords imbedded in template document (keys) to what they will be replaced
 
 import utility
 
+from docx.text.paragraph import Paragraph
+from docxtpl import DocxTemplate
 
 # Maps keywords within the template document to the values that they will be replaced by.
 REPLACEMENT_MAP = {
@@ -42,3 +44,23 @@ def replace_keywords(paragraph):
     for keyword in get_keywords(paragraph.text):
         if keyword in REPLACEMENT_MAP.keys():
             paragraph.text = paragraph.text.replace(f"{{{{{keyword}}}}}", REPLACEMENT_MAP[keyword])
+
+def create_summary_document(template_path, df=None, agency=None, year=None, quarter=None):
+    """
+    Creates a summary document for the passed agency, year and quarter.
+
+    :param template_path: The path to the template docx file from which a copy will be made containing relevant data.
+    """
+    tpl = DocxTemplate(template_path)
+
+    for block in utility.iter_block_items(tpl.docx):
+        if isinstance(block, Paragraph):            
+            replace_keywords(block)
+        else:  # if block is table
+            for row in block.rows: 
+                for cell in row.cells:
+                    for paragraph in cell.paragraphs: 
+                        replace_keywords(paragraph)
+
+    tpl.render({})
+    tpl.save("output.docx")
