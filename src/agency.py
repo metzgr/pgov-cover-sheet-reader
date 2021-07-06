@@ -1,3 +1,5 @@
+import utility
+
 class Agency():
     
     def __init__(self, df, name, current_quarter, current_year):
@@ -74,7 +76,7 @@ class Agency():
 
         param goal_names: A list of the goal names to be represented in the returned DataFrame. Defaults to returning all goals within the represented agency.
         :param year: The year from which to retrieve goal status. Defaults to the year that the object represents, "all" returns the data from all years and quarters.
-        :param quarter: The quarter from which to retrieve goal status. Defaults to the quarter that the object represents, "all" returns the data from all years and quarters.
+        :param quarter: The quarter from which to retrieve goal status. Defaults to the quarter that the object represents. "all" returns the data from all years and quarters. "previous" returns the data only from the previous quarter.
         :return: A DataFrame mapping each APG to its goal status across the specified year and quarters.
         """
         if not year:
@@ -82,6 +84,8 @@ class Agency():
 
         if not quarter:
             quarter = self.current_quarter
+        elif quarter == "previous":
+            quarter, year = utility.get_previous_quarter_and_year(self.get_quarter(), self.get_year())
 
         conditional = pd.Series(data=[True for i in range(len(self.agency_df))], index=self.agency_df.index)     # defaults to all rows
         
