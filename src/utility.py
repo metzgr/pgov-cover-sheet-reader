@@ -38,3 +38,18 @@ def print_table(table):
         for cell in row.cells:
             for paragraph in cell.paragraphs: 
                 print(paragraph.text)
+
+def get_previous_quarter_and_year(quarter, year):
+    """
+    Given a string representing a quarter (e.g., 'Q1'), returns the previous quarter and year.
+
+    :param quarter: A string representing a quarter (e.g., 'Q1').
+    :param year: A integer representing a fiscal year.
+    :return: Both the quarter and the year.
+    """
+    quarter_number = int(quarter.replace("Q", ""))
+
+    if quarter_number > 1:
+        return f"Q{quarter_number - 1}", year
+    else:
+        return "Q4", year - 1
