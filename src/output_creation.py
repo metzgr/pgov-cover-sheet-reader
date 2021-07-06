@@ -55,7 +55,7 @@ def replace_placeholder_images(tpl):
 
     }
 
-    for key, value in placeholder_figure_map.keys():
+    for key, value in placeholder_figure_map.items():
         tpl.replace_pic(key, value)
 
 def create_summary_document(template_path, df=None, agency=None, year=None, quarter=None):
