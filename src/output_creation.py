@@ -3,6 +3,7 @@ Maps keywords imbedded in template document (keys) to what they will be replaced
 """
 
 import utility
+import agency
 
 from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate
@@ -27,7 +28,7 @@ def replace_placeholder_images(tpl):
     for key, value in placeholder_figure_map.items():
         tpl.replace_pic(key, value)
 
-def create_summary_document(template_path, df=None, agency=None, year=None, quarter=None):
+def create_summary_document(template_path, agency):
     """
     Creates a summary document for the passed agency, year and quarter.
 
@@ -38,9 +39,9 @@ def create_summary_document(template_path, df=None, agency=None, year=None, quar
     replace_placeholder_images(tpl)
 
     replacement_map = {
-        "previous_quarter_and_year": "{} {}".format(*utility.get_previous_quarter_and_year("Q1", 2020)),
-        "current_quarter_and_year": f"{quarter} {year}",
-        "agency_name": agency
+        "previous_quarter_and_year": "{} {}".format(*utility.get_previous_quarter_and_year(agency.get_quarter(), agency.get_year())),
+        "current_quarter_and_year": f"{agency.get_quarter()} {agency.get_year()}",
+        "agency_name": agency.get_name()
     }
 
     tpl.render(replacement_map)
