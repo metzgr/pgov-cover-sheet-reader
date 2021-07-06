@@ -104,13 +104,15 @@ class Agency():
         Returns the goal status of the passed APG.
 
         :param goal_name: The name of the APG from which a status will be returned.
-        :param year: The year from which to retrieve goal status. Defaults to the year that the object represents, "all" returns the data from all years and quarters.
-        :param quarter: The quarter from which to retrieve goal status. Defaults to the quarter that the object represents, "all" returns the data from all years and quarters.
+        :param year: The year from which to retrieve goal status. Defaults to the year that the object represents.
+        :param quarter: The quarter from which to retrieve goal status. Defaults to the quarter that the object represents. "previous" returns the data only from the previous quarter.
         """
         if not year:
             year = self.current_year
         if not quarter:
             quarter = self.current_quarter
+        elif quarter == "previous":
+            quarter, year = utility.get_previous_quarter_and_year(self.current_quarter, self.current_year)
 
         try:
             return self.agency_df.loc[(self.df["Goal Name"] == goal_name) & (self.agency_df["Fiscal Year"] == year) & (self.agency_df["Quarter"] == quarter), "Status"].iloc[0]
