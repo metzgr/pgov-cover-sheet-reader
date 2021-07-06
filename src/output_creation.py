@@ -4,6 +4,7 @@ Maps keywords imbedded in template document (keys) to what they will be replaced
 
 import utility
 import agency
+import text_templates
 
 from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate
@@ -41,7 +42,9 @@ def create_summary_document(template_path, agency):
     replacement_map = {
         "previous_quarter_and_year": "{} {}".format(*utility.get_previous_quarter_and_year(agency.get_quarter(), agency.get_year())),
         "current_quarter_and_year": f"{agency.get_quarter()} {agency.get_year()}",
-        "agency_name": agency.get_name()
+        "agency_name": agency.get_name(),
+        "agency_abbreviation": "SBA",   # NOTE: this is temporarily hard-coded, should be changed to `agency.get_abbreviation()` once the agency name mapping is implemented
+        "goal_change_summary_sentence": text_templates.get_goal_change_summary_sentence(agency)
     }
 
     tpl.render(replacement_map)
