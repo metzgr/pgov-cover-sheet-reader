@@ -20,7 +20,8 @@ def replace_placeholder_images(tpl):
     :param tpl: A DocxTemplate containing placeholder images.
     """
     placeholder_figure_map = {
-
+        "Picture 6": "../viz/goal_status_q4_2020.png",
+        "Picture 7": "../../saved_figure.png",
     }
 
     for key, value in placeholder_figure_map.items():
