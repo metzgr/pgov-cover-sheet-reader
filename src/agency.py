@@ -14,6 +14,7 @@ class Agency():
         self.df = df
         self.name = name
         self.agency_df = df.loc[df["Agency Name"] == name]  # a DataFrame only containing data relevant to the agency that the object represents
+        self.apgs = list(self.agency_df["Goal Name"].unique())
         self.abbreviation = ""  # the abbreviation of the passed agency
         self.current_quarter = current_quarter 
         self.current_year = current_year
@@ -60,15 +61,15 @@ class Agency():
         """
         return self.current_year
 
-    # UTILITY METHODS
-
     def get_goals(self):
         """
         Returns a list of the APGs that the agency has set.
 
         :return: A list of strings, each representing a unique APG of the agency.
         """
-        return list(self.agency_df["Goal Name"].unique())
+        return self.apgs
+
+    # UTILITY METHODS
 
     def get_goal_status_df(self, goal_names=None, year=None, quarter=None):
         """
