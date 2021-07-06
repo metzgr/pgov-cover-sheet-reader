@@ -44,7 +44,8 @@ def create_summary_document(template_path, agency):
         "current_quarter_and_year": f"{agency.get_quarter()} {agency.get_year()}",
         "agency_name": agency.get_name(),
         "agency_abbreviation": "SBA",   # NOTE: this is temporarily hard-coded, should be changed to `agency.get_abbreviation()` once the agency name mapping is implemented
-        "goal_change_summary_sentence": text_templates.get_goal_change_summary_sentence(agency)
+        "goal_change_summary_sentence": text_templates.get_goal_change_summary_sentence(agency),
+        "goal_status_breakdown_bullets": text_templates.get_goal_status_breakdown_bullets(agency)
     }
 
     tpl.render(replacement_map)
