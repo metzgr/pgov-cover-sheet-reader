@@ -57,3 +57,31 @@ class Agency():
         :return: The year that the Agency object represents.
         """
         return self.current_year
+
+    # UTILITY METHODS
+
+    def get_goals(self):
+        """
+        Returns a list of the APGs that the agency has set.
+
+        :return: A list of strings, each representing a unique APG of the agency.
+        """
+        return list(self.agency_df["Goal Name"].unique())
+
+    def get_goal_status(self, goal_name, year=None, quarter=None):
+        """
+        Returns the goal status of the passed APG.
+
+        :param goal_name: The name of the APG from which a status will be returned.
+        :param year: The year from which to retrieve goal status. Defaults to the year that the object represents, "all" returns the data from all years and quarters.
+        :param quarter: The quarter from which to retrieve goal status. Defaults to the quarter that the object represents, "all" returns the data from all years and quarters.
+        """
+        if not year:
+            year = self.current_year
+        if not quarter:
+            quarter = self.current_quarter
+
+        try:
+            return self.agency_df.loc[(self.df["Goal Name"] == goal_name) & (self.agency_df["Fiscal Year"] == year) & (self.agency_df["Quarter"] == quarter), "Status"].iloc[0]
+        except IndexError:  # if the passed goal name is not held within the agency
+            return None
