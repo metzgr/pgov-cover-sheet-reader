@@ -5,6 +5,8 @@ Includes functions that take key information and format it in a client-friendly 
 import agency
 import utility
 
+from docxtpl import RichText
+
 def get_goal_change_summary_sentence(agency):
     """
     Given a passed agency, returns a sentence summarizing the change in total goal status across the agency from quarter to quarter.
@@ -31,3 +33,37 @@ def get_goal_change_summary_sentence(agency):
         to_return += ' to ' if last_or_this_quarter == 'last quarter' else ''   # adds a connecting word if in the first loop
         
     return to_return
+
+def get_goal_status_breakdown_bullets(agency):
+    """
+    Returns a RichText object representing the change in each goal status quarter-over-quarter, which is capable of being represented as a bulleted list. NOTE: The returned RichText object itself does not return a bulleted list, but each paragraph renders as a bullet when placed in a bulleted list in a template document.
+
+    :param agency: An Agency object representing a CFO Act agency at a given point in time.
+    :return: A RichText object describing the change in each agency goal quarter-over-quarter that is capable of being represented as a bulleted list.
+    """
+    rt = RichText()
+
+    goals_list = agency.get_goals()
+
+    # each loop creates a new paragraph for a unique agency goal
+    for i in range(len(goals_list)):
+        goal_name = goals_list[i]
+
+        current_goal_status = agency.get_goal_status(goal_name)
+        previous_goal_status = agency.get_goal_status(goal_name, quarter="previous")
+
+        rt.add(str(goal_name), bold=True)   # bolds the goal name at the beginning of the line
+        rt.add(f"'s team identified the status of the goal as {current_goal_status.lower()} this quarter, ")
+
+        # the next section of the line is conditional based on whether the goal status has stayed the same, progressed or regressed
+        if current_goal_status == previous_goal_status:
+            rt.add(f"remaining at the same status as its report of {current_goal_status.lower()} last quarter.")
+        elif utility.goal_is_progressing(current_goal_status, previous_goal_status):
+            rt.add(f"progressing from a status of {previous_goal_status.lower()} last quarter.")
+        else:   # goal is regressing
+            rt.add(f"dropping from a status of {previous_goal_status.lower()} reported last quarter.")
+        
+        if i != len(goals_list) - 1:
+            rt.add("\a")    # adds a paragraph break following each goal status statement (except for the final one)
+
+    return rt
