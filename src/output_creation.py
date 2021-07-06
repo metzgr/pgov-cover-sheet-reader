@@ -13,38 +13,6 @@ REPLACEMENT_MAP = {
     "blocking text": "These are some blockers that were custom-placed into the document. Nice job!"
 }
 
-
-def get_keywords(paragraph):
-    """
-    Given a paragraph, returns a list of the keywords held within it. NOTE: Keywords are contained within {{double curly brackets}} in the template document.
-
-    :param paragraph: A string of text that may contain keywords contained within double curly brackets (ex: {{keyword}}).
-    :return: A list of the keywords contained within the passed text.
-    """
-    paragraph_copy = paragraph  # Preserves the state of the original text
-    keywords = []
-    
-    while "{{" in paragraph_copy and "}}" in paragraph_copy:
-        keyword = paragraph_copy[paragraph_copy.index("{{") + 2:paragraph_copy.index("}}")]
-        
-        # Removes keyword indicators from the text after the keyword has been stored
-        paragraph_copy = paragraph_copy.replace("{{", "", 1)
-        paragraph_copy = paragraph_copy.replace("}}", "", 1)
-
-        keywords.append(keyword)
-        
-    return keywords
-
-def replace_keywords(paragraph): 
-    """
-    Replaces the keywords in the passed paragraphs within their corresponding values in the replacement map.
-
-    :param paragraph: A string of text that may contain keywords.
-    """   
-    for keyword in get_keywords(paragraph.text):
-        if keyword in REPLACEMENT_MAP.keys():
-            paragraph.text = paragraph.text.replace(f"{{{{{keyword}}}}}", REPLACEMENT_MAP[keyword])
-
 def replace_placeholder_images(tpl):
     """
     Replaces all of the placeholder images of the passed DocxTemplate object with relevant figures.
@@ -55,7 +23,7 @@ def replace_placeholder_images(tpl):
 
     }
 
-    for key, value in placeholder_figure_map.keys():
+    for key, value in placeholder_figure_map.items():
         tpl.replace_pic(key, value)
 
 def create_summary_document(template_path, df=None, agency=None, year=None, quarter=None):
@@ -66,16 +34,13 @@ def create_summary_document(template_path, df=None, agency=None, year=None, quar
     """
     tpl = DocxTemplate(template_path)
 
-    for block in utility.iter_block_items(tpl.docx):
-        if isinstance(block, Paragraph):            
-            replace_keywords(block)
-        else:  # if block is table
-            for row in block.rows: 
-                for cell in row.cells:
-                    for paragraph in cell.paragraphs: 
-                        replace_keywords(paragraph)
-
     replace_placeholder_images(tpl)
 
-    tpl.render({})
+    replacement_map = {
+        "previous_quarter_and_year": "{} {}".format(*utility.get_previous_quarter_and_year("Q1", 2020)),
+        "current_quarter_and_year": f"{quarter} {year}",
+        "agency_name": agency
+    }
+
+    tpl.render(replacement_map)
     tpl.save("output.docx")
