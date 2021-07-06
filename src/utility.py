@@ -9,6 +9,13 @@ from docx.table import _Cell, Table
 from docx.text.paragraph import Paragraph
 
 import xml.etree.ElementTree as ET
+# A dictionary mapping each goal status to a rank
+STATUS_RANK_MAP = {
+    "Ahead": 4,
+    "On track": 3,
+    "Nearly on track": 2,
+    "Blocked": 1
+}
 
 def iter_block_items(parent):
     """
@@ -70,3 +77,15 @@ def get_picture_names(tpl):
             picture_names.append(elem.attrib["name"])
 
     return picture_names
+def goal_is_progressing(current_status, previous_status):
+    """
+    Returns TRUE if the passed goal is progressing quarter-over-quarter, FALSE otherwise.
+
+    :param current_status: The current status of the goal being assessed.
+    :param previous_status: The previous quarter's status of the goal being assessed.
+    :return: TRUE if the goal is progressing in its status, FALSE otherwise.
+    """
+    try:
+        return STATUS_RANK_MAP[current_status] > STATUS_RANK_MAP[previous_status]
+    except:
+        raise Exception(f"{current_status}, {previous_status}")
