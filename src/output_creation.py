@@ -59,4 +59,11 @@ def create_summary_document(template_path, agency):
     }
 
     tpl.render(replacement_map)
-    tpl.save("output.docx")
+
+    try:
+        tpl.save("output.docx")
+    except ValueError as e:
+        if all(keyword in str(e) for keyword in ["Picture", "not found in the docx template"]):    # checking to see if error message contains two keywords indicating picture not found in the docx template
+            raise ValueError(f"{e}. Pictures present in the document are as follows: {', '.join(utility.get_picture_names(tpl))}")
+        else:
+            raise ValueError(e)     # raise raw ValueError
