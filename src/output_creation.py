@@ -5,6 +5,7 @@ Maps keywords imbedded in template document (keys) to what they will be replaced
 import utility
 import agency
 import text_templates
+import viz
 
 from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate
@@ -29,6 +30,14 @@ def replace_placeholder_images(tpl):
     for key, value in placeholder_figure_map.items():
         tpl.replace_pic(key, value)
 
+def create_visuals(agency):
+    """
+    Dynamically creates all of the visualizations needed for the summary report.
+
+    :param agency: An Agency object representing the agency that a summary report will be created for.
+    """
+    viz.create_goal_summary_small_multiples(agency)
+
 def create_summary_document(template_path, agency):
     """
     Creates a summary document for the passed agency, year and quarter.
@@ -37,6 +46,7 @@ def create_summary_document(template_path, agency):
     """
     tpl = DocxTemplate(template_path)
 
+    create_visuals(agency)
     replace_placeholder_images(tpl)
 
     replacement_map = {
