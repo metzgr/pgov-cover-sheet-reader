@@ -8,6 +8,8 @@ from docx.oxml.table import CT_Tbl
 from docx.table import _Cell, Table
 from docx.text.paragraph import Paragraph
 
+import xml.etree.ElementTree as ET
+
 def iter_block_items(parent):
     """
     Returns a stream of Paragraph and Table objects in the order in which they appear in the passed docx document.
@@ -53,3 +55,18 @@ def get_previous_quarter_and_year(quarter, year):
         return f"Q{quarter_number - 1}", year
     else:
         return "Q4", year - 1
+
+def get_picture_names(tpl):
+    """
+    Returns a list of all of the names of the images held within the passed DocxTemplate object. Holds relevance for mapping which images in the template document are to be replaced by auto-generated figures.
+
+    :param tpl: A DocxTemplate object.
+    :return: A list of strings, each of which is a name of a unique picture within the DocxTemplate file.
+    """
+    picture_names = []
+
+    for elem in ET.fromstring(tpl.docx.element.body.xml).iter():
+        if elem.tag == "{http://schemas.openxmlformats.org/drawingml/2006/picture}cNvPr":
+            picture_names.append(elem.attrib["name"])
+
+    return picture_names
