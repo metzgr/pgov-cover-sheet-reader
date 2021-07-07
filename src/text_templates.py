@@ -52,18 +52,18 @@ def get_goal_status_breakdown_bullets(agency):
         current_goal_status = agency.get_goal_status(goal_name)
         previous_goal_status = agency.get_goal_status(goal_name, quarter="previous")
 
-        rt.add(str(goal_name), bold=True)   # bolds the goal name at the beginning of the line
-        rt.add(f"'s team identified the status of the goal as {current_goal_status.lower()} this quarter, ")
+        rt.add(str(goal_name), bold=True, font="Roboto")   # bolds the goal name at the beginning of the line
+        rt.add(f"'s team identified the status of the goal as {current_goal_status.lower()} this quarter, ", font="Roboto")
 
         # the next section of the line is conditional based on whether the goal status has stayed the same, progressed or regressed
         if current_goal_status == previous_goal_status:
-            rt.add(f"remaining at the same status as its report of {current_goal_status.lower()} last quarter.")
+            rt.add(f"remaining at the same status as its report of {current_goal_status.lower()} last quarter.", font="Roboto")
         elif utility.goal_is_progressing(current_goal_status, previous_goal_status):
-            rt.add(f"progressing from a status of {previous_goal_status.lower()} last quarter.")
+            rt.add(f"progressing from a status of {previous_goal_status.lower()} last quarter.", font="Roboto")
         else:   # goal is regressing
-            rt.add(f"dropping from a status of {previous_goal_status.lower()} reported last quarter.")
+            rt.add(f"dropping from a status of {previous_goal_status.lower()} reported last quarter.", font="Roboto")
         
         if i != len(goals_list) - 1:
-            rt.add("\a")    # adds a paragraph break following each goal status statement (except for the final one)
+            rt.add("\a", font="Roboto")    # adds a paragraph break following each goal status statement (except for the final one)
 
     return rt
