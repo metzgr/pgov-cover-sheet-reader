@@ -43,6 +43,7 @@ def create_summary_document(template_path, agency):
     Creates a summary document for the passed agency, year and quarter.
 
     :param template_path: The path to the template docx file from which a copy will be made containing relevant data.
+    :param agency: An Agency object representing the agency that a summary report will be created for.
     """
     tpl = DocxTemplate(template_path)
 
