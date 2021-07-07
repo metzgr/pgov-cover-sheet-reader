@@ -24,6 +24,13 @@ def create_goal_summary_small_multiples(agency, dir=DEFAULT_DIRECTORY, names=["s
     :param dir: The directory to which the figures will be saved to. Default value is the directory stored in the DEFAULT_DIRECTORY constant.
     :param names: The file names that the figures will be saved to. The first item in the list is the name of the previous quarter's graph, and the second is for the current quarter's graph.
     """
+    # Error handling
+    if not isinstance(names, list) or len(names) != 2:
+        raise Exception("A list of length two is required to be passed in the 'names' argument.")
+
+    if not all([isinstance(name, str) for name in names]):
+        raise Exception("All items in the 'names' argument must be stings")
+
     goal_stauts_count_df = df_creator.get_status_count_groupby_agency_year_quarter(agency.agency_df)
 
     # Create ordered hierarchy of statuses
