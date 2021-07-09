@@ -33,7 +33,7 @@ def create_goal_summary_small_multiples(agency, dir=DEFAULT_DIRECTORY, names=["s
     if not all([isinstance(name, str) for name in names]):
         raise Exception("All items in the 'names' argument must be stings")
 
-    goal_stauts_count_df = df_creator.get_status_count_groupby_agency_year_quarter(agency.agency_df)
+    goal_stauts_count_df = df_creator.get_status_count_groupby_agency_year_quarter(agency.get_agency_df())
 
     # Create ordered hierarchy of statuses
     status_ordered = CategoricalDtype(
