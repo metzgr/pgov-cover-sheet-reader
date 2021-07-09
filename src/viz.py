@@ -86,9 +86,8 @@ def create_goal_summary_small_multiples(agency, dir=DEFAULT_DIRECTORY, names=["s
         ax.set_ylabel(ax.yaxis.get_label().get_text(), fontdict=font)   # sets the size of the category label on the y axis
         
         # Exporting figure
-        fig.set_size_inches(12, 8)
-        fig.savefig(f"{dir}{filename}", bbox_inches='tight')
-        plt.clf()  # clears plot
+        fig.set_size_inches(12, 8)   # saved image is larger, of higher quality
+        __save_figure(fig, dir, filename)
 
 def create_challenges_reported_in_quarter(agency, dir=DEFAULT_DIRECTORY, name="challenges_reported_bar_chart"):
     """
@@ -124,6 +123,16 @@ def create_challenges_reported_in_quarter(agency, dir=DEFAULT_DIRECTORY, name="c
     ax.set_ylabel(ax.yaxis.get_label().get_text(), fontdict=font)   # sets the size of the category label on the y axis
 
     # Exporting figure
-    fig.set_size_inches(12, 8)
+    fig.set_size_inches(12, 8)   # saved image is larger, of higher quality
+    __save_figure(fig, dir, name)
+
+def __save_figure(fig, dir, name):
+    """
+    Saves the passed figure to the passed directory path and name.
+
+    :param fig: The figure to be saved.
+    :param dir: The directory to which the figure will be saved to.
+    :param name: The file name that the figure will be saved to.
+    """
     fig.savefig(f"{dir}{name}", bbox_inches="tight")
-    plt.clf()
+    plt.clf()   # clears plot
