@@ -5,10 +5,12 @@ Maps keywords imbedded in template document (keys) to what they will be replaced
 import utility
 import agency
 import text_templates
+import df_creator
 import viz
 
 from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate
+import pandas as pd
 
 # Maps keywords within the template document to the values that they will be replaced by.
 REPLACEMENT_MAP = {
@@ -50,13 +52,21 @@ def create_summary_document(template_path, agency):
     create_visuals(agency)
     replace_placeholder_images(tpl)
 
+    recurring_challenges_df = get_top_recurring_challenges(agency)
+
     replacement_map = {
         "previous_quarter_and_year": "{} {}".format(*utility.get_previous_quarter_and_year(agency.get_quarter(), agency.get_year())),
         "current_quarter_and_year": f"{agency.get_quarter()} {agency.get_year()}",
         "agency_name": agency.get_name(),
         "agency_abbreviation": "SBA",   # NOTE: this is temporarily hard-coded, should be changed to `agency.get_abbreviation()` once the agency name mapping is implemented
         "goal_change_summary_sentence": text_templates.get_goal_change_summary_sentence(agency),
-        "goal_status_breakdown_bullets": text_templates.get_goal_status_breakdown_bullets(agency)
+        "goal_status_breakdown_bullets": text_templates.get_goal_status_breakdown_bullets(agency),
+        "recur_challenge_1": recurring_challenges_df.iloc[0]["Challenge"].lower(),
+        "recur_challenge_2": recurring_challenges_df.iloc[1]["Challenge"].lower(),
+        "recur_challenge_1_count": recurring_challenges_df.iloc[0]["Count"],
+        "recur_challenge_2_count": recurring_challenges_df.iloc[1]["Count"],
+        "recur_challenge_1_goal": recurring_challenges_df.iloc[0]["Goal Name"],
+        "recur_challenge_2_goal": recurring_challenges_df.iloc[1]["Goal Name"]
     }
 
     tpl.render(replacement_map)
@@ -68,3 +78,16 @@ def create_summary_document(template_path, agency):
             raise ValueError(f"{e}. Pictures present in the document are as follows: {', '.join(utility.get_picture_names(tpl))}")
         else:
             raise ValueError(e)     # raise raw ValueError
+
+def get_top_recurring_challenges(agency, num_challenges=2):
+    """
+    Returns a DataFrame with the most frequent recurring challenges for the passed agency.
+
+    :param agency: An Agency object representing the agency for which the top recurring challenges will be retrieved.
+    :param num_challenges: The number of top recurring challenges that should be returned. 2 by default.
+    :return: A DataFrame with the most frequent recurring challenges for the passed agency.
+    """
+    df = df_creator.get_recurring_challenges_count(agency.get_agency_df())
+    df = df.sort_values("Count", ascending=False)
+
+    return df.reset_index(drop=True).head(num_challenges)

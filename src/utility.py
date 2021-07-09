@@ -10,6 +10,8 @@ from docx.text.paragraph import Paragraph
 
 import xml.etree.ElementTree as ET
 
+# CONSTANTS
+
 # A dictionary mapping each goal status to a rank
 STATUS_RANK_MAP = {
     "Ahead": 4,
@@ -17,6 +19,8 @@ STATUS_RANK_MAP = {
     "Nearly on track": 2,
     "Blocked": 1
 }
+
+CHALLENGES_LIST = ["Hiring", "Competing deadlines", "Legislation", "Lack of research", "Unclear guidance", "Unavailable data"]
 
 def iter_block_items(parent):
     """
