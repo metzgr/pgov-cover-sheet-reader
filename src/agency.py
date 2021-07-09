@@ -31,7 +31,7 @@ class Agency():
 
     def get_df(self):
         """
-        Returns the central DataFrame used to store the data surrounding agencies and their goal statuses.
+        Returns the central DataFrame used to store the data surrounding agencies and their goal statuses. Contains data of all CFO Act agencies, not just the agency that the object represents.
 
         :return: A DataFrame that stores the data surrounding agencies and their goal statuses.
         """
@@ -39,7 +39,7 @@ class Agency():
 
     def get_agency_df(self):
         """
-        Returns the DataFrame representing the agency and its APGs.
+        Returns the DataFrame representing the agency and its APGs. Only contains data from the CFO Act agency that the object represents.
 
         :return: A slice of the central DataFrame used to initialize the object that only containts rows relevant to the represented agency.
         """
