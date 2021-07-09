@@ -86,6 +86,89 @@ def create_goal_summary_small_multiples(agency, dir=DEFAULT_DIRECTORY, names=["s
         ax.set_ylabel(ax.yaxis.get_label().get_text(), fontdict=font)   # sets the size of the category label on the y axis
         
         # Exporting figure
-        fig.set_size_inches(12, 8)
-        fig.savefig(f"{dir}{filename}", bbox_inches='tight')
-        plt.clf()  # clears plot
+        fig.set_size_inches(12, 8)   # saved image is larger, of higher quality
+        __save_figure(fig, dir, filename)
+
+def create_challenges_reported_in_quarter(agency, dir=DEFAULT_DIRECTORY, name="challenges_reported_bar_chart"):
+    """
+    Creates a graph representing the challenges reported in a quarter and saves it to a specified name and directory.
+
+    :param agency: The Agency object from which a quarterly challenges reported plot will be created.
+    :param dir: The directory to which the figure will be saved to.
+    :param name: The file name that the figure will be saved to.
+    """
+    # Retrieve DataFrame, filter for only this quarter
+    challenge_count_df = df_creator.get_challenge_count_by_quarter(agency.get_agency_df())
+    challenge_count_df = challenge_count_df.loc[(challenge_count_df["Quarter"] == agency.get_quarter()) & (challenge_count_df["Fiscal Year"] == agency.get_year())].sort_values(by="Count", ascending=False)
+
+    font = {
+        'family' : 'sans-serif',
+        'size'   : 24
+    }
+
+    plt.rc('font', **font)
+
+    # Creates barplot
+    sns.barplot(x="Challenge", y="Count", data=challenge_count_df, ci=None, palette=["grey" for i in range(len(challenge_count_df))])
+    
+    fig = plt.gcf()
+    ax = plt.gca()
+
+    # Editing the display of the plot
+    plt.suptitle(f"Challenges Reported across SBA APGs in Q4 2020")
+    plt.xlabel("")  # removes x label
+    plt.xticks(rotation=45, ha="right", fontsize=24)
+    ax.margins(y=0)
+    plt.yticks(ticks=[i for i in range(len(agency.get_goals()) + 1)], fontsize=24)
+    ax.set_ylabel(ax.yaxis.get_label().get_text(), fontdict=font)   # sets the size of the category label on the y axis
+
+    # Exporting figure
+    fig.set_size_inches(12, 8)   # saved image is larger, of higher quality
+    __save_figure(fig, dir, name)
+
+def create_challenges_area_chart(agency, dir=DEFAULT_DIRECTORY, name="challenges_area_chart"):
+    """
+    Creates an area chart showing the cumulative amount of challenges reported in each category.
+
+    :param agency: The Agency object from which a challenges area chart will be created.
+    :param dir: The directory to which the figure will be saved to.
+    :param name: The file name that the figure will be saved to.
+    """
+    # Retrieve DataFrame, sort values in chronological order
+    challenge_count_df = df_creator.get_challenge_count_by_quarter(agency.get_agency_df())
+    challenge_count_df.sort_values(by=["Fiscal Year", "Quarter"])
+
+    data = {}
+
+    # Create data entry of cumulative sum for each challenge. Cumulative sum is in chronological order, dating from the furthest back quarter reported to the most recent
+    for challenge in utility.CHALLENGES_LIST:
+        cumsum = list(challenge_count_df.loc[challenge_count_df["Challenge"] == challenge]["Count"].cumsum())
+        data[challenge] = cumsum
+        
+    # Create area plot from cumulative sum data
+    pd.DataFrame(data).plot.area(stacked=False)
+
+    fig = plt.gcf()
+    ax = plt.gca()
+
+    # Editing the display of the plot
+    quarter_list = [f"{quarter}" for year in challenge_count_df["Fiscal Year"].unique() for quarter in challenge_count_df["Quarter"].unique()]  # a list of all quarters stored in DataFrame
+    plt.xticks([i for i in range(len(quarter_list))], quarter_list, fontsize=24)
+    plt.yticks(fontsize=24)
+    ax.grid(False)
+    plt.legend(prop={'size': 20})
+
+    # Exporting figure
+    fig.set_size_inches(12, 8)
+    __save_figure(plt.gcf(), dir, name)
+
+def __save_figure(fig, dir, name):
+    """
+    Saves the passed figure to the passed directory path and name.
+
+    :param fig: The figure to be saved.
+    :param dir: The directory to which the figure will be saved to.
+    :param name: The file name that the figure will be saved to.
+    """
+    fig.savefig(f"{dir}{name}", bbox_inches="tight")
+    plt.clf()   # clears plot
