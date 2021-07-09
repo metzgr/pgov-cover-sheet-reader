@@ -52,9 +52,10 @@ def get_challenge_count_by_quarter(df):
     challenge_count_df = None
 
     for challenge in utility.CHALLENGES_LIST:
-        data_df = df.loc[(df[challenge] == "Yes")].astype({challenge:"category"})   # without changing the type of the column, the groupby automatically drops all fields with a count of 0
+        data_df = df.astype({challenge:"category"})   # without changing the type of the column, the groupby automatically drops all fields with a count of 0
 
         data_df = data_df.groupby(["Agency Name", "Fiscal Year", "Quarter", challenge]).size().reset_index().rename(columns={0: "Count"})
+        data_df = data_df.loc[(data_df[challenge] == "Yes")]
         
         # Change column with challenge name to general "Challenge" column, filled with the unique challenge name
         data_df[challenge] = challenge
