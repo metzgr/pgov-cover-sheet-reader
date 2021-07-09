@@ -41,3 +41,28 @@ def get_recurring_challenges_count(df):
                 })
 
     return pd.DataFrame(data=data)
+
+def get_challenge_count_by_quarter(df):
+    """
+    Returns a DataFrame with the challenge count by quarter for each agency within the passed DataFrame.
+
+    :param df: A DataFrame that resembles either the raw data storage source or a slice of original source.
+    :return: A DataFrame that displays the number of occurrences of a given challenge across each agency in a given quarter and fiscal year.
+    """
+    challenge_count_df = None
+
+    for challenge in utility.CHALLENGES_LIST:
+        data_df = df.loc[(df[challenge] == "Yes")].astype({challenge:"category"})   # without changing the type of the column, the groupby automatically drops all fields with a count of 0
+
+        data_df = data_df.groupby(["Agency Name", "Fiscal Year", "Quarter", challenge]).size().reset_index().rename(columns={0: "Count"})
+        
+        # Change column with challenge name to general "Challenge" column, filled with the unique challenge name
+        data_df[challenge] = challenge
+        data_df = data_df.rename(columns={challenge: "Challenge"})
+        
+        if isinstance(challenge_count_df, pd.core.frame.DataFrame):
+            challenge_count_df = challenge_count_df.append(data_df)
+        else:
+            challenge_count_df = pd.DataFrame(data=data_df)     # initializes the DataFrame if it does not exist yet
+
+    return challenge_count_df.sort_values(["Agency Name", "Fiscal Year", "Quarter"]).reset_index(drop=True)
