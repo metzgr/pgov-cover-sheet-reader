@@ -90,22 +90,22 @@ class Agency():
         :return: A DataFrame mapping each APG to its goal status across the specified year and quarters.
         """
         if not year:
-            year = self.current_year
+            year = self.get_year()
 
         if not quarter:
             quarter = self.current_quarter
         elif quarter == "previous":
             quarter, year = utility.get_previous_quarter_and_year(self.get_quarter(), self.get_year())
 
-        conditional = pd.Series(data=[True for i in range(len(self.agency_df))], index=self.agency_df.index)     # defaults to all rows
+        conditional = pd.Series(data=[True for i in range(len(self.get_agency_df()))], index=self.get_agency_df().index)     # defaults to all rows
         
         if not "all" in [year, quarter]:
-            conditional = conditional & (self.agency_df["Fiscal Year"] == year) & (self.agency_df["Quarter"] == quarter)
+            conditional = conditional & (self.get_agency_df()["Fiscal Year"] == year) & (self.get_agency_df()["Quarter"] == quarter)
         
         if goal_names:
-            conditional = conditional & (self.agency_df["Goal Name"].isin(goal_names))
+            conditional = conditional & (self.get_agency_df()["Goal Name"].isin(goal_names))
 
-        return self.agency_df.loc[conditional, ["Goal Name", "Quarter", "Fiscal Year", "Status"]].reset_index(drop=True)
+        return self.get_agency_df().loc[conditional, ["Goal Name", "Quarter", "Fiscal Year", "Status"]].reset_index(drop=True)
 
     def get_goal_status(self, goal_name, year=None, quarter=None):
         """
@@ -116,13 +116,13 @@ class Agency():
         :param quarter: The quarter from which to retrieve goal status. Defaults to the quarter that the object represents. "previous" returns the data only from the previous quarter.
         """
         if not year:
-            year = self.current_year
+            year = self.get_year()
         if not quarter:
-            quarter = self.current_quarter
+            quarter = self.get_quarter()
         elif quarter == "previous":
-            quarter, year = utility.get_previous_quarter_and_year(self.current_quarter, self.current_year)
+            quarter, year = utility.get_previous_quarter_and_year(self.get_quarter(), self.get_year())
 
         try:
-            return self.agency_df.loc[(self.df["Goal Name"] == goal_name) & (self.agency_df["Fiscal Year"] == year) & (self.agency_df["Quarter"] == quarter), "Status"].iloc[0]
+            return self.get_agency_df().loc[(self.get_agency_df()["Goal Name"] == goal_name) & (self.get_agency_df()["Fiscal Year"] == year) & (self.get_agency_df()["Quarter"] == quarter), "Status"].iloc[0]
         except IndexError:  # if the passed goal name is not held within the agency
             return None
