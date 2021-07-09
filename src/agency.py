@@ -22,6 +22,14 @@ class Agency():
 
     # GETTER METHODS
 
+    def get_df(self):
+        """
+        Returns the central DataFrame used to store the data surrounding agencies and their goal statuses.
+
+        :return: A DataFrame that stores the data surrounding agencies and their goal statuses.
+        """
+        return self.df
+
     def get_agency_df(self):
         """
         Returns the DataFrame representing the agency and its APGs.
