@@ -1,7 +1,14 @@
+"""
+Holds definition of Agency class and its associated methods.
+"""
+
 import utility
 import pandas as pd
 
 class Agency():
+    """
+    Represents a CFO Act agency at a given quarter and fiscal year and contains data related to the performance of its APGs over quarters and fiscal years.
+    """
     
     def __init__(self, df, name, current_quarter, current_year):
         """
