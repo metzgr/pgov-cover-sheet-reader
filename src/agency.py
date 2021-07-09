@@ -14,8 +14,8 @@ class Agency():
         """
         self.df = df
         self.name = name
-        self.agency_df = df.loc[df["Agency Name"] == name]  # a DataFrame only containing data relevant to the agency that the object represents
-        self.apgs = list(self.agency_df["Goal Name"].unique())
+        self.agency_df = self.get_df().loc[self.get_df()["Agency Name"] == self.get_name()]  # a DataFrame only containing data relevant to the agency that the object represents
+        self.apgs = list(self.get_agency_df()["Goal Name"].unique())
         self.abbreviation = ""  # the abbreviation of the passed agency
         self.current_quarter = current_quarter 
         self.current_year = current_year
