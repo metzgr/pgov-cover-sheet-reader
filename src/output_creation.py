@@ -27,7 +27,8 @@ def replace_placeholder_images(tpl):
     placeholder_figure_map = {
         "Picture 2": "viz/small_multiples_previous.png",
         "Picture 3": "viz/small_multiples_current.png",
-        "Picture 4": "viz/challenges_reported_bar_chart.png"
+        "Picture 4": "viz/challenges_reported_bar_chart.png",
+        "Picture 5": "viz/challenges_area_chart.png"
     }
 
     for key, value in placeholder_figure_map.items():
@@ -41,6 +42,7 @@ def create_visuals(agency):
     """
     viz.create_goal_summary_small_multiples(agency)
     viz.create_challenges_reported_in_quarter(agency)
+    viz.create_challenges_area_chart(agency)
 
 def create_summary_document(template_path, agency):
     """
