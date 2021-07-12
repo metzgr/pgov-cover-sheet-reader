@@ -44,12 +44,13 @@ def create_visuals(agency):
     viz.create_challenges_reported_in_quarter(agency)
     viz.create_challenges_area_chart(agency)
 
-def create_summary_document(template_path, agency):
+def create_summary_document(template_path, agency, output_dir="../"):
     """
     Creates a summary document for the passed agency, year and quarter.
 
     :param template_path: The path to the template docx file from which a copy will be made containing relevant data.
     :param agency: An Agency object representing the agency that a summary report will be created for.
+    :param output_dir: The directory to which the output file will be saved to.
     """
     tpl = DocxTemplate(template_path)
 
@@ -77,7 +78,7 @@ def create_summary_document(template_path, agency):
     tpl.render(replacement_map)
 
     try:
-        tpl.save("output.docx")
+        tpl.save(f"{output_dir}output.docx")
     except ValueError as e:
         if all(keyword in str(e) for keyword in ["Picture", "not found in the docx template"]):    # checking to see if error message contains two keywords indicating picture not found in the docx template
             raise ValueError(f"{e}. Pictures present in the document are as follows: {', '.join(utility.get_picture_names(tpl))}")
