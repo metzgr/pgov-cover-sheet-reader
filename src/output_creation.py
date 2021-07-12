@@ -103,6 +103,11 @@ def create_summary_document(template_path, agency, output_dir="../"):
             "apg_name": apg
         }
 
+        # Fill placeholders of image tags
+        image_tags = ["speedometer_image", "goal_status_over_time"]
+        for tag in image_tags:
+            context[tag] = f"{{{{{tag}_{i}}}}}"    
+
         apg_template.render(context)    # renders the keyword replacements specific to the APG
 
         # Adds page break after every APG breakdown except for on final page
