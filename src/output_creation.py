@@ -82,6 +82,14 @@ def create_summary_document(template_path, agency, output_dir="../"):
 
     tpl.render(replacement_map)
 
+    apgs_list = agency.get_goals()
+
+    for i in range(len(apgs_list)):
+        apg_template = DocxTemplate("../APG_Summary_Template.docx")     # re-renders APG summary template
+        apg = agency.get_goals()[i]
+        apg_df = agency.get_agency_df()
+        apg_df = apg_df.loc[apg_df["Goal Name"] == apg]
+
     try:
         tpl.save(f"{output_dir}output.docx")
     except ValueError as e:
