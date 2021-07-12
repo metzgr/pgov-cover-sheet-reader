@@ -34,6 +34,7 @@ def replace_placeholder_images(tpl):
 
     for key, value in placeholder_figure_map.items():
         tpl.replace_pic(key, value)
+        os.remove(value)    # remove file from local storage after it has been placed in report
 
 def create_visuals(agency):
     """
