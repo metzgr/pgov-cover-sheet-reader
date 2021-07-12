@@ -7,6 +7,7 @@ import agency
 import text_templates
 import df_creator
 import viz
+import os
 
 from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate
@@ -40,6 +41,9 @@ def create_visuals(agency):
 
     :param agency: An Agency object representing the agency that a summary report will be created for.
     """
+    if not os.path.isdir("viz"):
+        os.mkdir("viz")     # creates viz directory, if it does not already exist, in preparation for creating visualizations
+
     viz.create_goal_summary_small_multiples(agency)
     viz.create_challenges_reported_in_quarter(agency)
     viz.create_challenges_area_chart(agency)
