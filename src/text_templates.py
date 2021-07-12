@@ -4,6 +4,7 @@ Includes functions that take key information and format it in a client-friendly 
 
 import agency
 import utility
+import df_creator
 
 from docxtpl import RichText
 
@@ -65,5 +66,54 @@ def get_goal_status_breakdown_bullets(agency):
         
         if i != len(goals_list) - 1:
             rt.add("\a", font="Roboto")    # adds a paragraph break following each goal status statement (except for the final one)
+
+    return rt
+
+def get_challenge_summary_text(agency):
+    """
+    Returns a RichText object summarizing the challenges reported across the passed agency this quarter.
+
+    :param agency: An Agency object representing a CFO Act agency at a given point in time.
+    :return: A RichText object summarizing the passed agency's goal status in the quarter that it is reporting for.
+    """
+    rt = RichText()
+
+    challenges_df = df_creator.get_challenge_count_by_quarter(agency.get_agency_df())   # retrieve challenge count df
+    challenges_df = challenges_df.loc[  # filter for agency year and quarter
+        (challenges_df["Quarter"] == agency.get_quarter()) & 
+        (challenges_df["Fiscal Year"] == agency.get_year()
+    )]  
+
+    # Retrieving most common challenges as a DataFrame
+    most_common_challenges_df = challenges_df.loc[challenges_df["Count"] == challenges_df["Count"].max()]  # filter for only challenges with maximum count
+    most_common_challenges_list = list(most_common_challenges_df["Challenge"])
+
+    # Retrieving least common challenges as a DataFrame
+    least_common_challenges_df = challenges_df.loc[challenges_df["Count"] == challenges_df["Count"].min()]  # filter for only challenges with minimum count
+    least_common_challenges_list = list(least_common_challenges_df["Challenge"])
+
+    challenges_dict = {
+        "most common": most_common_challenges_list, 
+        "least common": least_common_challenges_list 
+    }
+
+    for key, value in challenges_dict.items():
+        challenge_list = value    # retrives the list (either most common or least common challenges) to be added to RichText in this loop
+
+        for j in range(len(challenge_list)):
+            challenge = challenge_list[j]
+
+            # Operations for if there are more than one most common challenges
+            if j != 0:
+                rt.add(" and ", font="Roboto")  # adds connecting word for multiple challenges
+                challenge = challenge.lower()   # keeps the first challenge in the list uppercase, all others lowercase
+
+            rt.add(challenge, bold=True, font="Roboto") 
+
+        if key == "most common":
+            rt.add(" were the most commonly reported challenges across the agency's APG teams.", font="Roboto")
+            rt.add("\n\n")    # line break in between most common and least common challenges
+        else:
+            rt.add(" were the least commonly reported challenges across the agency's APG teams.", font="Roboto")
 
     return rt

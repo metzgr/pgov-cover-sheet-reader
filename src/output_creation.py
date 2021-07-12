@@ -70,7 +70,8 @@ def create_summary_document(template_path, agency):
         "recur_challenge_1_count": recurring_challenges_df.iloc[0]["Count"],
         "recur_challenge_2_count": recurring_challenges_df.iloc[1]["Count"],
         "recur_challenge_1_goal": recurring_challenges_df.iloc[0]["Goal Name"],
-        "recur_challenge_2_goal": recurring_challenges_df.iloc[1]["Goal Name"]
+        "recur_challenge_2_goal": recurring_challenges_df.iloc[1]["Goal Name"],
+        "challenge_summary_text": text_templates.get_challenge_summary_text(agency)
     }
 
     tpl.render(replacement_map)
