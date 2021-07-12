@@ -90,6 +90,13 @@ def create_summary_document(template_path, agency, output_dir="../"):
         apg_df = agency.get_agency_df()
         apg_df = apg_df.loc[apg_df["Goal Name"] == apg]
 
+        # Fills all of the placeholder keywords with APG-specific text
+        context = {
+            "apg_name": apg
+        }
+
+        apg_template.render(context)
+
     try:
         tpl.save(f"{output_dir}output.docx")
     except ValueError as e:
