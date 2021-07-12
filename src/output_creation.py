@@ -97,6 +97,9 @@ def create_summary_document(template_path, agency, output_dir="../"):
 
         apg_template.render(context)
 
+        for element in apg_template.element.body:
+            tpl.docx.element.body.append(element)
+
     try:
         tpl.save(f"{output_dir}output.docx")
     except ValueError as e:
