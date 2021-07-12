@@ -4,6 +4,7 @@ Includes functions that take key information and format it in a client-friendly 
 
 import agency
 import utility
+import df_creator
 
 from docxtpl import RichText
 
@@ -67,3 +68,12 @@ def get_goal_status_breakdown_bullets(agency):
             rt.add("\a", font="Roboto")    # adds a paragraph break following each goal status statement (except for the final one)
 
     return rt
+
+def get_challenge_summary_text(agency):
+    """
+    Returns a RichText object summarizing the challenges reported across the passed agency this quarter.
+
+    :param agency: An Agency object representing a CFO Act agency at a given point in time.
+    :return: A RichText object summarizing the passed agency's goal status in the quarter that it is reporting for.
+    """
+    rt = RichText()
