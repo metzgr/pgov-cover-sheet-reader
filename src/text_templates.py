@@ -91,3 +91,29 @@ def get_challenge_summary_text(agency):
     # Retrieving least common challenges as a DataFrame
     least_common_challenges_df = challenges_df.loc[challenges_df["Count"] == challenges_df["Count"].min()]  # filter for only challenges with minimum count
     least_common_challenges_list = list(least_common_challenges_df["Challenge"])
+
+    challenges_dict = {
+        "most common": most_common_challenges_list, 
+        "least common": least_common_challenges_list 
+    }
+
+    for key, value in challenges_dict.items():
+        challenge_list = value    # retrives the list (either most common or least common challenges) to be added to RichText in this loop
+
+        for j in range(len(challenge_list)):
+            challenge = challenge_list[j]
+
+            # Operations for if there are more than one most common challenges
+            if j != 0:
+                rt.add(" and ", font="Roboto")  # adds connecting word for multiple challenges
+                challenge = challenge.lower()   # keeps the first challenge in the list uppercase, all others lowercase
+
+            rt.add(challenge, bold=True, font="Roboto") 
+
+        if key == "most common":
+            rt.add(" were the most commonly reported challenges across the agency's APG teams.", font="Roboto")
+            rt.add("\n\n")    # line break in between most common and least common challenges
+        else:
+            rt.add(" were the least commonly reported challenges across the agency's APG teams.", font="Roboto")
+
+    return rt
