@@ -77,3 +77,17 @@ def get_challenge_summary_text(agency):
     :return: A RichText object summarizing the passed agency's goal status in the quarter that it is reporting for.
     """
     rt = RichText()
+
+    challenges_df = df_creator.get_challenge_count_by_quarter(agency.get_agency_df())   # retrieve challenge count df
+    challenges_df = challenges_df.loc[  # filter for agency year and quarter
+        (challenges_df["Quarter"] == agency.get_quarter()) & 
+        (challenges_df["Fiscal Year"] == agency.get_year()
+    )]  
+
+    # Retrieving most common challenges as a DataFrame
+    most_common_challenges_df = challenges_df.loc[challenges_df["Count"] == challenges_df["Count"].max()]  # filter for only challenges with maximum count
+    most_common_challenges_list = list(most_common_challenges_df["Challenge"])
+
+    # Retrieving least common challenges as a DataFrame
+    least_common_challenges_df = challenges_df.loc[challenges_df["Count"] == challenges_df["Count"].min()]  # filter for only challenges with minimum count
+    least_common_challenges_list = list(least_common_challenges_df["Challenge"])
