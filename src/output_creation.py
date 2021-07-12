@@ -95,8 +95,9 @@ def create_summary_document(template_path, agency, output_dir="../"):
             "apg_name": apg
         }
 
-        apg_template.render(context)
+        apg_template.render(context)    # renders the keyword replacements specific to the APG
 
+        # Loops through every element in the APG summary, adds it to the whole agency summary report
         for element in apg_template.element.body:
             tpl.docx.element.body.append(element)
 
