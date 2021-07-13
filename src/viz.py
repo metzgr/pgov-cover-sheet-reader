@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 from pandas.api.types import CategoricalDtype
+import numpy as np
 
 import utility
 import df_creator
@@ -192,11 +193,21 @@ def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="
     ax.axvline(7.5, color="white", linestyle="--", dashes=[6,9])
     ax.axvline(11.5, color="white", linestyle="--", dashes=[6,9])
 
+    # Create ordered hierarchy of statuses
+    # TODO: Remove this map, implement map listed as constant in utility.py. That map also includes a key of "Nearly on track", which requires further implementation of this function.
+    status_rank_map = {
+        "Ahead": 2,
+        "On track": 1,
+        "Blocked": 0
+    }
+
+    status_ranked = pd.Series([status_rank_map[status] for status in list(apg_status_df["Status"])])    # List of numerical ranking of APG statuses in chronological order, needed to correctly order statuses on y-axis
+
     # Create plot
-    plt.plot(apg_status_df["Quarter/Year"], apg_status_df["Status"], marker="o", markersize=16)
+    plt.plot(apg_status_df["Quarter/Year"], status_ranked, marker="o", markersize=16)
     plt.suptitle("Goal Status Over Time")
     plt.xticks(rotation=90, fontsize=24)
-    plt.yticks(fontsize=24)
+    plt.yticks(np.arange(len(status_rank_map.keys())), status_rank_map.keys(), fontsize=24)     # restore string status names, overwrite numerical ranks
 
     ax.margins(y=0.25)
     ax.grid(False)  # turns off the seaborn plot
