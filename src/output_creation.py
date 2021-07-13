@@ -83,6 +83,7 @@ def create_summary_document(template_path, agency, output_dir="../"):
     tpl.render(replacement_map)
 
     apgs_list = agency.get_goals()
+    tpl.docx.add_page_break()   # add page break prior to APG breakdown pages
 
     for i in range(len(apgs_list)):
         apg_template = DocxTemplate("../APG_Summary_Template.docx")     # re-renders APG summary template
