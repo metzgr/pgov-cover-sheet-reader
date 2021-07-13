@@ -187,8 +187,9 @@ def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="
     ax.axvline(11.5, color="white", linestyle="--", dashes=[6,9])
 
     # Create plot
-    plt.plot(apg_status_df["Quarter/Year"], apg_status_df["Status"], marker="o")
-    plt.xticks(rotation=90)
+    plt.plot(apg_status_df["Quarter/Year"], apg_status_df["Status"], marker="o", markersize=16)
+    plt.xticks(rotation=90, fontsize=24)
+    plt.yticks(fontsize=24)
 
     ax.margins(y=0.25)
     ax.grid(False)  # turns off the seaborn plot
