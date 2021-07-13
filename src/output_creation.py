@@ -30,6 +30,19 @@ def replace_placeholder_images(tpl, placeholder_map):
         tpl.replace_pic(key, value)
         os.remove(value)    # remove file from local storage after it has been placed in report
 
+def get_summary_page_image_replacement_map():
+    """
+    Returns a dictionary object mapping the picture within the working DocxTemplate map to the image in local storage that should replace it.
+    
+    :return: A dictionary object mapping the name of the file that should be replaced in the DocxTemplate file's summary page (key) to the location of the locally stored image that should replace it (value).
+    """
+    return {
+        "Picture 2": "viz/small_multiples_previous.png",
+        "Picture 3": "viz/small_multiples_current.png",
+        "Picture 4": "viz/challenges_reported_bar_chart.png",
+        "Picture 5": "viz/challenges_area_chart.png"
+    }
+
 def create_visuals(agency):
     """
     Dynamically creates all of the visualizations needed for the summary report.
