@@ -175,6 +175,12 @@ def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="
     apg_status_df = apg_status_df.loc[apg_status_df["Goal Name"] == apg_name].sort_values(by=["Fiscal Year","Quarter"])     # sort in chronological order
     apg_status_df["Quarter/Year"] = apg_status_df["Quarter"] + " " + apg_status_df["Fiscal Year"].astype(str)
 
+    font = {
+        'family' : 'sans-serif',
+        'size'   : 40
+    }
+    plt.rc('font', **font)
+
     fig, ax = plt.subplots()
 
     # Lines dividing goal statuses
@@ -188,6 +194,7 @@ def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="
 
     # Create plot
     plt.plot(apg_status_df["Quarter/Year"], apg_status_df["Status"], marker="o", markersize=16)
+    plt.suptitle("Goal Status Over Time")
     plt.xticks(rotation=90, fontsize=24)
     plt.yticks(fontsize=24)
 
