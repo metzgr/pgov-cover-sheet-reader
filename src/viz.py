@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 from pandas.api.types import CategoricalDtype
+import numpy as np
 
 import utility
 import df_creator
@@ -157,6 +158,59 @@ def create_challenges_area_chart(agency, dir=DEFAULT_DIRECTORY, name="challenges
     plt.yticks(fontsize=24)
     ax.grid(False)
     plt.legend(prop={'size': 20})
+
+    # Exporting figure
+    fig.set_size_inches(12, 8)
+    __save_figure(plt.gcf(), dir, name)
+
+def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="goal_status_over_time"):
+    """
+    Creates a plot displaying the goal status over time of the passed APG.
+
+    :param agency: The Agency object from which the plot will be created.
+    :param apg_name: The name of the APG that will be represented in the created plot.
+    :param dir: The directory to which the figure will be saved to.
+    :param name: The file name that the figure will be saved to.
+    """
+    apg_status_df = agency.get_agency_df()
+    apg_status_df = apg_status_df.loc[apg_status_df["Goal Name"] == apg_name].sort_values(by=["Fiscal Year","Quarter"])     # sort in chronological order
+    apg_status_df["Quarter/Year"] = apg_status_df["Quarter"] + " " + apg_status_df["Fiscal Year"].astype(str)
+
+    font = {
+        'family' : 'sans-serif',
+        'size'   : 40
+    }
+    plt.rc('font', **font)
+
+    fig, ax = plt.subplots()
+
+    # Lines dividing goal statuses
+    ax.axhline(0.5, color="white")
+    ax.axhline(1.5, color="white")
+
+    # Lines dividing fiscal years
+    ax.axvline(3.5, color="white", linestyle="--", dashes=[6,9])
+    ax.axvline(7.5, color="white", linestyle="--", dashes=[6,9])
+    ax.axvline(11.5, color="white", linestyle="--", dashes=[6,9])
+
+    # Create ordered hierarchy of statuses
+    # TODO: Remove this map, implement map listed as constant in utility.py. That map also includes a key of "Nearly on track", which requires further implementation of this function.
+    status_rank_map = {
+        "Ahead": 2,
+        "On track": 1,
+        "Blocked": 0
+    }
+
+    status_ranked = pd.Series([status_rank_map[status] for status in list(apg_status_df["Status"])])    # List of numerical ranking of APG statuses in chronological order, needed to correctly order statuses on y-axis
+
+    # Create plot
+    plt.plot(apg_status_df["Quarter/Year"], status_ranked, marker="o", markersize=16)
+    plt.suptitle("Goal Status Over Time")
+    plt.xticks(rotation=90, fontsize=24)
+    plt.yticks(np.arange(len(status_rank_map.keys())), status_rank_map.keys(), fontsize=24)     # restore string status names, overwrite numerical ranks
+
+    ax.margins(y=0.25)
+    ax.grid(False)  # turns off the seaborn plot
 
     # Exporting figure
     fig.set_size_inches(12, 8)
