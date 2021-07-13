@@ -19,20 +19,14 @@ REPLACEMENT_MAP = {
     "blocking text": "These are some blockers that were custom-placed into the document. Nice job!"
 }
 
-def replace_placeholder_images(tpl):
+def replace_placeholder_images(tpl, placeholder_map):
     """
     Replaces all of the placeholder images of the passed DocxTemplate object with relevant figures.
 
     :param tpl: A DocxTemplate containing placeholder images.
+    :param placeholder_map: A dictionary object mapping the name of the file that should be replaced in the DocxTemplate file (key) to the location of the locally stored image that should replace it (value).
     """
-    placeholder_figure_map = {
-        "Picture 2": "viz/small_multiples_previous.png",
-        "Picture 3": "viz/small_multiples_current.png",
-        "Picture 4": "viz/challenges_reported_bar_chart.png",
-        "Picture 5": "viz/challenges_area_chart.png"
-    }
-
-    for key, value in placeholder_figure_map.items():
+    for key, value in placeholder_map.items():
         tpl.replace_pic(key, value)
         os.remove(value)    # remove file from local storage after it has been placed in report
 
