@@ -162,6 +162,19 @@ def create_challenges_area_chart(agency, dir=DEFAULT_DIRECTORY, name="challenges
     fig.set_size_inches(12, 8)
     __save_figure(plt.gcf(), dir, name)
 
+def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="goal_status_over_time"):
+    """
+    Creates a plot displaying the goal status over time of the passed APG.
+
+    :param agency: The Agency object from which the plot will be created.
+    :param apg_name: The name of the APG that will be represented in the created plot.
+    :param dir: The directory to which the figure will be saved to.
+    :param name: The file name that the figure will be saved to.
+    """
+    apg_status_df = agency.get_agency_df()
+    apg_status_df = apg_status_df.loc[apg_status_df["Goal Name"] == apg_name].sort_values(by=["Fiscal Year","Quarter"])     # sort in chronological order
+    apg_status_df["Quarter/Year"] = apg_status_df["Quarter"] + " " + apg_status_df["Fiscal Year"].astype(str)
+
 def __save_figure(fig, dir, name):
     """
     Saves the passed figure to the passed directory path and name.
