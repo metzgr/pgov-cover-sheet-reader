@@ -9,8 +9,9 @@ import df_creator
 import viz
 import os
 
+from docx.shared import Inches
 from docx.text.paragraph import Paragraph
-from docxtpl import DocxTemplate
+from docxtpl import DocxTemplate, InlineImage
 import pandas as pd
 
 # Maps keywords within the template document to the values that they will be replaced by.
@@ -96,6 +97,7 @@ def create_summary_document(template_path, agency, output_dir="../"):
     apgs_list = agency.get_goals()
     tpl.docx.add_page_break()   # add page break prior to APG breakdown pages
 
+    # Loops for every APG that the agency holds
     for i in range(len(apgs_list)):
         apg_template = DocxTemplate("../APG_Summary_Template.docx")     # re-renders APG summary template
         apg = agency.get_goals()[i]
@@ -121,6 +123,11 @@ def create_summary_document(template_path, agency, output_dir="../"):
         # Loops through every element in the APG summary, adds it to the whole agency summary report
         for element in apg_template.element.body:
             tpl.docx.element.body.append(element)
+
+        goal_status = apg_df.loc[(apg_df["Quarter"] == agency.get_quarter()) & (apg_df["Fiscal Year"] == agency.get_year())]["Status"].values[0]    # retrieve goal status for the current fiscal year and quarter
+        formatted_goal_status = goal_status.lower().replace(" ", "_")   # format goal status to the naming conventions of the speedometer images
+
+        tpl.render({f"speedometer_image_{i}": InlineImage(tpl, image_descriptor=f"viz/speedometers/speedometer_{formatted_goal_status}.png", width=Inches(2), height=Inches(1))})
 
     try:
         tpl.save(f"{output_dir}output.docx")
