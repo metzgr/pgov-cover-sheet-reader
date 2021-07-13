@@ -55,6 +55,10 @@ def create_visuals(agency):
     viz.create_goal_summary_small_multiples(agency)
     viz.create_challenges_reported_in_quarter(agency)
     viz.create_challenges_area_chart(agency)
+    goals = agency.get_goals()
+    for i in range(len(goals)):
+        goal = goals[i]
+        viz.create_goal_status_over_time(agency, goal, name=f"goal_status_over_time_{i}")
 
 def create_summary_document(template_path, agency, output_dir="../"):
     """
