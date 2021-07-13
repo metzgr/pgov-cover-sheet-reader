@@ -67,7 +67,7 @@ def create_summary_document(template_path, agency, output_dir="../"):
     tpl = DocxTemplate(template_path)
 
     create_visuals(agency)
-    replace_placeholder_images(tpl)
+    replace_placeholder_images(tpl, get_summary_page_image_replacement_map())
 
     recurring_challenges_df = get_top_recurring_challenges(agency)
 
