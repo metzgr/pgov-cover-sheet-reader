@@ -175,6 +175,28 @@ def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="
     apg_status_df = apg_status_df.loc[apg_status_df["Goal Name"] == apg_name].sort_values(by=["Fiscal Year","Quarter"])     # sort in chronological order
     apg_status_df["Quarter/Year"] = apg_status_df["Quarter"] + " " + apg_status_df["Fiscal Year"].astype(str)
 
+    fig, ax = plt.subplots()
+
+    # Lines dividing goal statuses
+    ax.axhline(0.5, color="white")
+    ax.axhline(1.5, color="white")
+
+    # Lines dividing fiscal years
+    ax.axvline(3.5, color="white", linestyle="--", dashes=[6,9])
+    ax.axvline(7.5, color="white", linestyle="--", dashes=[6,9])
+    ax.axvline(11.5, color="white", linestyle="--", dashes=[6,9])
+
+    # Create plot
+    plt.plot(apg_status_df["Quarter/Year"], apg_status_df["Status"], marker="o")
+    plt.xticks(rotation=90)
+
+    ax.margins(y=0.25)
+    ax.grid(False)  # turns off the seaborn plot
+
+    # Exporting figure
+    fig.set_size_inches(12, 8)
+    __save_figure(plt.gcf(), dir, name)
+
 def __save_figure(fig, dir, name):
     """
     Saves the passed figure to the passed directory path and name.
