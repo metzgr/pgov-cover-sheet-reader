@@ -135,3 +135,16 @@ def get_speedometer_summary_text(agency, apg_name):
     # Retrieving information to be placed in strings, added to the RichText object
     status = apg_row["Status"].values[0].lower()
     quarter_year = f"{agency.get_quarter()} {agency.get_year()}"
+
+    connecting_word = ""
+
+    if status in ["ahead", "on track", "nearly on track"]:
+        connecting_word = " of"
+    elif status == "blocked":
+        connecting_word = " from reaching"
+
+    rt.add("The goal team reported this goal as ", font="Roboto")
+    rt.add(f"{status}", bold=True, font="Roboto")
+    rt.add(f"{connecting_word} its expected progression in {quarter_year}.", font="Roboto")
+
+    return rt
