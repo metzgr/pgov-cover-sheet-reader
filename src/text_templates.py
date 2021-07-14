@@ -158,3 +158,9 @@ def get_group_help_text(agency, apg_name):
     :return: A RichText object describing the help that the passed APG's goal team has requested from various sectors.
     """
     rt = RichText()
+
+    apg_df = agency.get_agency_df()
+    apg_df = apg_df.loc[apg_df["Goal Name"] == apg_name]
+    apg_row = apg_df.loc[(apg_df["Quarter"] == agency.get_quarter()) & (apg_df["Fiscal Year"] == agency.get_year())]
+
+    apg_help_requested = apg_row.loc[:, apg_row.columns[apg_row.columns.str.contains("help")]]    # a DataFrame with only the columns indicating help requested
