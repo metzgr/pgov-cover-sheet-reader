@@ -9,8 +9,9 @@ import df_creator
 import viz
 import os
 
+from docx.shared import Inches
 from docx.text.paragraph import Paragraph
-from docxtpl import DocxTemplate
+from docxtpl import DocxTemplate, InlineImage
 import pandas as pd
 
 # Maps keywords within the template document to the values that they will be replaced by.
@@ -55,6 +56,10 @@ def create_visuals(agency):
     viz.create_goal_summary_small_multiples(agency)
     viz.create_challenges_reported_in_quarter(agency)
     viz.create_challenges_area_chart(agency)
+    goals = agency.get_goals()
+    for i in range(len(goals)):
+        goal = goals[i]
+        viz.create_goal_status_over_time(agency, goal, name=f"goal_status_over_time_{i}")
 
 def create_summary_document(template_path, agency, output_dir="../"):
     """
@@ -92,6 +97,7 @@ def create_summary_document(template_path, agency, output_dir="../"):
     apgs_list = agency.get_goals()
     tpl.docx.add_page_break()   # add page break prior to APG breakdown pages
 
+    # Loops for every APG that the agency holds
     for i in range(len(apgs_list)):
         apg_template = DocxTemplate("../APG_Summary_Template.docx")     # re-renders APG summary template
         apg = agency.get_goals()[i]
@@ -103,6 +109,11 @@ def create_summary_document(template_path, agency, output_dir="../"):
             "apg_name": apg
         }
 
+        # Fill placeholders of image tags
+        image_tags = ["speedometer_image", "goal_status_over_time"]
+        for tag in image_tags:
+            context[tag] = f"{{{{{tag}_{i}}}}}"    
+
         apg_template.render(context)    # renders the keyword replacements specific to the APG
 
         # Adds page break after every APG breakdown except for on final page
@@ -112,6 +123,14 @@ def create_summary_document(template_path, agency, output_dir="../"):
         # Loops through every element in the APG summary, adds it to the whole agency summary report
         for element in apg_template.element.body:
             tpl.docx.element.body.append(element)
+
+        goal_status = apg_df.loc[(apg_df["Quarter"] == agency.get_quarter()) & (apg_df["Fiscal Year"] == agency.get_year())]["Status"].values[0]    # retrieve goal status for the current fiscal year and quarter
+        formatted_goal_status = goal_status.lower().replace(" ", "_")   # format goal status to the naming conventions of the speedometer images
+
+        tpl.render({
+            f"speedometer_image_{i}": InlineImage(tpl, image_descriptor=f"viz/speedometers/speedometer_{formatted_goal_status}.png", width=Inches(3)),   # width of 3 inches seems to be sweet spot for 2-column table
+            f"goal_status_over_time_{i}": InlineImage(tpl, image_descriptor=f"viz/goal_status_over_time_{i}.png", width=Inches(3))
+        })
 
     try:
         tpl.save(f"{output_dir}output.docx")
