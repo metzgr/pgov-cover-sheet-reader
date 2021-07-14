@@ -207,7 +207,8 @@ def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="
     plt.plot(apg_status_df["Quarter/Year"], status_ranked, marker="o", markersize=16)
     plt.suptitle("Goal Status Over Time")
     plt.xticks(rotation=90, fontsize=24)
-    plt.yticks(np.arange(len(status_rank_map.keys())), status_rank_map.keys(), fontsize=24)     # restore string status names, overwrite numerical ranks
+    y_ticks  = [item[0] for item in sorted(status_rank_map.items(), key=lambda item: item[1])]  # orders keys based on their values in ascending order
+    plt.yticks(np.arange(len(y_ticks)), y_ticks, fontsize=24)     # restore string status names, overwrite numerical ranks
 
     ax.margins(y=0.25)
     ax.grid(False)  # turns off the seaborn plot
