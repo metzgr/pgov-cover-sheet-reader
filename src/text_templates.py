@@ -127,3 +127,11 @@ def get_speedometer_summary_text(agency, apg_name):
     :return: A RichText object describing the information conveyed in the speedometer figure displayed for the passed APG.
     """
     rt = RichText()
+
+    # Obtaining the row that represents the APG in the reporting quarter/fiscal year
+    agency_df = agency.get_agency_df()
+    apg_row = agency_df.loc[(agency_df["Goal Name"] == apg_name) & (agency_df["Quarter"] == agency.get_quarter()) & (agency_df["Fiscal Year"] == agency.get_year())]
+
+    # Retrieving information to be placed in strings, added to the RichText object
+    status = apg_row["Status"].values[0].lower()
+    quarter_year = f"{agency.get_quarter()} {agency.get_year()}"
