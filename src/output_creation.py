@@ -107,7 +107,8 @@ def create_summary_document(template_path, agency, output_dir="../"):
         # Fills all of the placeholder keywords with APG-specific text
         context = {
             "apg_name": apg,
-            "speedometer_text": text_templates.get_speedometer_summary_text(agency, apg)
+            "speedometer_text": text_templates.get_speedometer_summary_text(agency, apg),
+            "group_assistance_text": text_templates.get_group_help_text(agency, apg)
         }
 
         # Fill placeholders of image tags
