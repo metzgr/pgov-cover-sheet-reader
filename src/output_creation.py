@@ -128,8 +128,8 @@ def create_summary_document(template_path, agency, output_dir="../"):
         formatted_goal_status = goal_status.lower().replace(" ", "_")   # format goal status to the naming conventions of the speedometer images
 
         tpl.render({
-            f"speedometer_image_{i}": InlineImage(tpl, image_descriptor=f"viz/speedometers/speedometer_{formatted_goal_status}.png", width=Inches(3), height=Inches(2.73451327)),   # width of 3 inches seems to be sweet spot for 2-column table
-            f"goal_status_over_time_{i}": InlineImage(tpl, image_descriptor=f"viz/goal_status_over_time_{i}.png", width=Inches(3), height=Inches(2))
+            f"speedometer_image_{i}": InlineImage(tpl, image_descriptor=f"viz/speedometers/speedometer_{formatted_goal_status}.png", width=Inches(3)),   # width of 3 inches seems to be sweet spot for 2-column table
+            f"goal_status_over_time_{i}": InlineImage(tpl, image_descriptor=f"viz/goal_status_over_time_{i}.png", width=Inches(3))
         })
 
     try:
