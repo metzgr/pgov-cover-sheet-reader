@@ -148,3 +148,13 @@ def get_speedometer_summary_text(agency, apg_name):
     rt.add(f"{connecting_word} its expected progression in {quarter_year}.", font="Roboto")
 
     return rt
+
+def get_blockers_text(agency, apg_name):
+    """
+    Returns a string describing the blockers identified for the passed agency and APG.
+
+    :param agency: An Agency object representing a CFO Act agency at a given point in time.
+    :param apg_name: The name of the APG whose status will be summarized.
+    :return: A string describing the blockers identified for the passed agency and APG.
+    """
+    return ""
