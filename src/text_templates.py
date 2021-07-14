@@ -148,3 +148,13 @@ def get_speedometer_summary_text(agency, apg_name):
     rt.add(f"{connecting_word} its expected progression in {quarter_year}.", font="Roboto")
 
     return rt
+
+def get_group_help_text(agency, apg_name):
+    """
+    Returns a RichText object describing the help that the passed APG's goal team has requested from various sectors.
+
+    :param agency: An Agency object representing a CFO Act agency at a given point in time.
+    :param apg_name: The name of the APG whose status will be summarized.
+    :return: A RichText object describing the help that the passed APG's goal team has requested from various sectors.
+    """
+    rt = RichText()
