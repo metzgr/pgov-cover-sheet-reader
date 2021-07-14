@@ -117,3 +117,34 @@ def get_challenge_summary_text(agency):
             rt.add(" were the least commonly reported challenges across the agency's APG teams.", font="Roboto")
 
     return rt
+
+def get_speedometer_summary_text(agency, apg_name): 
+    """
+    Returns a RichText object describing the information conveyed in the speedometer figure displayed for the passed APG.
+
+    :param agency: An Agency object representing a CFO Act agency at a given point in time.
+    :param apg_name: The name of the APG whose status will be summarized.
+    :return: A RichText object describing the information conveyed in the speedometer figure displayed for the passed APG.
+    """
+    rt = RichText()
+
+    # Obtaining the row that represents the APG in the reporting quarter/fiscal year
+    agency_df = agency.get_agency_df()
+    apg_row = agency_df.loc[(agency_df["Goal Name"] == apg_name) & (agency_df["Quarter"] == agency.get_quarter()) & (agency_df["Fiscal Year"] == agency.get_year())]
+
+    # Retrieving information to be placed in strings, added to the RichText object
+    status = apg_row["Status"].values[0].lower()
+    quarter_year = f"{agency.get_quarter()} {agency.get_year()}"
+
+    connecting_word = ""
+
+    if status in ["ahead", "on track", "nearly on track"]:
+        connecting_word = " of"
+    elif status == "blocked":
+        connecting_word = " from reaching"
+
+    rt.add("The goal team reported this goal as ", font="Roboto")
+    rt.add(f"{status}", bold=True, font="Roboto")
+    rt.add(f"{connecting_word} its expected progression in {quarter_year}.", font="Roboto")
+
+    return rt
