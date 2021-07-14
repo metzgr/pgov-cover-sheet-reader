@@ -117,3 +117,13 @@ def get_challenge_summary_text(agency):
             rt.add(" were the least commonly reported challenges across the agency's APG teams.", font="Roboto")
 
     return rt
+
+def get_speedometer_summary_text(agency, apg_name): 
+    """
+    Returns a RichText object describing the information conveyed in the speedometer figure displayed for the passed APG.
+
+    :param agency: An Agency object representing a CFO Act agency at a given point in time.
+    :param apg_name: The name of the APG whose status will be summarized.
+    :return: A RichText object describing the information conveyed in the speedometer figure displayed for the passed APG.
+    """
+    rt = RichText()
