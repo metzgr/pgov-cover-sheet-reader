@@ -162,3 +162,33 @@ def get_blockers_text(agency, apg_name):
     apg_row = agency_df.loc[(agency_df["Goal Name"] == apg_name) & (agency_df["Quarter"] == agency.get_quarter()) & (agency_df["Fiscal Year"] == agency.get_year())]
 
     return apg_row["Blockers"].values[0]
+
+def get_group_help_text(agency, apg_name):
+    """
+    Returns a RichText object describing the help that the passed APG's goal team has requested from various sectors.
+
+    :param agency: An Agency object representing a CFO Act agency at a given point in time.
+    :param apg_name: The name of the APG whose status will be summarized.
+    :return: A RichText object describing the help that the passed APG's goal team has requested from various sectors.
+    """
+    rt = RichText()
+
+    apg_df = agency.get_agency_df()
+    apg_df = apg_df.loc[apg_df["Goal Name"] == apg_name]
+    apg_row = apg_df.loc[(apg_df["Quarter"] == agency.get_quarter()) & (apg_df["Fiscal Year"] == agency.get_year())]
+
+    apg_help_requested = apg_row.loc[:, apg_row.columns[apg_row.columns.str.contains("help")]]    # a DataFrame with only the columns indicating help requested
+
+    for name, value in zip(apg_help_requested.columns, apg_help_requested.values[0]):
+        # Adds field value to summary report if the field holds a string, i.e., if it was filled out in the cover sheet
+        if isinstance(value, str):
+            # Adds a line break if lines have already been created
+            if rt.xml:
+                rt.add("\n\n")
+            
+            header_text = name.replace(" help", "")     # creates header name from the column name via removing the "help" indicator of column
+
+            rt.add(f"{header_text}:", bold=True, font="Roboto")
+            rt.add(f" {value}", font="Roboto")
+
+    return rt
