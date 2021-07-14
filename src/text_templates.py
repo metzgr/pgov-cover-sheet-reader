@@ -192,3 +192,13 @@ def get_group_help_text(agency, apg_name):
             rt.add(f" {value}", font="Roboto")
 
     return rt
+
+def get_apg_challenges_bullets(agency, apg_name):
+    """
+    Returns a RichText object listing out the challenges reported by the APG goal team during the reported quarter, which is capable of being represented as a bulleted list. NOTE: The returned RichText object itself does not return a bulleted list, but each paragraph renders as a bullet when placed in a bulleted list in a template document.
+
+    :param agency: An Agency object representing a CFO Act agency at a given point in time.
+    :param apg_name: The name of the APG whose status will be summarized.
+    :return: A RichText object object listing out the challenges reported by the APG goal team during the reported quarter, which is capable of being represented as a bulleted list. 
+    """
+    rt = RichText()
