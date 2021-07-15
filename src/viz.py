@@ -10,6 +10,7 @@ import pandas as pd
 from pandas.api.types import CategoricalDtype
 import numpy as np
 
+from constants import CHALLENGES_LIST
 import utility
 import df_creator
 
@@ -142,7 +143,7 @@ def create_challenges_area_chart(agency, dir=DEFAULT_DIRECTORY, name="challenges
     data = {}
 
     # Create data entry of cumulative sum for each challenge. Cumulative sum is in chronological order, dating from the furthest back quarter reported to the most recent
-    for challenge in utility.CHALLENGES_LIST:
+    for challenge in CHALLENGES_LIST:
         cumsum = list(challenge_count_df.loc[challenge_count_df["Challenge"] == challenge]["Count"].cumsum())
         data[challenge] = cumsum
         
