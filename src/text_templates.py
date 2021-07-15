@@ -202,3 +202,16 @@ def get_apg_challenges_bullets(agency, apg_name):
     :return: A RichText object object listing out the challenges reported by the APG goal team during the reported quarter, which is capable of being represented as a bulleted list. 
     """
     rt = RichText()
+
+    challenges_list = agency.get_challenges(apg_name)
+
+    # Add every challenge in list to RichText object
+    for i in range(len(challenges_list)):
+        challenge = challenges_list[i]
+
+        rt.add(f"{challenge}", font="Roboto")
+
+        if i != len(challenges_list) - 1:
+            rt.add("\a")    # adds a paragraph break following each challenge (except for the final one)
+
+    return rt
