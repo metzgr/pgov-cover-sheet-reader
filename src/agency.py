@@ -2,7 +2,7 @@
 Holds definition of Agency class and its associated methods.
 """
 
-from constants import CHALLENGES_LIST
+from constants import CHALLENGES_LIST, AGENCY_NAME_TO_ABBREVIATION
 import utility
 
 import pandas as pd
@@ -25,7 +25,7 @@ class Agency():
         self.name = name
         self.agency_df = self.get_df().loc[self.get_df()["Agency Name"] == self.get_name()]  # a DataFrame only containing data relevant to the agency that the object represents
         self.apgs = list(self.get_agency_df()["Goal Name"].unique())
-        self.abbreviation = ""  # the abbreviation of the passed agency
+        self.abbreviation = AGENCY_NAME_TO_ABBREVIATION[name]   # the abbreviation of the passed agency
         self.current_quarter = current_quarter 
         self.current_year = current_year
 
