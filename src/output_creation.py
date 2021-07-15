@@ -109,7 +109,8 @@ def create_summary_document(template_path, agency, output_dir="../"):
             "apg_name": apg,
             "speedometer_text": text_templates.get_speedometer_summary_text(agency, apg),
             "blockers_text": text_templates.get_blockers_text(agency, apg),
-            "group_assistance_text": text_templates.get_group_help_text(agency, apg)
+            "group_assistance_text": text_templates.get_group_help_text(agency, apg),
+            "challenge_bullets": text_templates.get_apg_challenges_bullets(agency, apg)
         }
 
         # Fill placeholders of image tags

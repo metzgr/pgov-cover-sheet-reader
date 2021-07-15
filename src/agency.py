@@ -133,3 +133,14 @@ class Agency():
             return self.get_agency_df().loc[(self.get_agency_df()["Goal Name"] == goal_name) & (self.get_agency_df()["Fiscal Year"] == year) & (self.get_agency_df()["Quarter"] == quarter), "Status"].iloc[0]
         except IndexError:  # if the passed goal name is not held within the agency
             return None
+
+    def get_challenges(self, goal_name):
+        """
+        Returns a list of the challenges reported for the passed goal name.
+
+        :param goal_name: The name of the APG from which the challenges reported will be returned.
+        :return: A list of the challenges reported by the passed goal team.
+        """
+        apg_row = self.get_agency_df().loc[(self.get_agency_df()["Quarter"] == self.get_quarter()) & (self.get_agency_df()["Fiscal Year"] == self.get_year()) & (self.get_agency_df()["Goal Name"] == goal_name)]
+        
+        return apg_row[utility.CHALLENGES_LIST].columns[(apg_row[utility.CHALLENGES_LIST] == "Yes").all()].tolist()     # list of challenge columns that are in the affirmative
