@@ -80,7 +80,7 @@ def create_summary_document(agency, output_dir="../"):
         "previous_quarter_and_year": "{} {}".format(*utility.get_previous_quarter_and_year(agency.get_quarter(), agency.get_year())),
         "current_quarter_and_year": f"{agency.get_quarter()} {agency.get_year()}",
         "agency_name": agency.get_name(),
-        "agency_abbreviation": "SBA",   # NOTE: this is temporarily hard-coded, should be changed to `agency.get_abbreviation()` once the agency name mapping is implemented
+        "agency_abbreviation": agency.get_abbreviation(),
         "goal_change_summary_sentence": text_templates.get_goal_change_summary_sentence(agency),
         "goal_status_breakdown_bullets": text_templates.get_goal_status_breakdown_bullets(agency),
         "recur_challenge_1": recurring_challenges_df.iloc[0]["Challenge"].lower(),
