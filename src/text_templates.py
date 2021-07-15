@@ -129,8 +129,7 @@ def get_speedometer_summary_text(agency, apg_name):
     rt = RichText()
 
     # Obtaining the row that represents the APG in the reporting quarter/fiscal year
-    agency_df = agency.get_agency_df()
-    apg_row = agency_df.loc[(agency_df["Goal Name"] == apg_name) & (agency_df["Quarter"] == agency.get_quarter()) & (agency_df["Fiscal Year"] == agency.get_year())]
+    apg_row = agency.get_apg_row(apg_name)
 
     # Retrieving information to be placed in strings, added to the RichText object
     status = apg_row["Status"].values[0].lower()
@@ -158,8 +157,7 @@ def get_blockers_text(agency, apg_name):
     :return: A string describing the blockers identified for the passed agency and APG. String returned is raw input given in cover sheet.
     """
     # Obtaining the row that represents the APG in the reporting quarter/fiscal year
-    agency_df = agency.get_agency_df()
-    apg_row = agency_df.loc[(agency_df["Goal Name"] == apg_name) & (agency_df["Quarter"] == agency.get_quarter()) & (agency_df["Fiscal Year"] == agency.get_year())]
+    apg_row = agency.get_apg_row(apg_name)
 
     return apg_row["Blockers"].values[0]
 
@@ -173,9 +171,7 @@ def get_group_help_text(agency, apg_name):
     """
     rt = RichText()
 
-    apg_df = agency.get_agency_df()
-    apg_df = apg_df.loc[apg_df["Goal Name"] == apg_name]
-    apg_row = apg_df.loc[(apg_df["Quarter"] == agency.get_quarter()) & (apg_df["Fiscal Year"] == agency.get_year())]
+    apg_row = agency.get_apg_row(apg_name)
 
     apg_help_requested = apg_row.loc[:, apg_row.columns[apg_row.columns.str.contains("help")]]    # a DataFrame with only the columns indicating help requested
 
