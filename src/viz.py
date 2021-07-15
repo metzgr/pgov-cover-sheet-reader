@@ -59,7 +59,7 @@ def create_goal_summary_small_multiples(agency, dir=DEFAULT_DIRECTORY, names=["s
     for quarter, year, filename in zip(quarters, years, names):
         # Initializes DataFrame as slice of main DataFrame that relates to the agency, fiscal year and quarter being analyzed in this loop
         quarter_statuses_df = goal_stauts_count_df.loc[
-            (goal_stauts_count_df["Agency Name"] == agency.get_name()) & 
+            (goal_stauts_count_df["Agency Name"] == agency.get_abbreviation()) & 
             (goal_stauts_count_df["Fiscal Year"] == year) & 
             (goal_stauts_count_df["Quarter"] == quarter)
         ].reset_index(drop=True)
