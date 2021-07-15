@@ -2,7 +2,7 @@
 Holds definition of Agency class and its associated methods.
 """
 
-from constants import CHALLENGES_LIST, AGENCY_NAME_TO_ABBREVIATION
+from constants import CHALLENGES_LIST, AGENCY_NAME_TO_ABBREVIATION, AGENCY_ABBREVIATION_TO_NAME
 import utility
 
 import pandas as pd
@@ -17,15 +17,22 @@ class Agency():
         Constructor method; creates a Agency object initialized with the basic attributes of a agency being reported on.
 
         :param df: The central DataFrame that information will be pulled from - includes the data for all agencies, not just the agency that the object represents.
-        :param name: The name of the agency that this object represents.
+        :param name: The name of the agency that this object represents. Takes either an abbreviation or a full agency name.
         :param current_quarter: The quarter that this agency will be reporting on.
         :param current_year: The year that this agency will be reporting on. 
         """
+        if name in AGENCY_ABBREVIATION_TO_NAME.keys():  # if name is an abbreviation:
+            self.name = AGENCY_ABBREVIATION_TO_NAME[name]
+            self.abbreviation = name
+        elif name in AGENCY_NAME_TO_ABBREVIATION.keys():    # if name is a full agency name
+            self.name = name
+            self.abbreviation = AGENCY_NAME_TO_ABBREVIATION[name]
+        else:
+            raise ValueError(f"\"{name}\" is neither a valid agency abbreviation nor a full agency name of one of the 24 CFO act agencies.")
+
         self.df = df
-        self.name = name
-        self.agency_df = self.get_df().loc[self.get_df()["Agency Name"] == self.get_name()]  # a DataFrame only containing data relevant to the agency that the object represents
+        self.agency_df = self.get_df().loc[self.get_df()["Agency Name"] == self.get_abbreviation()]  # a DataFrame only containing data relevant to the agency that the object represents
         self.apgs = list(self.get_agency_df()["Goal Name"].unique())
-        self.abbreviation = AGENCY_NAME_TO_ABBREVIATION[name]   # the abbreviation of the passed agency
         self.current_quarter = current_quarter 
         self.current_year = current_year
 
