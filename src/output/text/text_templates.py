@@ -30,7 +30,7 @@ def get_goal_change_summary_sentence(agency):
             num_status = (status_list == status).sum()  # number of occurrences of given status
             status_strs.append(f"{num_status} goals {status.lower()}")
 
-        to_return += f"{' and '.join(status_strs)} {last_or_this_quarter} quarter"  # joins each string together with "and" keyword
+        to_return += f"{' and '.join(status_strs)} {last_or_this_quarter}"  # joins each string together with "and" keyword
         to_return += ' to ' if last_or_this_quarter == 'last quarter' else ''   # adds a connecting word if in the first loop
         
     return to_return
