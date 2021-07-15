@@ -144,3 +144,12 @@ class Agency():
         apg_row = self.get_agency_df().loc[(self.get_agency_df()["Quarter"] == self.get_quarter()) & (self.get_agency_df()["Fiscal Year"] == self.get_year()) & (self.get_agency_df()["Goal Name"] == goal_name)]
         
         return apg_row[utility.CHALLENGES_LIST].columns[(apg_row[utility.CHALLENGES_LIST] == "Yes").all()].tolist()     # list of challenge columns that are in the affirmative
+
+    def get_apg_row(self, goal_name):
+        """
+        Returns a single row of a DataFrame containing the data retrieved for the passed goal for the current quarter.
+
+        :param goal_name: The name of the APG from which the challenges reported will be returned.
+        :return: A single row of a DataFrame containing the data retrieved for the passed goal for the current quarter.
+        """
+        return self.get_agency_df().loc[(self.get_agency_df()["Quarter"] == self.get_quarter()) & (self.get_agency_df()["Fiscal Year"] == self.get_year()) & (self.get_agency_df()["Goal Name"] == goal_name)]
