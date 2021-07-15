@@ -130,7 +130,7 @@ class Agency():
             quarter, year = utility.get_previous_quarter_and_year(self.get_quarter(), self.get_year())
 
         try:
-            return self.get_agency_df().loc[(self.get_agency_df()["Goal Name"] == goal_name) & (self.get_agency_df()["Fiscal Year"] == year) & (self.get_agency_df()["Quarter"] == quarter), "Status"].iloc[0]
+            return self.get_apg_row(goal_name)["Status"].iloc[0]
         except IndexError:  # if the passed goal name is not held within the agency
             return None
 
