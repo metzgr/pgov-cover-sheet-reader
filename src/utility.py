@@ -2,6 +2,8 @@
 Holds functions that have use across multiple sections of the project.
 """
 
+from constants import STATUS_RANK_MAP
+
 from docx.document import Document as _Document
 from docx.oxml.text.paragraph import CT_P
 from docx.oxml.table import CT_Tbl
@@ -9,18 +11,6 @@ from docx.table import _Cell, Table
 from docx.text.paragraph import Paragraph
 
 import xml.etree.ElementTree as ET
-
-# CONSTANTS
-
-# A dictionary mapping each goal status to a rank
-STATUS_RANK_MAP = {
-    "Ahead": 4,
-    "On track": 3,
-    "Nearly on track": 2,
-    "Blocked": 1
-}
-
-CHALLENGES_LIST = ["Hiring", "Competing deadlines", "Legislation", "Lack of research", "Unclear guidance", "Unavailable data"]
 
 def iter_block_items(parent):
     """
