@@ -2,8 +2,9 @@
 Functions that return specialized DataFrame transformations to be used in analysis.
 """
 
+from constants import CHALLENGES_LIST
+
 import pandas as pd
-import utility
 
 def get_status_count_groupby_agency_year_quarter(df):
     """
@@ -30,7 +31,7 @@ def get_recurring_challenges_count(df):
         
         # loops for every combination of goal and challenges
         for goal in agency_goals:
-            for challenge in utility.CHALLENGES_LIST:
+            for challenge in CHALLENGES_LIST:
                 # gets the index of the last time the challenge wasn't reported, i.e., the number of consecutive quarters it was reported
                 consecutive_reports = (sorted_df.loc[sorted_df["Goal Name"] == goal].reset_index(drop=True)[challenge] == "Off").idxmax() 
                 data.append({
@@ -51,7 +52,7 @@ def get_challenge_count_by_quarter(df):
     """
     challenge_count_df = None
 
-    for challenge in utility.CHALLENGES_LIST:
+    for challenge in CHALLENGES_LIST:
         data_df = df.astype({challenge:"category"})   # without changing the type of the column, the groupby automatically drops all fields with a count of 0
 
         data_df = data_df.groupby(["Agency Name", "Fiscal Year", "Quarter", challenge]).size().reset_index().rename(columns={0: "Count"})

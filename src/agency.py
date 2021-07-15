@@ -2,7 +2,9 @@
 Holds definition of Agency class and its associated methods.
 """
 
+from constants import CHALLENGES_LIST
 import utility
+
 import pandas as pd
 
 class Agency():
@@ -141,7 +143,7 @@ class Agency():
         :param goal_name: The name of the APG from which the challenges reported will be returned.
         :return: A list of the challenges reported by the passed goal team.
         """
-        return self.get_apg_row(goal_name)[utility.CHALLENGES_LIST].columns[(self.get_apg_row(goal_name)[utility.CHALLENGES_LIST] == "Yes").all()].tolist()     # list of challenge columns that are in the affirmative
+        return self.get_apg_row(goal_name)[CHALLENGES_LIST].columns[(self.get_apg_row(goal_name)[CHALLENGES_LIST] == "Yes").all()].tolist()     # list of challenge columns that are in the affirmative
 
     def get_apg_row(self, goal_name):
         """
