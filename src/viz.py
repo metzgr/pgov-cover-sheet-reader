@@ -144,8 +144,10 @@ def create_challenges_area_chart(agency, dir=DEFAULT_DIRECTORY, name="challenges
 
     # Create data entry of cumulative sum for each challenge. Cumulative sum is in chronological order, dating from the furthest back quarter reported to the most recent
     for challenge in CHALLENGES_LIST:
-        cumsum = list(challenge_count_df.loc[challenge_count_df["Challenge"] == challenge]["Count"].cumsum())
-        data[challenge] = cumsum
+        challenge_df_slice = challenge_count_df.loc[challenge_count_df["Challenge"] == challenge]   # a slice of the challenge df with only the current challenge
+        if challenge_df_slice["Count"].sum() != 0:  # only include challenges that were identified by the challenge team
+            cumsum = list(challenge_df_slice["Count"].cumsum())
+            data[challenge] = cumsum
         
     # Create area plot from cumulative sum data
     pd.DataFrame(data).plot.area(stacked=False)
