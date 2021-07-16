@@ -39,7 +39,7 @@ def create_goal_summary_small_multiples(agency, dir=DEFAULT_DIRECTORY, names=["s
 
     # Create ordered hierarchy of statuses
     status_ordered = CategoricalDtype(
-        ['Blocked', 'On Track', 'Ahead'], 
+        ['Blocked', 'On track', 'Ahead'], 
         ordered=True
     )
 
