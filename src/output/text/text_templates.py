@@ -28,9 +28,10 @@ def get_goal_change_summary_sentence(agency):
     
         for status in status_list.unique():
             num_status = (status_list == status).sum()  # number of occurrences of given status
-            status_strs.append(f"{num_status} goals {status.lower()}")
+            plural_formatting = ("s" if num_status > 1 else "")
+            status_strs.append(f"{num_status} goal{plural_formatting} {status.lower()}")
 
-        to_return += f"{' and '.join(status_strs)} {last_or_this_quarter} quarter"  # joins each string together with "and" keyword
+        to_return += f"{' and '.join(status_strs)} {last_or_this_quarter}"  # joins each string together with "and" keyword
         to_return += ' to ' if last_or_this_quarter == 'last quarter' else ''   # adds a connecting word if in the first loop
         
     return to_return
@@ -58,7 +59,7 @@ def get_goal_status_breakdown_bullets(agency):
 
         # the next section of the line is conditional based on whether the goal status has stayed the same, progressed or regressed
         if current_goal_status == previous_goal_status:
-            rt.add(f"remaining at the same status as its report of {current_goal_status.lower()} last quarter.", font="Roboto")
+            rt.add(f"remaining consistent at its reported status of {current_goal_status.lower()} last quarter.", font="Roboto")
         elif utility.goal_is_progressing(current_goal_status, previous_goal_status):
             rt.add(f"progressing from a status of {previous_goal_status.lower()} last quarter.", font="Roboto")
         else:   # goal is regressing
