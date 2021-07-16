@@ -14,7 +14,7 @@ from src.constants import CHALLENGES_LIST
 import src.utility as utility
 import src.output.data.df_creator as df_creator
 
-DEFAULT_DIRECTORY = "viz/"
+from src.constants import VIZ_DIRECTORY as DEFAULT_DIRECTORY
 
 # FIRST PAGE
 

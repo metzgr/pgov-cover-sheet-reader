@@ -7,7 +7,7 @@ import src.objects.agency as agency
 import src.output.text.text_templates as text_templates
 import src.output.data.df_creator as df_creator
 import src.output.viz.viz as viz
-from src.constants import SUMMARY_TEMPLATE_PATH, APG_BREAKDOWN_TEMPLATE_PATH
+from src.constants import VIZ_DIRECTORY, SUMMARY_TEMPLATE_PATH, APG_BREAKDOWN_TEMPLATE_PATH
 
 import os
 from docx.shared import Inches
@@ -39,10 +39,10 @@ def get_summary_page_image_replacement_map():
     :return: A dictionary object mapping the name of the file that should be replaced in the DocxTemplate file's summary page (key) to the location of the locally stored image that should replace it (value).
     """
     return {
-        "Picture 2": "viz/small_multiples_previous.png",
-        "Picture 3": "viz/small_multiples_current.png",
-        "Picture 4": "viz/challenges_reported_bar_chart.png",
-        "Picture 5": "viz/challenges_area_chart.png"
+        "Picture 2": f"{VIZ_DIRECTORY}small_multiples_previous.png",
+        "Picture 3": f"{VIZ_DIRECTORY}small_multiples_current.png",
+        "Picture 4": f"{VIZ_DIRECTORY}challenges_reported_bar_chart.png",
+        "Picture 5": f"{VIZ_DIRECTORY}challenges_area_chart.png"
     }
 
 def create_visuals(agency):
@@ -51,9 +51,6 @@ def create_visuals(agency):
 
     :param agency: An Agency object representing the agency that a summary report will be created for.
     """
-    if not os.path.isdir("viz"):
-        os.mkdir("viz")     # creates viz directory, if it does not already exist, in preparation for creating visualizations
-
     viz.create_goal_summary_small_multiples(agency)
     viz.create_challenges_reported_in_quarter(agency)
     viz.create_challenges_area_chart(agency)
@@ -134,7 +131,7 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
 
         tpl.render({
             f"speedometer_image_{i}": InlineImage(tpl, image_descriptor=f"src/resources/speedometers/speedometer_{formatted_goal_status}.png", width=Inches(3)),   # width of 3 inches seems to be sweet spot for 2-column table
-            f"goal_status_over_time_{i}": InlineImage(tpl, image_descriptor=f"viz/goal_status_over_time_{i}.png", width=Inches(3))
+            f"goal_status_over_time_{i}": InlineImage(tpl, image_descriptor=f"{VIZ_DIRECTORY}goal_status_over_time_{i}.png", width=Inches(3))
         })
 
     # Creates output directories if they do not already exist
