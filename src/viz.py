@@ -229,4 +229,4 @@ def __save_figure(fig, dir, name):
     :param name: The file name that the figure will be saved to.
     """
     fig.savefig(f"{dir}{name}", bbox_inches="tight")
-    plt.clf()   # clears plot
+    plt.close(fig)
