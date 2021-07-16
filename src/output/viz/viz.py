@@ -10,9 +10,9 @@ import pandas as pd
 from pandas.api.types import CategoricalDtype
 import numpy as np
 
-from constants import CHALLENGES_LIST
-import utility
-import df_creator
+from src.constants import CHALLENGES_LIST
+import src.utility as utility
+import src.output.data.df_creator as df_creator
 
 DEFAULT_DIRECTORY = "viz/"
 

@@ -2,9 +2,9 @@
 Includes functions that take key information and format it in a client-friendly string that can be used in summary reports.
 """
 
-import agency
-import utility
-import df_creator
+import src.objects.agency as agency
+import src.utility as utility
+import src.output.data.df_creator as df_creator
 
 from docxtpl import RichText
 

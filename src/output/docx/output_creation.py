@@ -2,12 +2,12 @@
 Maps keywords imbedded in template document (keys) to what they will be replaced with in the rendered output document (values). Note that each keyword is identified as "{{keyword_name}}" within the template document.
 """
 
-import utility
-import agency
-import text_templates
-import df_creator
-import viz
-from constants import SUMMARY_TEMPLATE_PATH, APG_BREAKDOWN_TEMPLATE_PATH
+import src.utility as utility
+import src.objects.agency as agency
+import src.output.text.text_templates as text_templates
+import src.output.data.df_creator as df_creator
+import src.output.viz.viz as viz
+from src.constants import SUMMARY_TEMPLATE_PATH, APG_BREAKDOWN_TEMPLATE_PATH
 
 import os
 from docx.shared import Inches

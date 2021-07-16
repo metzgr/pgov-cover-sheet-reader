@@ -2,7 +2,7 @@
 Functions realted to scraping the data from an incoming cover sheet.
 """
 
-import utility
+import src.utility
 
 from docx.text.paragraph import Paragraph
 import pandas as pd
