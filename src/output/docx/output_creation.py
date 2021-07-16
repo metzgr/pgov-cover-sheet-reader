@@ -2,12 +2,12 @@
 Maps keywords imbedded in template document (keys) to what they will be replaced with in the rendered output document (values). Note that each keyword is identified as "{{keyword_name}}" within the template document.
 """
 
-import utility
-import agency
-import text_templates
-import df_creator
-import viz
-from constants import SUMMARY_TEMPLATE_PATH, APG_BREAKDOWN_TEMPLATE_PATH
+import src.utility as utility
+import src.objects.agency as agency
+import src.output.text.text_templates as text_templates
+import src.output.data.df_creator as df_creator
+import src.output.viz.viz as viz
+from src.constants import VIZ_DIRECTORY, SUMMARY_TEMPLATE_PATH, APG_BREAKDOWN_TEMPLATE_PATH
 
 import os
 from docx.shared import Inches
@@ -39,10 +39,10 @@ def get_summary_page_image_replacement_map():
     :return: A dictionary object mapping the name of the file that should be replaced in the DocxTemplate file's summary page (key) to the location of the locally stored image that should replace it (value).
     """
     return {
-        "Picture 2": "viz/small_multiples_previous.png",
-        "Picture 3": "viz/small_multiples_current.png",
-        "Picture 4": "viz/challenges_reported_bar_chart.png",
-        "Picture 5": "viz/challenges_area_chart.png"
+        "Picture 2": f"{VIZ_DIRECTORY}small_multiples_previous.png",
+        "Picture 3": f"{VIZ_DIRECTORY}small_multiples_current.png",
+        "Picture 4": f"{VIZ_DIRECTORY}challenges_reported_bar_chart.png",
+        "Picture 5": f"{VIZ_DIRECTORY}challenges_area_chart.png"
     }
 
 def create_visuals(agency):
@@ -51,9 +51,6 @@ def create_visuals(agency):
 
     :param agency: An Agency object representing the agency that a summary report will be created for.
     """
-    if not os.path.isdir("viz"):
-        os.mkdir("viz")     # creates viz directory, if it does not already exist, in preparation for creating visualizations
-
     viz.create_goal_summary_small_multiples(agency)
     viz.create_challenges_reported_in_quarter(agency)
     viz.create_challenges_area_chart(agency)
@@ -62,7 +59,7 @@ def create_visuals(agency):
         goal = goals[i]
         viz.create_goal_status_over_time(agency, goal, name=f"goal_status_over_time_{i}")
 
-def create_summary_document(agency, output_filename, output_dir="output/summary_reports/"):
+def create_summary_document(agency, output_filename, output_dir="src/output/docx/summary_reports/"):
     """
     Creates a summary document for the passed agency, year and quarter.
 
@@ -133,8 +130,8 @@ def create_summary_document(agency, output_filename, output_dir="output/summary_
         formatted_goal_status = goal_status.lower().replace(" ", "_")   # format goal status to the naming conventions of the speedometer images
 
         tpl.render({
-            f"speedometer_image_{i}": InlineImage(tpl, image_descriptor=f"viz/speedometers/speedometer_{formatted_goal_status}.png", width=Inches(3)),   # width of 3 inches seems to be sweet spot for 2-column table
-            f"goal_status_over_time_{i}": InlineImage(tpl, image_descriptor=f"viz/goal_status_over_time_{i}.png", width=Inches(3))
+            f"speedometer_image_{i}": InlineImage(tpl, image_descriptor=f"src/resources/speedometers/speedometer_{formatted_goal_status}.png", width=Inches(3)),   # width of 3 inches seems to be sweet spot for 2-column table
+            f"goal_status_over_time_{i}": InlineImage(tpl, image_descriptor=f"{VIZ_DIRECTORY}goal_status_over_time_{i}.png", width=Inches(3))
         })
 
     # Creates output directories if they do not already exist

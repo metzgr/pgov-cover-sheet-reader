@@ -40,3 +40,5 @@ AGENCY_NAME_TO_ABBREVIATION = {
 }
 
 AGENCY_ABBREVIATION_TO_NAME = {value: key for key, value in AGENCY_NAME_TO_ABBREVIATION.items()}
+
+VIZ_DIRECTORY = "src/output/viz/images/"

@@ -9,12 +9,13 @@ import seaborn as sns
 import pandas as pd
 from pandas.api.types import CategoricalDtype
 import numpy as np
+import os
 
-from constants import CHALLENGES_LIST
-import utility
-import df_creator
+from src.constants import CHALLENGES_LIST
+import src.utility as utility
+import src.output.data.df_creator as df_creator
 
-DEFAULT_DIRECTORY = "viz/"
+from src.constants import VIZ_DIRECTORY as DEFAULT_DIRECTORY
 
 # FIRST PAGE
 
@@ -228,5 +229,8 @@ def __save_figure(fig, dir, name):
     :param dir: The directory to which the figure will be saved to.
     :param name: The file name that the figure will be saved to.
     """
+    if not os.path.isdir(dir):
+        os.makedirs(dir)
+
     fig.savefig(f"{dir}{name}", bbox_inches="tight")
     plt.close(fig)

@@ -2,8 +2,8 @@
 Holds definition of Agency class and its associated methods.
 """
 
-from constants import CHALLENGES_LIST, AGENCY_NAME_TO_ABBREVIATION, AGENCY_ABBREVIATION_TO_NAME
-import utility
+from src.constants import CHALLENGES_LIST, AGENCY_NAME_TO_ABBREVIATION, AGENCY_ABBREVIATION_TO_NAME
+import src.utility as utility
 
 import pandas as pd
 

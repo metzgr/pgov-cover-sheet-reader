@@ -2,7 +2,7 @@
 Functions that return specialized DataFrame transformations to be used in analysis.
 """
 
-from constants import CHALLENGES_LIST
+from src.constants import CHALLENGES_LIST
 
 import pandas as pd
 

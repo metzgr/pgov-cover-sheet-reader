@@ -1,11 +1,11 @@
 """
 File to be run to generate summary reports for the most recent quarter
 """
-import output_creation
-from agency import Agency
+import src.output.docx.output_creation as output_creation
+from src.objects.agency import Agency
 import pandas as pd
 
-from constants import AGENCY_ABBREVIATION_TO_NAME
+from src.constants import AGENCY_ABBREVIATION_TO_NAME
 
 if __name__ == "__main__":
     for agency_abbreviation in AGENCY_ABBREVIATION_TO_NAME.keys():

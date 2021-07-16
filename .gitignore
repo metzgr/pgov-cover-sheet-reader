@@ -1,4 +1,4 @@
 __pycache__/
 .ipynb_checkpoints/
-viz/
-output/*
+src/output/viz/images/
+src/output/docx/summary_reports/*.docx

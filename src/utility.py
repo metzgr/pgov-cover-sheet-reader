@@ -2,7 +2,7 @@
 Holds functions that have use across multiple sections of the project.
 """
 
-from constants import STATUS_RANK_MAP
+from src.constants import STATUS_RANK_MAP
 
 from docx.document import Document as _Document
 from docx.oxml.text.paragraph import CT_P
