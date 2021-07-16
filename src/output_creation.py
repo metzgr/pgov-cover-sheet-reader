@@ -62,11 +62,12 @@ def create_visuals(agency):
         goal = goals[i]
         viz.create_goal_status_over_time(agency, goal, name=f"goal_status_over_time_{i}")
 
-def create_summary_document(agency, output_dir="../"):
+def create_summary_document(agency, output_filename, output_dir="output/summary_reports/"):
     """
     Creates a summary document for the passed agency, year and quarter.
 
     :param agency: An Agency object representing the agency that a summary report will be created for.
+    :param output_filename: The filename to which the output file will be save. Excluding file extension (.docx).
     :param output_dir: The directory to which the output file will be saved to.
     """
     tpl = DocxTemplate(SUMMARY_TEMPLATE_PATH)
@@ -80,7 +81,7 @@ def create_summary_document(agency, output_dir="../"):
         "previous_quarter_and_year": "{} {}".format(*utility.get_previous_quarter_and_year(agency.get_quarter(), agency.get_year())),
         "current_quarter_and_year": f"{agency.get_quarter()} {agency.get_year()}",
         "agency_name": agency.get_name(),
-        "agency_abbreviation": "SBA",   # NOTE: this is temporarily hard-coded, should be changed to `agency.get_abbreviation()` once the agency name mapping is implemented
+        "agency_abbreviation": agency.get_abbreviation(),
         "goal_change_summary_sentence": text_templates.get_goal_change_summary_sentence(agency),
         "goal_status_breakdown_bullets": text_templates.get_goal_status_breakdown_bullets(agency),
         "recur_challenge_1": recurring_challenges_df.iloc[0]["Challenge"].lower(),
@@ -136,8 +137,12 @@ def create_summary_document(agency, output_dir="../"):
             f"goal_status_over_time_{i}": InlineImage(tpl, image_descriptor=f"viz/goal_status_over_time_{i}.png", width=Inches(3))
         })
 
+    # Creates output directories if they do not already exist
+    if not os.path.isdir(output_dir):
+        os.makedirs(output_dir)  
+
     try:
-        tpl.save(f"{output_dir}output.docx")
+        tpl.save(f"{output_dir}{output_filename}.docx")
     except ValueError as e:
         if all(keyword in str(e) for keyword in ["Picture", "not found in the docx template"]):    # checking to see if error message contains two keywords indicating picture not found in the docx template
             raise ValueError(f"{e}. Pictures present in the document are as follows: {', '.join(utility.get_picture_names(tpl))}")

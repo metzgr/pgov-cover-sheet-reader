@@ -2,10 +2,14 @@
 File to be run to generate summary reports for the most recent quarter
 """
 import output_creation
-import agency
+from agency import Agency
 import pandas as pd
 
-# NOTE: The current implementation below is for development purposes. When this project is in production, the implementation below should create summary report documents for each CFO act agency with the most updated cover sheet data.
+from constants import AGENCY_ABBREVIATION_TO_NAME
+
 if __name__ == "__main__":
-    sba = agency.Agency(pd.read_csv("../dummy_cover_sheet_data.csv"), "SBA", "Q4", 2020)    # created for debugging in development
-    output_creation.create_summary_document(sba)
+    for agency_abbreviation in AGENCY_ABBREVIATION_TO_NAME.keys():
+        file_name = f"{agency_abbreviation}_Summary"
+        agency = Agency(pd.read_csv("../dummy_cover_sheet_data.csv"), agency_abbreviation, "Q4", 2020)
+        output_creation.create_summary_document(agency, file_name)
+        print(file_name, "created")
