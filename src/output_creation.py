@@ -62,11 +62,12 @@ def create_visuals(agency):
         goal = goals[i]
         viz.create_goal_status_over_time(agency, goal, name=f"goal_status_over_time_{i}")
 
-def create_summary_document(agency, output_dir="../"):
+def create_summary_document(agency, output_filename, output_dir="../"):
     """
     Creates a summary document for the passed agency, year and quarter.
 
     :param agency: An Agency object representing the agency that a summary report will be created for.
+    :param output_filename: The filename to which the output file will be save. Excluding file extension (.docx).
     :param output_dir: The directory to which the output file will be saved to.
     """
     tpl = DocxTemplate(SUMMARY_TEMPLATE_PATH)
@@ -137,7 +138,7 @@ def create_summary_document(agency, output_dir="../"):
         })
 
     try:
-        tpl.save(f"{output_dir}output.docx")
+        tpl.save(f"{output_dir}{output_filename}.docx")
     except ValueError as e:
         if all(keyword in str(e) for keyword in ["Picture", "not found in the docx template"]):    # checking to see if error message contains two keywords indicating picture not found in the docx template
             raise ValueError(f"{e}. Pictures present in the document are as follows: {', '.join(utility.get_picture_names(tpl))}")
