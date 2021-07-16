@@ -35,7 +35,6 @@ AGENCY_NAME_TO_ABBREVIATION = {
     "Social Security Administration": "SSA",
     "General Services Administration": "GSA",
     "National Science Foundation": "NSF",
-    "Nuclear Regulatory Commission": "NRC",
     "Office of Personnel Management": "OPM",
     "Small Business Administration": "SBA"
 }
