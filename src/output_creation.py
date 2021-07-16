@@ -62,7 +62,7 @@ def create_visuals(agency):
         goal = goals[i]
         viz.create_goal_status_over_time(agency, goal, name=f"goal_status_over_time_{i}")
 
-def create_summary_document(agency, output_filename, output_dir="../"):
+def create_summary_document(agency, output_filename, output_dir="output/summary_reports/"):
     """
     Creates a summary document for the passed agency, year and quarter.
 
@@ -136,6 +136,10 @@ def create_summary_document(agency, output_filename, output_dir="../"):
             f"speedometer_image_{i}": InlineImage(tpl, image_descriptor=f"viz/speedometers/speedometer_{formatted_goal_status}.png", width=Inches(3)),   # width of 3 inches seems to be sweet spot for 2-column table
             f"goal_status_over_time_{i}": InlineImage(tpl, image_descriptor=f"viz/goal_status_over_time_{i}.png", width=Inches(3))
         })
+
+    # Creates output directories if they do not already exist
+    if not os.path.isdir(output_dir):
+        os.makedirs(output_dir)  
 
     try:
         tpl.save(f"{output_dir}{output_filename}.docx")
