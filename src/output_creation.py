@@ -7,8 +7,9 @@ import agency
 import text_templates
 import df_creator
 import viz
-import os
+from constants import SUMMARY_TEMPLATE_PATH, APG_BREAKDOWN_TEMPLATE_PATH
 
+import os
 from docx.shared import Inches
 from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate, InlineImage
@@ -61,15 +62,14 @@ def create_visuals(agency):
         goal = goals[i]
         viz.create_goal_status_over_time(agency, goal, name=f"goal_status_over_time_{i}")
 
-def create_summary_document(template_path, agency, output_dir="../"):
+def create_summary_document(agency, output_dir="../"):
     """
     Creates a summary document for the passed agency, year and quarter.
 
-    :param template_path: The path to the template docx file from which a copy will be made containing relevant data.
     :param agency: An Agency object representing the agency that a summary report will be created for.
     :param output_dir: The directory to which the output file will be saved to.
     """
-    tpl = DocxTemplate(template_path)
+    tpl = DocxTemplate(SUMMARY_TEMPLATE_PATH)
 
     create_visuals(agency)
     replace_placeholder_images(tpl, get_summary_page_image_replacement_map())
@@ -99,7 +99,7 @@ def create_summary_document(template_path, agency, output_dir="../"):
 
     # Loops for every APG that the agency holds
     for i in range(len(apgs_list)):
-        apg_template = DocxTemplate("../APG_Summary_Template.docx")     # re-renders APG summary template
+        apg_template = DocxTemplate(APG_BREAKDOWN_TEMPLATE_PATH)  # renders/re-renders APG summary template
         apg = agency.get_goals()[i]
         apg_df = agency.get_agency_df()
         apg_df = apg_df.loc[apg_df["Goal Name"] == apg]
