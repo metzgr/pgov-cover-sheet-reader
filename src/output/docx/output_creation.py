@@ -62,7 +62,7 @@ def create_visuals(agency):
         goal = goals[i]
         viz.create_goal_status_over_time(agency, goal, name=f"goal_status_over_time_{i}")
 
-def create_summary_document(agency, output_filename, output_dir="output/summary_reports/"):
+def create_summary_document(agency, output_filename, output_dir="src/output/docx/summary_reports/"):
     """
     Creates a summary document for the passed agency, year and quarter.
 
