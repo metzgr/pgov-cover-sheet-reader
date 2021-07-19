@@ -11,9 +11,10 @@ The team tasked with developing [Performance.gov](https://www.performance.gov/) 
 To install this project for local development, follow the steps below:
 
 1. Install [Python](https://www.python.org/downloads/).
-2. [Clone this repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository-from-github/cloning-a-repository#cloning-a-repository).
-3. Open a terminal and change your current working directory to where you cloned the project.
-4. Run the following command to install the project's required Python packages:
+2. Install Git ([GitHub desktop](https://desktop.github.com/) recommended, but Git can also be [used via the command line](https://docs.github.com/en/get-started/quickstart/set-up-git))
+3. [Clone this repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository-from-github/cloning-a-repository#cloning-a-repository).
+4. Open a terminal and change your current working directory to where you cloned the project.
+5. Run the following command to install the project's required Python packages:
 ```
 pip install -r requirements.txt
 ```
