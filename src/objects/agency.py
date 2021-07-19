@@ -105,13 +105,7 @@ class Agency():
         :param quarter: The quarter from which to retrieve goal status. Defaults to the quarter that the object represents. "all" returns the data from all years and quarters. "previous" returns the data only from the previous quarter.
         :return: A DataFrame mapping each APG to its goal status across the specified year and quarters.
         """
-        if not year:
-            year = self.get_year()
-
-        if not quarter:
-            quarter = self.current_quarter
-        elif quarter == "previous":
-            quarter, year = utility.get_previous_quarter_and_year(self.get_quarter(), self.get_year())
+        year, quarter = self.__handle_year_quarter_input(year, quarter)
 
         conditional = pd.Series(data=[True for i in range(len(self.get_agency_df()))], index=self.get_agency_df().index)     # defaults to all rows
         
@@ -154,12 +148,7 @@ class Agency():
         :param quarter: The quarter from which to retrieve goal status. Defaults to the quarter that the object represents.
         :return: A single row of a DataFrame containing the data retrieved for the passed goal for the current quarter.
         """
-        if not year:
-            year = self.get_year()
-        if not quarter:
-            quarter = self.get_quarter()
-        elif quarter == "previous":
-            quarter, year = utility.get_previous_quarter_and_year(self.get_quarter(), self.get_year())
+        year, quarter = self.__handle_year_quarter_input(year, quarter)
 
         return self.get_agency_df().loc[(self.get_agency_df()["Quarter"] == quarter) & (self.get_agency_df()["Fiscal Year"] == year) & (self.get_agency_df()["Goal Name"] == goal_name)]
 
