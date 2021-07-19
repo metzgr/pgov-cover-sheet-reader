@@ -11,7 +11,7 @@ from pandas.api.types import CategoricalDtype
 import numpy as np
 import os
 
-from src.constants import CHALLENGES_LIST
+from src.constants import CHALLENGES_LIST, STATUS_RANK_MAP
 import src.utility as utility
 import src.output.data.df_creator as df_creator
 
@@ -40,7 +40,7 @@ def create_goal_summary_small_multiples(agency, dir=DEFAULT_DIRECTORY, names=["s
 
     # Create ordered hierarchy of statuses
     status_ordered = CategoricalDtype(
-        ['Blocked', 'On track', 'Ahead'], 
+        [item[0] for item in sorted(STATUS_RANK_MAP.items(), key=lambda item: item[1])],    # a list of status names, ranked in the order of the values in constant STATUS_RANK_MAP
         ordered=True
     )
 
@@ -65,7 +65,7 @@ def create_goal_summary_small_multiples(agency, dir=DEFAULT_DIRECTORY, names=["s
             (goal_stauts_count_df["Quarter"] == quarter)
         ].reset_index(drop=True)
         
-        for status in ['Ahead', 'Blocked', 'On track']:     # TODO: Replace this hard-coded list with a constant
+        for status in STATUS_RANK_MAP.keys():
             if not status in quarter_statuses_df["Status"].unique(): 
                 new_row = pd.Series(quarter_statuses_df.iloc[0])
                 new_row["Status"] = status
@@ -191,30 +191,23 @@ def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="
     # Lines dividing goal statuses
     ax.axhline(0.5, color="white")
     ax.axhline(1.5, color="white")
+    ax.axhline(2.5, color="white")
 
     # Lines dividing fiscal years
-    ax.axvline(3.5, color="white", linestyle="--", dashes=[6,9])
-    ax.axvline(7.5, color="white", linestyle="--", dashes=[6,9])
-    ax.axvline(11.5, color="white", linestyle="--", dashes=[6,9])
+    ax.axvline(3.5, color="white", linestyle="--", dashes=[6,9], linewidth=3)
+    ax.axvline(7.5, color="white", linestyle="--", dashes=[6,9], linewidth=3)
+    ax.axvline(11.5, color="white", linestyle="--", dashes=[6,9], linewidth=3)
 
-    # Create ordered hierarchy of statuses
-    # TODO: Remove this map, implement map listed as constant in utility.py. That map also includes a key of "Nearly on track", which requires further implementation of this function.
-    status_rank_map = {
-        "Ahead": 2,
-        "On track": 1,
-        "Blocked": 0
-    }
-
-    status_ranked = pd.Series([status_rank_map[status] for status in list(apg_status_df["Status"])])    # List of numerical ranking of APG statuses in chronological order, needed to correctly order statuses on y-axis
+    status_ranked = pd.Series([STATUS_RANK_MAP[status] for status in list(apg_status_df["Status"])])    # List of numerical ranking of APG statuses in chronological order, needed to correctly order statuses on y-axis
 
     # Create plot
     plt.plot(apg_status_df["Quarter/Year"], status_ranked, marker="o", markersize=16)
     plt.suptitle("Goal Status Over Time")
     plt.xticks(rotation=90, fontsize=24)
-    y_ticks  = [item[0] for item in sorted(status_rank_map.items(), key=lambda item: item[1])]  # orders keys based on their values in ascending order
+    y_ticks  = [item[0] for item in sorted(STATUS_RANK_MAP.items(), key=lambda item: item[1])]  # orders keys based on their values in ascending order
     plt.yticks(np.arange(len(y_ticks)), y_ticks, fontsize=24)     # restore string status names, overwrite numerical ranks
 
-    ax.margins(y=0.25)
+    ax.margins(y=0.15)
     ax.grid(False)  # turns off the seaborn plot
 
     # Exporting figure
