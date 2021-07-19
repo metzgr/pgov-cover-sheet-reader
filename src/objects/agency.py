@@ -162,3 +162,20 @@ class Agency():
             quarter, year = utility.get_previous_quarter_and_year(self.get_quarter(), self.get_year())
 
         return self.get_agency_df().loc[(self.get_agency_df()["Quarter"] == quarter) & (self.get_agency_df()["Fiscal Year"] == year) & (self.get_agency_df()["Goal Name"] == goal_name)]
+
+    def __handle_year_quarter_input(self, year, quarter):
+        """
+        Handles input values of year and quarter and returns either the raw values or machine-readable interpretations of input.
+
+        :param year: The year from which to retrieve goal status. Defaults to the year that the object represents.
+        :param quarter: The quarter from which to retrieve goal status. Defaults to the quarter that the object represents. "previous" returns the data only from the previous quarter.
+        :return: A formatted year followed by a formatted quarter.
+        """
+        if not year:
+            year = self.get_year()
+        if not quarter:
+            quarter = self.get_quarter()
+        elif quarter == "previous":
+            quarter, year = utility.get_previous_quarter_and_year(self.get_quarter(), self.get_year())
+
+        return year, quarter
