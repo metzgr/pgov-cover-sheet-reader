@@ -170,7 +170,7 @@ def create_challenges_area_chart(agency, dir=DEFAULT_DIRECTORY, name="challenges
     plt.legend(prop={'size': 20})
 
     # Exporting figure
-    fig.set_size_inches(12, 8)
+    fig.set_size_inches(12, 9)
     __save_figure(plt.gcf(), dir, name)
 
 def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="goal_status_over_time"):
