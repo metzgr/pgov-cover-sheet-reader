@@ -11,7 +11,7 @@ from pandas.api.types import CategoricalDtype
 import numpy as np
 import os
 
-from src.constants import CHALLENGES_LIST, STATUS_RANK_MAP
+from src.constants import CHALLENGES_LIST, STATUS_RANK_MAP, STATUS_COLOR_MAP
 import src.utility as utility
 import src.output.data.df_creator as df_creator
 
@@ -29,6 +29,10 @@ def create_goal_summary_small_multiples(agency, dir=DEFAULT_DIRECTORY, names=["s
     :param dir: The directory to which the figures will be saved to. Default value is the directory stored in the DEFAULT_DIRECTORY constant.
     :param names: The file names that the figures will be saved to. The first item in the list is the name of the previous quarter's graph, and the second is for the current quarter's graph.
     """
+    colors_list = list(STATUS_COLOR_MAP.values())
+    colors_list.reverse()   # reversed for formatting
+    sns.set_palette(sns.color_palette(colors_list))   # use status colors for color palette
+
     # Error handling
     if not isinstance(names, list) or len(names) != 2:
         raise Exception("A list of length two is required to be passed in the 'names' argument.")
@@ -91,6 +95,8 @@ def create_goal_summary_small_multiples(agency, dir=DEFAULT_DIRECTORY, names=["s
         # Exporting figure
         fig.set_size_inches(12, 8)   # saved image is larger, of higher quality
         __save_figure(fig, dir, filename)
+
+    sns.set_theme()     # set theme back to default after plots have been created
 
 def create_challenges_reported_in_quarter(agency, dir=DEFAULT_DIRECTORY, name="challenges_reported_bar_chart"):
     """
