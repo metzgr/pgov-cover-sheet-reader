@@ -191,6 +191,7 @@ def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="
     # Lines dividing goal statuses
     ax.axhline(0.5, color="white")
     ax.axhline(1.5, color="white")
+    ax.axhline(2.5, color="white")
 
     # Lines dividing fiscal years
     ax.axvline(3.5, color="white", linestyle="--", dashes=[6,9])
