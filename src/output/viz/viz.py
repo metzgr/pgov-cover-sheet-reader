@@ -139,7 +139,7 @@ def create_challenges_area_chart(agency, dir=DEFAULT_DIRECTORY, name="challenges
     """
     # Retrieve DataFrame, sort values in chronological order
     challenge_count_df = df_creator.get_challenge_count_by_quarter(agency.get_agency_df())
-    challenge_count_df.sort_values(by=["Fiscal Year", "Quarter"])
+    challenge_count_df = challenge_count_df.sort_values(by=["Fiscal Year", "Quarter"])
 
     data = {}
 
