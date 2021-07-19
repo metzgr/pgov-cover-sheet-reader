@@ -139,32 +139,39 @@ def create_challenges_area_chart(agency, dir=DEFAULT_DIRECTORY, name="challenges
     """
     # Retrieve DataFrame, sort values in chronological order
     challenge_count_df = df_creator.get_challenge_count_by_quarter(agency.get_agency_df())
-    challenge_count_df.sort_values(by=["Fiscal Year", "Quarter"])
+    challenge_count_df = challenge_count_df.sort_values(by=["Fiscal Year", "Quarter"])
 
     data = {}
 
+    # Retrieves a list of the number of occurrences of each challenge, where each challenge's count is in the same index as the challenge name is in the constant.
+    challenge_list_occurrences = [int(challenge_count_df.loc[challenge_count_df["Challenge"] == challenge, ["Count"]].sum()) for challenge in CHALLENGES_LIST]
+
+    # Creates a list of challenge names sorted from least number of occurrences to most. Enables area chart to be sorted by the number of occurrences of each challenges across the time span.
+    sorted_challenges_list = [name for occurrences, name in sorted(zip(challenge_list_occurrences, CHALLENGES_LIST))]
+
     # Create data entry of cumulative sum for each challenge. Cumulative sum is in chronological order, dating from the furthest back quarter reported to the most recent
-    for challenge in CHALLENGES_LIST:
+    for challenge in sorted_challenges_list:
         challenge_df_slice = challenge_count_df.loc[challenge_count_df["Challenge"] == challenge]   # a slice of the challenge df with only the current challenge
         if challenge_df_slice["Count"].sum() != 0:  # only include challenges that were identified by the challenge team
             cumsum = list(challenge_df_slice["Count"].cumsum())
             data[challenge] = cumsum
         
     # Create area plot from cumulative sum data
-    pd.DataFrame(data).plot.area(stacked=False)
+    pd.DataFrame(data).plot.area()
 
     fig = plt.gcf()
     ax = plt.gca()
 
     # Editing the display of the plot
-    quarter_list = [f"{quarter}" for year in challenge_count_df["Fiscal Year"].unique() for quarter in challenge_count_df["Quarter"].unique()]  # a list of all quarters stored in DataFrame
-    plt.xticks([i for i in range(len(quarter_list))], quarter_list, fontsize=24)
+    quarter_list = [f"{quarter} {year}" for year in challenge_count_df["Fiscal Year"].unique() for quarter in challenge_count_df["Quarter"].unique()]  # a list of all quarters stored in DataFrame
+    plt.ylabel("# of occurrences", fontsize=24)
+    plt.xticks([i for i in range(len(quarter_list))], quarter_list, fontsize=24, rotation=90)
     plt.yticks(fontsize=24)
     ax.grid(False)
     plt.legend(prop={'size': 20})
 
     # Exporting figure
-    fig.set_size_inches(12, 8)
+    fig.set_size_inches(12, 9)
     __save_figure(plt.gcf(), dir, name)
 
 def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="goal_status_over_time"):
