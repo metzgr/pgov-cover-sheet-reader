@@ -8,6 +8,16 @@ STATUS_RANK_MAP = {
     "Blocked": 0
 }
 
+"""
+Maps each goal status to a hex color
+"""
+STATUS_COLOR_MAP = {
+    "Ahead": "#156966",
+    "On track": "#319C98",
+    "Nearly on track": "#67B5CE",
+    "Blocked": "#FA935B"
+}
+
 CHALLENGES_LIST = ["Hiring", "Competing deadlines", "Legislation", "Lack of research", "Unclear guidance", "Unavailable data"]
 
 SUMMARY_TEMPLATE_PATH = "src/resources/templates/Summary_Report_Template.docx"
