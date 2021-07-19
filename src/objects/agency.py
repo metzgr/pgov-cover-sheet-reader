@@ -160,11 +160,11 @@ class Agency():
         :param quarter: The quarter from which to retrieve goal status. Defaults to the quarter that the object represents. "previous" returns the data only from the previous quarter.
         :return: A formatted year followed by a formatted quarter.
         """
-        if not year:
+        if not year:    # assigns current year if no year is specified
             year = self.get_year()
-        if not quarter:
+        if not quarter:     # assigns current quarter if no quarter is specified
             quarter = self.get_quarter()
-        elif quarter == "previous":
+        elif quarter == "previous":     # if quarter is "previous", then the previous year and quarter combination is assigned
             quarter, year = utility.get_previous_quarter_and_year(self.get_quarter(), self.get_year())
 
         return year, quarter
