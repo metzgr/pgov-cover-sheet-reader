@@ -65,7 +65,7 @@ def create_goal_summary_small_multiples(agency, dir=DEFAULT_DIRECTORY, names=["s
             (goal_stauts_count_df["Quarter"] == quarter)
         ].reset_index(drop=True)
         
-        for status in ['Ahead', 'Blocked', 'On track', 'Nearly on track']:     # TODO: Replace this hard-coded list with a constant
+        for status in STATUS_RANK_MAP.keys():
             if not status in quarter_statuses_df["Status"].unique(): 
                 new_row = pd.Series(quarter_statuses_df.iloc[0])
                 new_row["Status"] = status
