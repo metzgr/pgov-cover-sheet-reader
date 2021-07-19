@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 This project is designed such that the output file can be modified without touching the code.
 
-#### Changing the layout of the output .docx files
+### Changing the layout of the output .docx files
 
 To edit the layout of the output .docx files (e.g., to change formatting or text alignment), access the template files under the directory [src/resources/templates](https://github.com/jasondamico/pgov-cover-sheet-reader/tree/jasondamico/update-readme/src/resources/templates). These files may be edited just as any other docx file would be. Once you are satisfied with your edits, please [open a pull request](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) with your updated files for them to be merged into the repository.
 
