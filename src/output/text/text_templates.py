@@ -59,7 +59,7 @@ def get_goal_status_breakdown_bullets(agency):
 
         # the next section of the line is conditional based on whether the goal status has stayed the same, progressed or regressed
         if current_goal_status == previous_goal_status:
-            rt.add(f"remaining consistent at its reported status of {current_goal_status.lower()} last quarter.", font="Roboto")
+            rt.add(f"remaining consistent at its reported status of {previous_goal_status.lower()} last quarter.", font="Roboto")
         elif utility.goal_is_progressing(current_goal_status, previous_goal_status):
             rt.add(f"progressing from a status of {previous_goal_status.lower()} last quarter.", font="Roboto")
         else:   # goal is regressing
