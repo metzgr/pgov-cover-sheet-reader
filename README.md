@@ -1,4 +1,5 @@
-# [Performance.gov logo](https://github.com/jasondamico/pgov-cover-sheet-reader/blob/jasondamico/update-readme/src/resources/images/performance-gov-twitter.png?raw=true) Performance.gov Cover Sheet Project
+[Performance.gov logo](https://github.com/jasondamico/pgov-cover-sheet-reader/blob/jasondamico/update-readme/src/resources/images/performance-gov-twitter.png?raw=true)
+# Performance.gov Cover Sheet Project
 
 ## Introduction 
 
