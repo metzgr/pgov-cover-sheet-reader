@@ -18,6 +18,10 @@ To install this project for local development, follow the steps below:
 pip install -r requirements.txt
 ```
 
+## Contributing 
+
+All are welcome to contribute to this project. If you wish to propose a change, please [open a pull request](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) for the developers to consider. Please note that at this time, the dataset used to drive this project is for internal use only and is not available to the public.
+
 ## No-code editing
 
 This project is designed such that the output file can be modified without touching the code.
