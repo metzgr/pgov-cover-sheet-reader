@@ -151,7 +151,7 @@ def create_challenges_area_chart(agency, dir=DEFAULT_DIRECTORY, name="challenges
             data[challenge] = cumsum
         
     # Create area plot from cumulative sum data
-    pd.DataFrame(data).plot.area(stacked=False)
+    pd.DataFrame(data).plot.area()
 
     fig = plt.gcf()
     ax = plt.gca()
