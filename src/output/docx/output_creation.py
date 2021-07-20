@@ -88,8 +88,7 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
         "recur_challenge_1_goal": recurring_challenges_df.iloc[0]["Goal Name"],
         "recur_challenge_2_goal": recurring_challenges_df.iloc[1]["Goal Name"],
         "challenge_summary_text": text_templates.get_challenge_summary_text(agency),
-        'col_labels' : ['fruit', 'vegetable', 'stone', 'thing'],
-        'tbl_contents': get_goal_status_table(agency)
+        "tbl_contents": get_goal_status_table(agency)
     }
 
     tpl.render(replacement_map)
