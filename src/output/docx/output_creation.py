@@ -74,6 +74,20 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
 
     recurring_challenges_df = get_top_recurring_challenges(agency)
 
+    table = []
+
+    previous_quarter, previous_year = utility.get_previous_quarter_and_year(agency.get_quarter(), agency.get_year())
+
+    for goal in agency.get_goals():
+        row = [goal]
+
+        for quarter, year in zip([previous_quarter, agency.get_quarter()], [previous_year, agency.get_year()]):
+            status = agency.get_goal_status(goal, quarter=quarter, year=year)
+
+            row.append(status)
+
+        table.append({"cols": row})
+
     replacement_map = {
         "previous_quarter_and_year": "{} {}".format(*utility.get_previous_quarter_and_year(agency.get_quarter(), agency.get_year())),
         "current_quarter_and_year": f"{agency.get_quarter()} {agency.get_year()}",
@@ -89,11 +103,7 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
         "recur_challenge_2_goal": recurring_challenges_df.iloc[1]["Goal Name"],
         "challenge_summary_text": text_templates.get_challenge_summary_text(agency),
         'col_labels' : ['fruit', 'vegetable', 'stone', 'thing'],
-        'tbl_contents': [
-            {'label': 'yellow', 'cols': ['banana', 'capsicum', 'pyrite', 'taxi']},
-            {'label': 'red', 'cols': ['apple', 'tomato', 'cinnabar', 'doubledecker']},
-            {'label': 'green', 'cols': ['guava', 'cucumber', 'aventurine', 'card']},
-        ]
+        'tbl_contents': table
     }
 
     tpl.render(replacement_map)
