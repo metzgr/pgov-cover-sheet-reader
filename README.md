@@ -25,9 +25,19 @@ All are welcome to contribute to this project. If you wish to propose a change, 
 
 ## No-code editing
 
-This project is designed such that the output file can be modified without touching the code.
+This project is designed such that the output file can be modified without touching the code. After changing any of the no-code files associated with this project (e.g., the Word template documents), follow the steps below to create a test output document:
 
-### Changing the layout of the output .docx files
+1. Open the terminal.
+2. Change directories to the location of the project folder.
+3. Enter and run the following prompt:
+```
+python testing.py
+```
+4. In your file explorer, navigate to the folder `src/resources/templates` and find the file `SBA_output.docx`, which is the sample output file that was created by the test run.
+
+The project output can be changed without touching the code in the following ways:
+
+#### Changing the layout of the output .docx files
 
 To edit the layout of the output .docx files (e.g., to change formatting or text alignment), access the template files under the directory [src/resources/templates](https://github.com/jasondamico/pgov-cover-sheet-reader/tree/jasondamico/update-readme/src/resources/templates). These files may be edited just as any other docx file would be. Once you are satisfied with your edits, please [open a pull request](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) with your updated files for them to be merged into the repository.
 
