@@ -67,7 +67,7 @@ def read_cover_sheet(document):
 
                         index = max(checked_index, unchecked_index)
                         checkbox = row_text.pop(index)
-                        column_title = row_text.pop(index).lower().replace(" ", "_")    # converts to snake_case
+                        column_title = row_text.pop(index)
 
                         data[column_title] = 1 if checkbox == "☒" else 0   # stores a 1 if box is checked, else 0
     
