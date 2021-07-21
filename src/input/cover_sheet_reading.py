@@ -9,14 +9,14 @@ import pandas as pd
 
 # Maps headers on cover sheet to columns in the data
 HEADER_MAP = {
-    "What is blocking you?": "blockers_description",
-    "Add your own tags": "tags",
-    "How can the White House help?": "help_white_house",
-    "How can other agencies help?": "help_other_agencies",
-    "How can Congress help?": "help_congress",
-    "How can industry help?": "help_industry",
-    "How can the third sector (non-profits and non-governmental organizations) help?": "help_third_sector",
-    "How can academia help?": "help_academia"
+    "What is blocking you?": "Blockers",
+    "Add your own tags": "Tags",
+    "How can the White House help?": "White House help",
+    "How can other agencies help?": "Other agencies help",
+    "How can Congress help?": "Congress help",
+    "How can industry help?": "Industry help",
+    "How can the third sector (non-profits and non-governmental organizations) help?": "Third sector help",
+    "How can academia help?": "Academia help"
 }
 
 
