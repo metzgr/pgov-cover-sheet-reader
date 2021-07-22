@@ -68,7 +68,7 @@ def get_goal_status_breakdown_bullets(agency):
         if i != len(goals_list) - 1:
             rt.add("\a", font="Roboto")    # adds a paragraph break following each goal status statement (except for the final one)
 
-    return rt
+    return __process_richtext(rt)
 
 def get_challenge_summary_text(agency):
     """
@@ -117,7 +117,7 @@ def get_challenge_summary_text(agency):
         else:
             rt.add(" were the least commonly reported challenges across the agency's APG teams.", font="Roboto")
 
-    return rt
+    return __process_richtext(rt)
 
 def get_speedometer_summary_text(agency, apg_name): 
     """
@@ -147,7 +147,7 @@ def get_speedometer_summary_text(agency, apg_name):
     rt.add(f"{status}", bold=True, font="Roboto")
     rt.add(f"{connecting_word} its expected progression in {quarter_year}.", font="Roboto")
 
-    return rt
+    return __process_richtext(rt)
 
 def get_blockers_text(agency, apg_name):
     """
@@ -188,7 +188,7 @@ def get_group_help_text(agency, apg_name):
             rt.add(f"{header_text}:", bold=True, font="Roboto")
             rt.add(f" {value}", font="Roboto")
 
-    return rt
+    return __process_richtext(rt)
 
 def get_apg_challenges_bullets(agency, apg_name):
     """
