@@ -68,7 +68,7 @@ def get_goal_status_breakdown_bullets(agency):
         if i != len(goals_list) - 1:
             rt.add("\a", font="Roboto")    # adds a paragraph break following each goal status statement (except for the final one)
 
-    return rt
+    return __process_richtext(rt)
 
 def get_challenge_summary_text(agency):
     """
@@ -117,7 +117,7 @@ def get_challenge_summary_text(agency):
         else:
             rt.add(" were the least commonly reported challenges across the agency's APG teams.", font="Roboto")
 
-    return rt
+    return __process_richtext(rt)
 
 def get_speedometer_summary_text(agency, apg_name): 
     """
@@ -147,7 +147,7 @@ def get_speedometer_summary_text(agency, apg_name):
     rt.add(f"{status}", bold=True, font="Roboto")
     rt.add(f"{connecting_word} its expected progression in {quarter_year}.", font="Roboto")
 
-    return rt
+    return __process_richtext(rt)
 
 def get_blockers_text(agency, apg_name):
     """
@@ -188,7 +188,7 @@ def get_group_help_text(agency, apg_name):
             rt.add(f"{header_text}:", bold=True, font="Roboto")
             rt.add(f" {value}", font="Roboto")
 
-    return rt
+    return __process_richtext(rt)
 
 def get_apg_challenges_bullets(agency, apg_name):
     """
@@ -211,4 +211,16 @@ def get_apg_challenges_bullets(agency, apg_name):
         if i != len(challenges_list) - 1:
             rt.add("\a")    # adds a paragraph break following each challenge (except for the final one)
 
-    return rt
+    return __process_richtext(rt)
+
+def __process_richtext(rt):
+    """
+    Processes a RichText object and returns a version of it that is suitable for use in the output file. Please use this function to wrap a RichText object whenever returning it for use in the output document.
+
+    :param rt: A RichText object.
+    :return: A version of the RichText object (or a string object, if applicable) that is suitable for use in the output file.
+    """
+    if utility.richtext_is_empty(rt):
+        return ""   # returns an empty string, as empty RichText objects (i.e., data never added to them) will still render within the output file
+    else:
+        return rt
