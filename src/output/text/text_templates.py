@@ -211,4 +211,16 @@ def get_apg_challenges_bullets(agency, apg_name):
         if i != len(challenges_list) - 1:
             rt.add("\a")    # adds a paragraph break following each challenge (except for the final one)
 
-    return rt
+    return __process_richtext(rt)
+
+def __process_richtext(rt):
+    """
+    Processes a RichText object and returns a version of it that is suitable for use in the output file. Please use this function to wrap a RichText object whenever returning it for use in the output document.
+
+    :param rt: A RichText object.
+    :return: A version of the RichText object (or a string object, if applicable) that is suitable for use in the output file.
+    """
+    if utility.richtext_is_empty(rt):
+        return ""   # returns an empty string, as empty RichText objects (i.e., data never added to them) will still render within the output file
+    else:
+        return rt
