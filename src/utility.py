@@ -85,3 +85,12 @@ def get_picture_names(tpl):
             picture_names.append(elem.attrib["name"])
 
     return picture_names
+
+def richtext_is_empty(rt):
+    """
+    Returns a boolean indicating whether or not the passed RichText object is empty.
+
+    :param rt: A RichText object.
+    :return: TRUE if the RichText object is empty (i.e., does not have any text), FALSE otherwise.
+    """
+    return rt.xml == ""
