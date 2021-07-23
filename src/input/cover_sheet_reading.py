@@ -101,7 +101,11 @@ def get_cover_sheets(path=None):
     if path == None:
         path = COVER_SHEET_DIRECTORY    # retrieves cover sheets from the default directory specified by a constant if no path was passed
 
-    for filename in os.listdir(path):  # retrieves all file names from cover sheet directory
-        cover_sheets.append(Document(f"{path}{filename}"))     # creates Document objects for every cover sheet
+    try:
+        for filename in os.listdir(path):  # retrieves all file names from cover sheet directory
+            cover_sheets.append(Document(f"{path}{filename}"))     # creates Document objects for every cover sheet
+    except FileNotFoundError as e:
+        print(f"Unable to retrieve cover sheets from path {path}")
+        return None
 
     return cover_sheets
