@@ -89,15 +89,19 @@ def process_cover_sheets(cover_sheets_list):
         
     return pd.DataFrame(data)
 
-def get_cover_sheets():
+def get_cover_sheets(path=None):
     """
     Returns a list of docx Document objects representing cover sheets, each of which are retrieved from the folder where cover sheets are stored.
 
+    :param path: The path to the directory where cover sheet objects are stored. NOTE: This directory should only include cover sheets.
     :return: A list of docx Document objects representing cover sheets, each of which are retrieved from the folder where cover sheets are stored.
     """
     cover_sheets = []
 
-    for filename in os.listdir(COVER_SHEET_DIRECTORY):  # retrieves all file names from cover sheet directory
-        cover_sheets.append(Document(f"{COVER_SHEET_DIRECTORY}{filename}"))     # creates Document objects for every cover sheet
+    if path == None:
+        path = COVER_SHEET_DIRECTORY    # retrieves cover sheets from the default directory specified by a constant if no path was passed
+
+    for filename in os.listdir(path):  # retrieves all file names from cover sheet directory
+        cover_sheets.append(Document(f"{path}{filename}"))     # creates Document objects for every cover sheet
 
     return cover_sheets
