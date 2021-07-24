@@ -3,9 +3,12 @@ Functions realted to scraping the data from an incoming cover sheet.
 """
 
 import src.utility as utility
+from src.constants import COVER_SHEET_DIRECTORY
 
+from docx import Document
 from docx.text.paragraph import Paragraph
 import pandas as pd
+import os
 
 # Maps headers on cover sheet to columns in the data
 HEADER_MAP = {
@@ -85,3 +88,24 @@ def process_cover_sheets(cover_sheets_list):
         data.append(read_cover_sheet(cover_sheet))
         
     return pd.DataFrame(data)
+
+def get_cover_sheets(path=None):
+    """
+    Returns a list of docx Document objects representing cover sheets, each of which are retrieved from the folder where cover sheets are stored.
+
+    :param path: The path to the directory where cover sheet objects are stored. NOTE: This directory should only include cover sheets.
+    :return: A list of docx Document objects representing cover sheets, each of which are retrieved from the folder where cover sheets are stored.
+    """
+    cover_sheets = []
+
+    if path == None:
+        path = COVER_SHEET_DIRECTORY    # retrieves cover sheets from the default directory specified by a constant if no path was passed
+
+    try:
+        for filename in os.listdir(path):  # retrieves all file names from cover sheet directory
+            cover_sheets.append(Document(f"{path}{filename}"))     # creates Document objects for every cover sheet
+    except FileNotFoundError as e:
+        print(f"Unable to retrieve cover sheets from path {path}")
+        return None
+
+    return cover_sheets

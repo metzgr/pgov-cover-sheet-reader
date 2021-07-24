@@ -52,3 +52,8 @@ AGENCY_NAME_TO_ABBREVIATION = {
 AGENCY_ABBREVIATION_TO_NAME = {value: key for key, value in AGENCY_NAME_TO_ABBREVIATION.items()}
 
 VIZ_DIRECTORY = "src/output/viz/images/"
+
+"""
+A path to the directory in which cover sheets are stored (relative to the location of the project's root).
+"""
+COVER_SHEET_DIRECTORY = "../cover_sheet/cover_sheets/"
