@@ -93,12 +93,7 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
 
     tpl.render(replacement_map)
 
-    # Removes a blank line added after the final table in the template when render() is called, which resulted in a blank page being rendered. Sourced from https://github.com/python-openxml/python-docx/issues/33#issuecomment-77661907
-    for p in utility.get_trailing_blank_paragraphs(tpl.docx):
-        p = p._element
-        p.getparent().remove(p)     # removes line
-        p._p = p._element = None
-
+    remove_trailing_paragraphs(tpl.docx)    # if there are trailing blank paragraphs at the end of the document, a blank page may be created when the page break is added on the line below
     tpl.docx.add_page_break()   # add page break prior to APG breakdown pages
 
     apgs_list = agency.get_goals()
@@ -191,3 +186,15 @@ def get_goal_status_table(agency):
         table.append({"cols": row})     # appends row to the table object
 
     return table
+
+def remove_trailing_paragraphs(docx):
+    """
+    Removes all of the blank paragraphs at the end of the passed Document object.
+
+    :param docx: A docx Document object.
+    """
+    # Removes a blank line added after the final table in the template when render() is called, which resulted in a blank page being rendered. Sourced from https://github.com/python-openxml/python-docx/issues/33#issuecomment-77661907
+    for p in utility.get_trailing_blank_paragraphs(docx):
+        p = p._element
+        p.getparent().remove(p)     # removes line
+        p._p = p._element = None
