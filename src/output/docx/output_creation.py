@@ -94,6 +94,12 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
     tpl.render(replacement_map)
 
     apgs_list = agency.get_goals()
+    
+    # Removes a blank line added after the final table in the template when render() is called, which resulted in a blank page being rendered. Sourced from https://github.com/python-openxml/python-docx/issues/33#issuecomment-77661907
+    p = tpl.docx.paragraphs[-1]._element    # retrieves final paragraph
+    p.getparent().remove(p)     # removes final pargraph
+    p._p = p._element = None
+
     tpl.docx.add_page_break()   # add page break prior to APG breakdown pages
 
     # Loops for every APG that the agency holds
