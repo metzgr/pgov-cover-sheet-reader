@@ -94,3 +94,20 @@ def richtext_is_empty(rt):
     :return: TRUE if the RichText object is empty (i.e., does not have any text), FALSE otherwise.
     """
     return rt.xml == ""
+
+def get_trailing_blank_paragraphs(docx):
+    """
+    Returns a list of Paragraph objects representing the blank lines at the end of the passed Document object.
+
+    :param docx: A docx Document object.
+    :return: A list of Paragraph objects that are at the end of the the passed document. Returns an empty list if no blank lines were found at the end of the document.
+    """
+    reversed_block_items = list(iter_block_items(docx))  # converts generator to list
+    reversed_block_items.reverse()  # reverses the order of the list of block items, i.e., placing the final blocks at the beginning of the list
+    lines_to_remove = []
+
+    # Checks if the last line of the template document is empty, adds to list of lines to remove if it is. This prevents extra blank lines at the end of the document, potentially creating a blank page when a page break is added.
+    while len(reversed_block_items) != 0 and isinstance(reversed_block_items[0], Paragraph) and reversed_block_items[0].text == "":
+        lines_to_remove.append(reversed_block_items.pop(0))
+
+    return lines_to_remove
