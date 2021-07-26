@@ -123,6 +123,11 @@ def create_challenges_reported_in_quarter(agency, dir=DEFAULT_DIRECTORY, name="c
     fig = plt.gcf()
     ax = plt.gca()
 
+    # Add value labels to each bar in bar chart
+    offset = 0.1    # the (y-axis) distance from the top of the bars that the labels will be displayed
+    for i in range(len(challenge_count_df["Challenge"])):
+        plt.text(i, challenge_count_df["Count"].iloc[i] + offset, challenge_count_df["Count"].iloc[i], ha="center")
+
     # Editing the display of the plot
     plt.suptitle(f"Challenges Reported across SBA APGs in Q4 2020")
     plt.xlabel("")  # removes x label
