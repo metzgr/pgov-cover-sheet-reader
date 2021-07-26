@@ -123,13 +123,17 @@ def create_challenges_reported_in_quarter(agency, dir=DEFAULT_DIRECTORY, name="c
     fig = plt.gcf()
     ax = plt.gca()
 
+    # Add value labels to each bar in bar chart
+    offset = 0.1    # the (y-axis) distance from the top of the bars that the labels will be displayed
+    for i in range(len(challenge_count_df["Challenge"])):
+        plt.text(i, challenge_count_df["Count"].iloc[i] + offset, challenge_count_df["Count"].iloc[i], ha="center")
+
     # Editing the display of the plot
     plt.suptitle(f"Challenges Reported across SBA APGs in Q4 2020")
     plt.xlabel("")  # removes x label
     plt.xticks(rotation=45, ha="right", fontsize=24)
-    ax.margins(y=0)
-    plt.yticks(ticks=[i for i in range(len(agency.get_goals()) + 1)], fontsize=24)
-    ax.set_ylabel(ax.yaxis.get_label().get_text(), fontdict=font)   # sets the size of the category label on the y axis
+    ax.margins(y=offset)    # sourced from offset of label text
+    ax.get_yaxis().set_visible(False)
 
     # Exporting figure
     fig.set_size_inches(12, 8)   # saved image is larger, of higher quality
