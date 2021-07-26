@@ -132,7 +132,7 @@ def create_challenges_reported_in_quarter(agency, dir=DEFAULT_DIRECTORY, name="c
     plt.suptitle(f"Challenges Reported across SBA APGs in Q4 2020")
     plt.xlabel("")  # removes x label
     plt.xticks(rotation=45, ha="right", fontsize=24)
-    ax.margins(y=0)
+    ax.margins(y=offset)    # sourced from offset of label text
     plt.yticks(ticks=[i for i in range(len(agency.get_goals()) + 1)], fontsize=24)
     ax.set_ylabel(ax.yaxis.get_label().get_text(), fontdict=font)   # sets the size of the category label on the y axis
 
