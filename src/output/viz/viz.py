@@ -133,8 +133,7 @@ def create_challenges_reported_in_quarter(agency, dir=DEFAULT_DIRECTORY, name="c
     plt.xlabel("")  # removes x label
     plt.xticks(rotation=45, ha="right", fontsize=24)
     ax.margins(y=offset)    # sourced from offset of label text
-    plt.yticks(ticks=[i for i in range(len(agency.get_goals()) + 1)], fontsize=24)
-    ax.set_ylabel(ax.yaxis.get_label().get_text(), fontdict=font)   # sets the size of the category label on the y axis
+    ax.get_yaxis().set_visible(False)
 
     # Exporting figure
     fig.set_size_inches(12, 8)   # saved image is larger, of higher quality
