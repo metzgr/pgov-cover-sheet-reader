@@ -86,7 +86,8 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
         "recur_challenge_2_count": recurring_challenges_df.iloc[1]["Count"],
         "recur_challenge_1_goal": recurring_challenges_df.iloc[0]["Goal Name"],
         "recur_challenge_2_goal": recurring_challenges_df.iloc[1]["Goal Name"],
-        "tbl_contents": get_goal_status_table(agency)
+        "tbl_contents": get_goal_status_table(agency),
+        "challenge_count_table": get_challenge_count_table(agency)
     }
 
     tpl.render(replacement_map)
@@ -182,6 +183,30 @@ def get_goal_status_table(agency):
             row.append(status)  # appends goal status as a new column
 
         table.append({"cols": row})     # appends row to the table object
+
+    return table
+
+def get_challenge_count_table(agency):
+    """
+    Returns a list of dictionaries (representing rows of the the table) to fill the challenge count table in the template document.
+
+    :param agency: An Agency object representing the agency for which the top recurring challenges will be retrieved.
+    :return: A list of dictionaries used to render the challenge count table.
+    """
+    table = []
+
+    challenge_count_df = df_creator.get_challenge_count_by_quarter(agency.get_agency_df())
+    challenge_count_df = challenge_count_df.loc[(challenge_count_df["Quarter"] == agency.get_quarter()) & (challenge_count_df["Fiscal Year"] == agency.get_year())].sort_values(by="Count", ascending=False)
+
+    for challenge in challenge_count_df["Challenge"].unique():
+        count = challenge_count_df.loc[challenge_count_df["Challenge"] == challenge, "Count"].values[0]
+        
+        table.append({
+            "col": {
+                "name": challenge,
+                "count": count
+            }
+        })
 
     return table
 
