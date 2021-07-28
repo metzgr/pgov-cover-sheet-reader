@@ -7,6 +7,7 @@ import src.utility as utility
 import src.output.data.df_creator as df_creator
 
 from docxtpl import RichText
+import numpy as np
 
 def get_goal_change_summary_sentence(agency):
     """
@@ -34,7 +35,7 @@ def get_goal_change_summary_sentence(agency):
         to_return += f"{' and '.join(status_strs)} {last_or_this_quarter}"  # joins each string together with "and" keyword
         to_return += ' to ' if last_or_this_quarter == 'last quarter' else ''   # adds a connecting word if in the first loop
         
-    return to_return
+    return __process_template_output(to_return)
 
 def get_goal_status_breakdown_bullets(agency):
     """
@@ -68,7 +69,7 @@ def get_goal_status_breakdown_bullets(agency):
         if i != len(goals_list) - 1:
             rt.add("\a", font="Roboto")    # adds a paragraph break following each goal status statement (except for the final one)
 
-    return __process_richtext(rt)
+    return __process_template_output(rt)
 
 def get_challenge_summary_text(agency):
     """
@@ -117,7 +118,7 @@ def get_challenge_summary_text(agency):
         else:
             rt.add(" were the least commonly reported challenges across the agency's APG teams.", font="Roboto")
 
-    return __process_richtext(rt)
+    return __process_template_output(rt)
 
 def get_speedometer_summary_text(agency, apg_name): 
     """
@@ -147,7 +148,7 @@ def get_speedometer_summary_text(agency, apg_name):
     rt.add(f"{status}", bold=True, font="Roboto")
     rt.add(f"{connecting_word} its expected progression in {quarter_year}.", font="Roboto")
 
-    return __process_richtext(rt)
+    return __process_template_output(rt)
 
 def get_blockers_text(agency, apg_name):
     """
@@ -160,7 +161,7 @@ def get_blockers_text(agency, apg_name):
     # Obtaining the row that represents the APG in the reporting quarter/fiscal year
     apg_row = agency.get_apg_row(apg_name)
 
-    return apg_row["Blockers"].values[0]
+    return __process_template_output(apg_row["Blockers"].values[0])
 
 def get_group_help_text(agency, apg_name):
     """
@@ -188,7 +189,7 @@ def get_group_help_text(agency, apg_name):
             rt.add(f"{header_text}:", bold=True, font="Roboto")
             rt.add(f" {value}", font="Roboto")
 
-    return __process_richtext(rt)
+    return __process_template_output(rt)
 
 def get_apg_challenges_bullets(agency, apg_name):
     """
@@ -211,7 +212,7 @@ def get_apg_challenges_bullets(agency, apg_name):
         if i != len(challenges_list) - 1:
             rt.add("\a")    # adds a paragraph break following each challenge (except for the final one)
 
-    return __process_richtext(rt)
+    return __process_template_output(rt)
 
 def get_success_story(agency, apg_name):
     """
@@ -220,7 +221,24 @@ def get_success_story(agency, apg_name):
     :param agency: An Agency object representing a CFO Act agency at a given point in time.
     :return: The success story from the quarter and year held by the passed Agency object.
     """
-    return agency.get_apg_row(apg_name)["Success Story"].values[0]
+    apg_row = agency.get_apg_row(apg_name)
+
+    return __process_template_output(apg_row["Success Story"].values[0])
+
+def __process_template_output(output_text):
+    """
+    Processes template output object and returns a version of it that is suitable for use in the output file. Please use this function to wrap any data that is intended to be rendered in the output document.
+
+    :param output_text: An object to be used to render the output file.
+    :return: A version of the passed object that has been processed and is suitable for use in the output file.
+    """
+    if isinstance(output_text, RichText):
+        return __process_richtext(output_text)  # passes RichText objects off to their own designated processor
+    else:
+        if isinstance(output_text, float) and np.isnan(output_text):
+            return ""   # catches NaN values, which are still rendered by docxtpl
+        else:
+            return output_text
 
 def __process_richtext(rt):
     """
