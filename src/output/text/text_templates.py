@@ -7,6 +7,7 @@ import src.utility as utility
 import src.output.data.df_creator as df_creator
 
 from docxtpl import RichText
+import numpy as np
 
 def get_goal_change_summary_sentence(agency):
     """
@@ -221,6 +222,21 @@ def get_success_story(agency, apg_name):
     :return: The success story from the quarter and year held by the passed Agency object.
     """
     return agency.get_apg_row(apg_name)["Success Story"].values[0]
+
+def __process_template_output(output_text):
+    """
+    Processes template output object and returns a version of it that is suitable for use in the output file. Please use this function to wrap any data that is intended to be rendered in the output document.
+
+    :param output_text: An object to be used to render the output file.
+    :return: A version of the passed object that has been processed and is suitable for use in the output file.
+    """
+    if isinstance(output_text, RichText):
+        return __process_richtext(output_text)
+    else:
+        if isinstance(output_text, float) and np.isnan(output_text):
+            return ""
+        else:
+            return output_text
 
 def __process_richtext(rt):
     """
