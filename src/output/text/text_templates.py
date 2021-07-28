@@ -233,10 +233,10 @@ def __process_template_output(output_text):
     :return: A version of the passed object that has been processed and is suitable for use in the output file.
     """
     if isinstance(output_text, RichText):
-        return __process_richtext(output_text)
+        return __process_richtext(output_text)  # passes RichText objects off to their own designated processor
     else:
         if isinstance(output_text, float) and np.isnan(output_text):
-            return ""
+            return ""   # catches NaN values, which are still rendered by docxtpl
         else:
             return output_text
 
