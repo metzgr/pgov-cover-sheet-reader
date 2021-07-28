@@ -35,7 +35,7 @@ def get_goal_change_summary_sentence(agency):
         to_return += f"{' and '.join(status_strs)} {last_or_this_quarter}"  # joins each string together with "and" keyword
         to_return += ' to ' if last_or_this_quarter == 'last quarter' else ''   # adds a connecting word if in the first loop
         
-    return to_return
+    return __process_template_output(to_return)
 
 def get_goal_status_breakdown_bullets(agency):
     """
@@ -161,7 +161,7 @@ def get_blockers_text(agency, apg_name):
     # Obtaining the row that represents the APG in the reporting quarter/fiscal year
     apg_row = agency.get_apg_row(apg_name)
 
-    return apg_row["Blockers"].values[0]
+    return __process_template_output(apg_row["Blockers"].values[0])
 
 def get_group_help_text(agency, apg_name):
     """
@@ -221,7 +221,9 @@ def get_success_story(agency, apg_name):
     :param agency: An Agency object representing a CFO Act agency at a given point in time.
     :return: The success story from the quarter and year held by the passed Agency object.
     """
-    return agency.get_apg_row(apg_name)["Success Story"].values[0]
+    apg_row = agency.get_apg_row(apg_name)
+
+    return __process_template_output(apg_row["Success Story"].values[0])
 
 def __process_template_output(output_text):
     """
