@@ -213,6 +213,15 @@ def get_apg_challenges_bullets(agency, apg_name):
 
     return __process_richtext(rt)
 
+def get_success_story(agency, apg_name):
+    """
+    Returns the success story submitted for the quarter and fiscal year that the passed Agency object represents. 
+
+    :param agency: An Agency object representing a CFO Act agency at a given point in time.
+    :return: The success story from the quarter and year held by the passed Agency object.
+    """
+    return agency.get_apg_row(apg_name)["Success Story"].values[0]
+
 def __process_richtext(rt):
     """
     Processes a RichText object and returns a version of it that is suitable for use in the output file. Please use this function to wrap a RichText object whenever returning it for use in the output document.
