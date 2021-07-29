@@ -11,6 +11,7 @@ from src.constants import VIZ_DIRECTORY, SUMMARY_TEMPLATE_PATH, APG_BREAKDOWN_TE
 
 import os
 from docx.shared import Inches
+from docx.enum.text import WD_BREAK
 from docx.text.paragraph import Paragraph
 from docxtpl import DocxTemplate, InlineImage
 import pandas as pd
@@ -121,10 +122,6 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
 
         apg_template.render(context)    # renders the keyword replacements specific to the APG
 
-        # Adds page break after every APG breakdown except for on final page
-        if i != len(apgs_list) - 1:
-            apg_template.add_page_break()
-
         # Loops through every element in the APG summary, adds it to the whole agency summary report
         for element in apg_template.element.body:
             tpl.docx.element.body.append(element)
@@ -136,6 +133,11 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
             f"speedometer_image_{i}": InlineImage(tpl, image_descriptor=f"src/resources/speedometers/speedometer_{formatted_goal_status}.png", width=Inches(3)),   # width of 3 inches seems to be sweet spot for 2-column table
             f"goal_status_over_time_{i}": InlineImage(tpl, image_descriptor=f"{VIZ_DIRECTORY}goal_status_over_time_{i}.png", width=Inches(3))
         })
+
+        # Adds page break after every APG breakdown except for on final page
+        if i != len(apgs_list) - 1:
+            run = list(utility.iter_block_items(tpl.docx))[-1].add_run()
+            run.add_break(WD_BREAK.PAGE)
 
     # Creates output directories if they do not already exist
     if not os.path.isdir(output_dir):
