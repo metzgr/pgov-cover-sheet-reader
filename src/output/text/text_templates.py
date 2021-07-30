@@ -129,8 +129,6 @@ def get_speedometer_summary_text(agency, apg_name):
     :param apg_name: The name of the APG whose status will be summarized.
     :return: A RichText object describing the information conveyed in the speedometer figure displayed for the passed APG.
     """
-    rt = RichText()
-
     # Obtaining the row that represents the APG in the reporting quarter/fiscal year
     apg_row = agency.get_apg_row(apg_name)
 
