@@ -218,6 +218,23 @@ def get_success_story(agency, apg_name):
 
     return __process_template_output(apg_row["Success Story"].values[0])
 
+def get_recurring_challenges_text(challenge_name, goal_name, count):
+    """
+    Returns a RichText object describing the passed recurring challenge.
+
+    :param challenge_name: The name of the recurring challenge.
+    :param goal_name: The name of the goal for which the challenge has been repeatedly reported.
+    :param count: The number of consecutive quarters that the challenge has been reported for.
+    :return: A RichText object describing the passed recurring challenge.
+    """
+    placeholders_dict = {
+        "challenge": challenge_name,
+        "goal": goal_name,
+        "challenge count": count
+    }
+
+    return __process_template_output(get_richtext_from_variable("recurring_challenge_text", placeholders_dict))
+
 def __process_template_output(output_text):
     """
     Processes template output object and returns a version of it that is suitable for use in the output file. Please use this function to wrap any data that is intended to be rendered in the output document.

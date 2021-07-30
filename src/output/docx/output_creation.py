@@ -74,6 +74,18 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
 
     recurring_challenges_df = get_top_recurring_challenges(agency)
 
+    recur_challenge_1_dict = {
+        "challenge": recurring_challenges_df.iloc[0]["Challenge"],
+        "goal": recurring_challenges_df.iloc[0]["Goal Name"],
+        "count": recurring_challenges_df.iloc[0]["Count"]
+    }
+
+    recur_challenge_2_dict = {
+        "challenge": recurring_challenges_df.iloc[1]["Challenge"],
+        "goal": recurring_challenges_df.iloc[1]["Goal Name"],
+        "count": recurring_challenges_df.iloc[1]["Count"]
+    }
+
     replacement_map = {
         "previous_quarter_and_year": "{} {}".format(*utility.get_previous_quarter_and_year(agency.get_quarter(), agency.get_year())),
         "current_quarter_and_year": f"{agency.get_quarter()} {agency.get_year()}",
@@ -81,12 +93,10 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
         "agency_abbreviation": agency.get_abbreviation(),
         "goal_change_summary_sentence": text_templates.get_goal_change_summary_sentence(agency),
         "goal_status_breakdown_bullets": text_templates.get_goal_status_breakdown_bullets(agency),
-        "recur_challenge_1": recurring_challenges_df.iloc[0]["Challenge"],
-        "recur_challenge_2": recurring_challenges_df.iloc[1]["Challenge"],
-        "recur_challenge_1_count": recurring_challenges_df.iloc[0]["Count"],
-        "recur_challenge_2_count": recurring_challenges_df.iloc[1]["Count"],
-        "recur_challenge_1_goal": recurring_challenges_df.iloc[0]["Goal Name"],
-        "recur_challenge_2_goal": recurring_challenges_df.iloc[1]["Goal Name"],
+        "recurring_challenge_1_text": text_templates.get_recurring_challenges_text(recur_challenge_1_dict["challenge"], recur_challenge_1_dict["goal"], recur_challenge_1_dict["count"]),
+        "recurring_challenge_2_text": text_templates.get_recurring_challenges_text(recur_challenge_2_dict["challenge"], recur_challenge_2_dict["goal"], recur_challenge_2_dict["count"]),
+        "recur_challenge_1_count": recur_challenge_1_dict["count"],
+        "recur_challenge_2_count": recur_challenge_2_dict["count"],
         "goal_status_table": get_goal_status_table(agency),
         "challenge_count_table": get_challenge_count_table(agency)
     }
