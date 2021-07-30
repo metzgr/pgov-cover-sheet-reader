@@ -5,6 +5,24 @@ import src.output.text.processing.markdown as markdown
 
 from src.constants import TEXT_BLOCK_TEMPLATES_DF
 
+def get_richtext_from_variable(variable_name, placeholders_dict, tone="neutral"):
+    """
+    Given a variable name, a dictionary of values to be replaced in the template, and a tone, returns a RichText object holding the text from the template document.
+
+    :param variable_name: The variable name in the template document that will be rendered with the returned RichText object.
+    :param placeholders_dict: A dictionary mapping the placeholders in the desired text template with the values they should be replaced with.
+    :param tone: The tone that the RichText object should be delivered in. Acceptable inputs are: "neutral", "progressing", "regressing" or "plural". "neutral" by default.
+    :return: A RichText object of the text template indicated by the arguments of the function.
+    """
+    text_block_row = TEXT_BLOCK_TEMPLATES_DF.loc[TEXT_BLOCK_TEMPLATES_DF["Variable Name"] == variable_name] 
+    col_name = f"Sentence Template {tone.capitalize()}"
+
+    # Retrieve text block from template, fill placeholders based on passed dictionary
+    text = text_block_row[col_name].values[0]
+    text = __fill_placeholders(text, placeholders_dict)
+
+    return markdown.string_to_richtext(text)
+
 def __fill_placeholders(text, placeholders_dict):
     """
     Fills placeholders in the passed string with the values mapped in the passed dictionary. Searches for placeholders in the passed string by searching for contents within {curly braces} and matching them with keys in the passed dictionary.
