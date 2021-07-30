@@ -5,6 +5,7 @@ Includes functions that take key information and format it in a client-friendly 
 import src.objects.agency as agency
 import src.utility as utility
 import src.output.data.df_creator as df_creator
+from src.output.text.processing.excel import get_richtext_from_variable
 
 from docxtpl import RichText
 import numpy as np
@@ -128,27 +129,19 @@ def get_speedometer_summary_text(agency, apg_name):
     :param apg_name: The name of the APG whose status will be summarized.
     :return: A RichText object describing the information conveyed in the speedometer figure displayed for the passed APG.
     """
-    rt = RichText()
-
     # Obtaining the row that represents the APG in the reporting quarter/fiscal year
     apg_row = agency.get_apg_row(apg_name)
 
     # Retrieving information to be placed in strings, added to the RichText object
     status = apg_row["Status"].values[0].lower()
-    quarter_year = f"{agency.get_quarter()} {agency.get_year()}"
 
-    connecting_word = ""
+    placeholder_map = {
+        "status": status, 
+        "quarter": agency.get_quarter(), 
+        "year": agency.get_year()
+    }
 
-    if status in ["ahead", "on track", "nearly on track"]:
-        connecting_word = " of"
-    elif status == "blocked":
-        connecting_word = " from reaching"
-
-    rt.add("The goal team reported this goal as ", font="Roboto")
-    rt.add(f"{status}", bold=True, font="Roboto")
-    rt.add(f"{connecting_word} its expected progression in {quarter_year}.", font="Roboto")
-
-    return __process_template_output(rt)
+    return __process_template_output(get_richtext_from_variable("speedometer_text", placeholder_map))
 
 def get_blockers_text(agency, apg_name):
     """
