@@ -1,3 +1,5 @@
+import pandas as pd
+
 """
 A dictionary mapping each goal status to a rank
 """
@@ -57,3 +59,11 @@ VIZ_DIRECTORY = "src/output/viz/images/"
 A path to the directory in which cover sheets are stored (relative to the location of the project's root).
 """
 COVER_SHEET_DIRECTORY = "../cover_sheet/cover_sheets/"
+
+"""
+Text block template constants
+"""
+BOLD_REGEX = "\*\*(.*?)\*\*"
+ITALICS_REGEX = "\*(.*?)\*"
+BOLD_ITALICS_REGEX = ""
+TEXT_BLOCK_TEMPLATES_DF = pd.read_excel("src/resources/templates/text_block_templates.xlsx")
