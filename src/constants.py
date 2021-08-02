@@ -24,6 +24,7 @@ CHALLENGES_LIST = ["Hiring", "Competing deadlines", "Legislation", "Lack of rese
 
 SUMMARY_TEMPLATE_PATH = "src/resources/templates/docx/Summary_Report_Template.docx"
 APG_BREAKDOWN_TEMPLATE_PATH = "src/resources/templates/docx/APG_Summary_Template.docx"
+TEXT_BLOCK_TEMPLATES_PATH = "src/resources/templates/excel/text_block_templates.xlsx"
 
 AGENCY_NAME_TO_ABBREVIATION = {
     "Department of Agriculture": "USDA", 
@@ -66,4 +67,4 @@ Text block template constants
 BOLD_REGEX = "\*\*(.*?)\*\*"
 ITALICS_REGEX = "\*(.*?)\*"
 BOLD_ITALICS_REGEX = ""
-TEXT_BLOCK_TEMPLATES_DF = pd.read_excel("src/resources/templates/text_block_templates.xlsx")
+TEXT_BLOCK_TEMPLATES_DF = pd.read_excel(TEXT_BLOCK_TEMPLATES_PATH)
