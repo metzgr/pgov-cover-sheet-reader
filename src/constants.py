@@ -20,11 +20,19 @@ STATUS_COLOR_MAP = {
     "Blocked": "#FA935B"
 }
 
-CHALLENGES_LIST = ["Hiring", "Competing deadlines", "Legislation", "Lack of research", "Unclear guidance", "Unavailable data"]
-
+"""
+Paths for various templates needed to dynamically generate the summary report.
+"""
 SUMMARY_TEMPLATE_PATH = "src/resources/templates/docx/Summary_Report_Template.docx"
 APG_BREAKDOWN_TEMPLATE_PATH = "src/resources/templates/docx/APG_Summary_Template.docx"
 TEXT_BLOCK_TEMPLATES_PATH = "src/resources/templates/excel/text_block_templates.xlsx"
+CHALLENGES_RECOMMENDATIONS_MAP_PATH = "src/resources/templates/excel/challenges_recommendations_map.xlsx"
+
+"""
+Constants related to the challenges expressed by APG teams
+"""
+CHALLENGES_RECOMMENDATIONS_MAP_DF = pd.read_excel(CHALLENGES_RECOMMENDATIONS_MAP_PATH)
+CHALLENGES_LIST = ["Hiring", "Competing deadlines", "Legislation", "Lack of research", "Unclear guidance", "Unavailable data"]
 
 AGENCY_NAME_TO_ABBREVIATION = {
     "Department of Agriculture": "USDA", 
