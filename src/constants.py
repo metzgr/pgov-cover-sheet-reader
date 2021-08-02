@@ -32,7 +32,7 @@ CHALLENGES_RECOMMENDATIONS_MAP_PATH = "src/resources/templates/excel/challenges_
 Constants related to the challenges expressed by APG teams
 """
 CHALLENGES_RECOMMENDATIONS_MAP_DF = pd.read_excel(CHALLENGES_RECOMMENDATIONS_MAP_PATH)
-CHALLENGES_LIST = ["Hiring", "Competing deadlines", "Legislation", "Lack of research", "Unclear guidance", "Unavailable data"]
+CHALLENGES_LIST = ["Hiring technical staff", "Competing deadlines", "Legislation", "Lack of research", "Unclear guidance", "Unavailable data"]
 
 AGENCY_NAME_TO_ABBREVIATION = {
     "Department of Agriculture": "USDA", 
