@@ -37,11 +37,11 @@ python testing.py
 
 The project output can be changed without touching the code in the following ways:
 
-#### Changing the layout of the output .docx files
+### Changing the layout of the output .docx files
 
 To edit the layout of the output .docx files (e.g., to change formatting or text alignment), access the template files under the directory [src/resources/templates](https://github.com/jasondamico/pgov-cover-sheet-reader/tree/jasondamico/update-readme/src/resources/templates). These files may be edited just as any other docx file would be. Once you are satisfied with your edits, please [open a pull request](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) with your updated files for them to be merged into the repository. **NOTE: Please do not remove or change the dimensions of any of the placeholder images.** It is acceptable to scale the images to rearrange text, but changing the width-to-height ratio compromises the display. If you have a proposal for a new graphic to be used or spot an issue with one of the existing images pulled into the document, please [create an issue in this repository](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue) to notify the developers.
 
-#### Editing the text blocks that populate the summary report
+### Editing the text blocks that populate the summary report
 
 Throughout the summary report template documents, there are placeholders that are replaced by text blocks that are dynamically populated with information specific to the report. The templates for these text blocks are all pulled from a spreadsheet, `text_block_templates.xlsx`, which can be found in the directory [src/resources/templates](https://github.com/jasondamico/pgov-cover-sheet-reader/tree/jasondamico/update-readme/src/resources/templates).
 
