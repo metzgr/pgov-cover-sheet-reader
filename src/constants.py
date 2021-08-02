@@ -22,8 +22,8 @@ STATUS_COLOR_MAP = {
 
 CHALLENGES_LIST = ["Hiring", "Competing deadlines", "Legislation", "Lack of research", "Unclear guidance", "Unavailable data"]
 
-SUMMARY_TEMPLATE_PATH = "src/resources/templates/Summary_Report_Template.docx"
-APG_BREAKDOWN_TEMPLATE_PATH = "src/resources/templates/APG_Summary_Template.docx"
+SUMMARY_TEMPLATE_PATH = "src/resources/templates/docx/Summary_Report_Template.docx"
+APG_BREAKDOWN_TEMPLATE_PATH = "src/resources/templates/docx/APG_Summary_Template.docx"
 
 AGENCY_NAME_TO_ABBREVIATION = {
     "Department of Agriculture": "USDA", 
