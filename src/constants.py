@@ -67,4 +67,4 @@ Text block template constants
 BOLD_REGEX = "\*\*(.*?)\*\*"
 ITALICS_REGEX = "\*(.*?)\*"
 BOLD_ITALICS_REGEX = ""
-TEXT_BLOCK_TEMPLATES_DF = pd.read_excel(TEXT_BLOCK_TEMPLATES_PATH)
+TEXT_BLOCK_TEMPLATES_DF = pd.read_excel(TEXT_BLOCK_TEMPLATES_PATH, skiprows=1)
