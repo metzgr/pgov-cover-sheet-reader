@@ -43,7 +43,14 @@ To edit the layout of the output .docx files (e.g., to change formatting or text
 
 #### Editing the text blocks that populate the summary report
 
-Throughout the summary report template documents, there are placeholders that are replaced by text blocks that are dynamically populated with information specific to the report. The templates for these text blocks are all pulled from a spreadsheet, `text_block_templates.xlsx`, which can be found in the directory [src/resources/templates](https://github.com/jasondamico/pgov-cover-sheet-reader/tree/jasondamico/update-readme/src/resources/templates). Each column of the spreadsheet has a specific purpose:
+Throughout the summary report template documents, there are placeholders that are replaced by text blocks that are dynamically populated with information specific to the report. The templates for these text blocks are all pulled from a spreadsheet, `text_block_templates.xlsx`, which can be found in the directory [src/resources/templates](https://github.com/jasondamico/pgov-cover-sheet-reader/tree/jasondamico/update-readme/src/resources/templates).
+
+Please edit the text fields in the spreadsheet as you see fit to reword the generated text blocks. Note that bolding and italicizing in the text fields can be done by Markdown conventions:
+
+- To **bold** a string of characters, place **\*\*double asterisks\*\*** around them.
+- To *italicize* a string of characters, place *\*single asterisks\** around them.
+
+Note that each column of the spreadsheet has a specific purpose:
 
 - `Template Document`: the name of the template document where this text template will be generated
 - `Variable Name`: The variable in the template report which will be filled with the text block. **Please do not change this field**, but instead use it as a reference.
@@ -53,8 +60,3 @@ Throughout the summary report template documents, there are placeholders that ar
 - `Sentence Template Progressing`: The sentence that will be rendered when the phenomenon being described is improving/trending positively (if applicable). 	
 - `Sentence Template Regressing`: The sentence that will be rendered when the phenomenon being described is regressing/trending negatively (if applicable). 	
 - `Currently in template`: A field representing whether or not the text field is currently included in one of the template documents.
-
-Please edit the text fields in the spreadsheet as you see fit to reword the generated text blocks. Please note that bolding and italicizing in the text fields can be done by Markdown conventions:
-
-- To **bold** a string of characters, place **\*\*double asterisks\*\*** around them.
-- To *italicize* a string of characters, place *\*single asterisks\** around them.
