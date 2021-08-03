@@ -6,6 +6,7 @@ import src.objects.agency as agency
 import src.utility as utility
 import src.output.data.df_creator as df_creator
 from src.output.text.processing.excel import get_richtext_from_variable
+import src.output.text.processing.excel as excel
 
 from docxtpl import RichText
 import numpy as np
@@ -184,12 +185,13 @@ def get_group_help_text(agency, apg_name):
 
     return __process_template_output(rt)
 
-def get_apg_challenges_bullets(agency, apg_name):
+def get_apg_challenges_bullets(agency, apg_name, tpl):
     """
     Returns a RichText object listing out the challenges reported by the APG goal team during the reported quarter, which is capable of being represented as a bulleted list. NOTE: The returned RichText object itself does not return a bulleted list, but each paragraph renders as a bullet when placed in a bulleted list in a template document.
 
     :param agency: An Agency object representing a CFO Act agency at a given point in time.
     :param apg_name: The name of the APG whose status will be summarized.
+    :param tpl: An initialized DocxTemplate object. The object is required to create hyperlinks, but is not modified in any way within this function.
     :return: A RichText object object listing out the challenges reported by the APG goal team during the reported quarter, which is capable of being represented as a bulleted list. 
     """
     rt = RichText()
@@ -201,6 +203,18 @@ def get_apg_challenges_bullets(agency, apg_name):
         challenge = challenges_list[i]
 
         rt.add(f"{challenge}", font="Roboto")
+
+        recs = excel.get_recommendations_for_challenge(challenge)  # retrieves all recommendations for the given challenge
+        
+        if len(recs):
+            rt.add(" — consider the following: ", font="Roboto")    # transition text
+            
+            for j in range(len(recs)):
+                rec = recs[j]
+                rt.add(f"{rec['Recommended Action']}", font="Roboto", url_id=tpl.build_url_id(rec["URL"]), color="#0000FF", underline=True) # adds recommended action with hyperlink
+
+                if j != len(recs) - 1:
+                    rt.add(", ", font="Roboto")     # adds commas to separate challenges
 
         if i != len(challenges_list) - 1:
             rt.add("\a")    # adds a paragraph break following each challenge (except for the final one)

@@ -121,7 +121,7 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
             "speedometer_text": text_templates.get_speedometer_summary_text(agency, apg),
             "blockers_text": text_templates.get_blockers_text(agency, apg),
             "group_assistance_text": text_templates.get_group_help_text(agency, apg),
-            "challenge_bullets": text_templates.get_apg_challenges_bullets(agency, apg),
+            "challenge_bullets": text_templates.get_apg_challenges_bullets(agency, apg, tpl),
             "success_story": text_templates.get_success_story(agency, apg)
         }
 
