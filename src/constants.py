@@ -76,3 +76,8 @@ BOLD_REGEX = "\*\*(.*?)\*\*"
 ITALICS_REGEX = "\*(.*?)\*"
 BOLD_ITALICS_REGEX = ""
 TEXT_BLOCK_TEMPLATES_DF = pd.read_excel(TEXT_BLOCK_TEMPLATES_PATH, skiprows=1)
+
+"""
+List containing administration goals, which are also used as column names.
+"""
+THEMES_LIST = ["Climate", "Equity", "Recovery"]
