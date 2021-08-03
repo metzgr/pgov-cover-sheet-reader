@@ -2,7 +2,7 @@
 Holds definition of Agency class and its associated methods.
 """
 
-from src.constants import CHALLENGES_LIST, AGENCY_NAME_TO_ABBREVIATION, AGENCY_ABBREVIATION_TO_NAME
+from src.constants import CHALLENGES_LIST, THEMES_LIST, AGENCY_NAME_TO_ABBREVIATION, AGENCY_ABBREVIATION_TO_NAME
 import src.utility as utility
 
 import pandas as pd
@@ -138,6 +138,15 @@ class Agency():
         :return: A list of the challenges reported by the passed goal team.
         """
         return self.get_apg_row(goal_name)[CHALLENGES_LIST].columns[(self.get_apg_row(goal_name)[CHALLENGES_LIST] == "Yes").all()].tolist()     # list of challenge columns that are in the affirmative
+
+    def get_themes(self, goal_name):
+        """
+        Returns a list of the themes connected to the passed goal name.
+
+        :param goal_name: The name of the APG from which the challenges reported will be returned.
+        :return: A list of the themes connected to the the passed goal.
+        """
+        return self.get_apg_row(goal_name)[THEMES_LIST].columns[(self.get_apg_row(goal_name)[THEMES_LIST] == "Off").all()].tolist()
 
     def get_apg_row(self, goal_name, year=None, quarter=None):
         """
