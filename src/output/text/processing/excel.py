@@ -25,17 +25,12 @@ def get_richtext_from_variable(variable_name, placeholders_dict, tone="neutral")
 
 def get_recommendations_for_challenge(challenge_name):
     """
-    Returns a list of dictionaries including the challenge name, recommendation, URL and explanation for all of the recommendations for the passed challenge.
+    Returns a DataFrame including the challenge name, recommendation, URL and explanation for all of the recommendations for the passed challenge.
 
     :param challenge_name: The name of the challenge from which challenges will be retrieved.
-    :return: A list of dictionaries, which hold the following keys:
-        - Challenge Name: The name of the challenge that is connected to the recommendation.
-        - Recommended Action: The recommendation based on the challenge identified.
-        - URL: A URL linking to a page that provides more information on the recommended action.
-        - Explanation: An explanation of why the recommended action was recommended for the challenge.
+    :return: A DataFrame with all of the recommendations based on the passed challenge name.
     """
-    recommendations_df = CHALLENGES_RECOMMENDATIONS_MAP_DF.loc[CHALLENGES_RECOMMENDATIONS_MAP_DF["Challenge Name"] == challenge_name]
-    return recommendations_df.to_dict("records")
+    return CHALLENGES_RECOMMENDATIONS_MAP_DF.loc[CHALLENGES_RECOMMENDATIONS_MAP_DF["Challenge Name"] == challenge_name]
 
 def __fill_placeholders(text, placeholders_dict):
     """
