@@ -1,3 +1,7 @@
+"""
+Stores all of the constants that are needed for project-wide use.
+"""
+
 import pandas as pd
 
 """
