@@ -120,7 +120,8 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
             "blockers_text": text_templates.get_blockers_text(agency, apg),
             "group_assistance_text": text_templates.get_group_help_text(agency, apg),
             "success_story": text_templates.get_success_story(agency, apg),
-            "recs_table": tables.get_recs_table(agency, apg, tpl)
+            "recs_table": tables.get_recs_table(agency, apg, tpl),
+            "theme_challenges_table": tables.get_common_challenges_theme_table(agency, apg, agency.get_challenges(apg)[0])
         }
 
         # Fill placeholders of image tags
