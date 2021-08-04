@@ -92,3 +92,25 @@ def get_recs_table(agency, goal_name, tpl):
         table.append(table_row)
 
     return table
+
+def get_common_challenges_theme_table(agency, apg, challenge):
+    """
+    Returns a list of dictionaries to populate a table showing agencies working on a common challenge across related themes for the passed agency.
+
+    :param agency: An Agency object representing the agency for which APG teams with common themes and challenges will be shown.
+    :param apg: The agency's APG for which for which common APG teams will be rendered.
+    :return: A list of dictionaries used to render the common challenges/themes table.
+    """
+    table = []
+
+    for theme in agency.get_themes(apg):
+        common_teams_df = agency.get_common_apgs_theme_challenge(theme, challenge)
+        common_teams_df = common_teams_df.loc[:, ["Agency Name", "Goal Name"]].rename(columns={"Agency Name": "agency", "Goal Name": "apg"})    # rename columns in prepartion for insertion in table
+        common_teams_dicts = common_teams_df.to_dict("records")     # converts DataFrame to list of dictionaries for instertion into table
+
+        table.append({
+            "theme": theme,
+            "common_teams": common_teams_dicts
+        })
+
+    return table
