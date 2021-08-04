@@ -249,6 +249,22 @@ def get_recurring_challenges_text(challenge_name, goal_name, count):
 
     return __process_template_output(get_richtext_from_variable("recurring_challenge_text", placeholders_dict))
 
+def get_rec_text_block(rec, explanation, url):
+    """
+    Given a passed recommendation, explanation and URL, returns a RichText object representing a text block of the passed values.
+
+    :param rec: The recommendation made based on a challenge that an agency is facing.
+    :param explanation: The explanation offered on why the recommendation was made.
+    :param url: The URL that provides more information about the recommendation.
+    :return: A RichText object describing the recommendation and linking to a URL to learn more about the recommendation.
+    """
+    rt = RichText()
+
+    rt.add(rec, font="Roboto", url_id=url, color="#0000FF", underline=True) # adds recommended action with hyperlink
+    rt.add(f": {__process_template_output(explanation)}", font="Roboto")    # processes explanation to catch NaN values
+
+    return rt
+
 def __process_template_output(output_text):
     """
     Processes template output object and returns a version of it that is suitable for use in the output file. Please use this function to wrap any data that is intended to be rendered in the output document.

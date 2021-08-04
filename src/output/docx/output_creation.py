@@ -245,8 +245,7 @@ def get_recs_table(agency, goal_name, tpl):
             explanation = row['Explanation']
             url = tpl.build_url_id(row["URL"])
 
-            rt.add(rec, font="Roboto", url_id=url, color="#0000FF", underline=True) # adds recommended action with hyperlink
-            rt.add(f": {explanation}", font="Roboto")
+            rt.add(text_templates.get_rec_text_block(rec, explanation, url))
             
             if index != len(recs_df) - 1:   # add line breaks between all recommendations except for the last
                 rt.add("\n\n")
