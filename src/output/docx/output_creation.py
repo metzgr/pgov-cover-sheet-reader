@@ -234,12 +234,13 @@ def get_recs_table(agency, goal_name, tpl):
     """
     table = []
 
+    # Adds row based on every challenge the agency is facing in the current quarter
     for challenge in agency.get_challenges(goal_name):
         recs_df = get_recommendations_for_challenge(challenge).reset_index()
 
         rt = RichText()
 
-        for index, row in recs_df.iterrows():
+        for index, row in recs_df.iterrows():   # NOTE: this is not implemented in the text template spreadsheet because the hyperlink needs to be added to the recommendations
             rec = row["Recommended Action"]
             explanation = row['Explanation']
             url = tpl.build_url_id(row["URL"])
@@ -247,7 +248,7 @@ def get_recs_table(agency, goal_name, tpl):
             rt.add(rec, font="Roboto", url_id=url, color="#0000FF", underline=True) # adds recommended action with hyperlink
             rt.add(f": {explanation}", font="Roboto")
             
-            if index != len(recs_df) - 1:
+            if index != len(recs_df) - 1:   # add line breaks between all recommendations except for the last
                 rt.add("\n\n")
         
         table_row = {
