@@ -3,19 +3,16 @@ Maps keywords imbedded in template document (keys) to what they will be replaced
 """
 
 import src.utility as utility
-import src.objects.agency as agency
 import src.output.text.text_templates as text_templates
 import src.output.data.df_creator as df_creator
 import src.output.viz.viz as viz
-from src.output.text.processing.excel import get_recommendations_for_challenge
+import src.output.docx.tables as tables
 from src.constants import VIZ_DIRECTORY, SUMMARY_TEMPLATE_PATH, APG_BREAKDOWN_TEMPLATE_PATH
 
 import os
 from docx.shared import Inches
 from docx.enum.text import WD_BREAK
-from docx.text.paragraph import Paragraph
-from docxtpl import DocxTemplate, InlineImage, RichText
-import pandas as pd
+from docxtpl import DocxTemplate, InlineImage
 
 # Maps keywords within the template document to the values that they will be replaced by.
 REPLACEMENT_MAP = {
@@ -98,8 +95,8 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
         "recurring_challenge_2_text": text_templates.get_recurring_challenges_text(recur_challenge_2_dict["challenge"], recur_challenge_2_dict["goal"], recur_challenge_2_dict["count"]),
         "recur_challenge_1_count": recur_challenge_1_dict["count"],
         "recur_challenge_2_count": recur_challenge_2_dict["count"],
-        "goal_status_table": get_goal_status_table(agency),
-        "challenge_count_table": get_challenge_count_table(agency)
+        "goal_status_table": tables.get_goal_status_table(agency),
+        "challenge_count_table": tables.get_challenge_count_table(agency)
     }
 
     tpl.render(replacement_map)
@@ -123,7 +120,7 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
             "blockers_text": text_templates.get_blockers_text(agency, apg),
             "group_assistance_text": text_templates.get_group_help_text(agency, apg),
             "success_story": text_templates.get_success_story(agency, apg),
-            "recs_table": get_recs_table(agency, apg, tpl)
+            "recs_table": tables.get_recs_table(agency, apg, tpl)
         }
 
         # Fill placeholders of image tags
@@ -174,90 +171,6 @@ def get_top_recurring_challenges(agency, num_challenges=2):
     df = df.sort_values("Count", ascending=False)
 
     return df.reset_index(drop=True).head(num_challenges)
-
-def get_goal_status_table(agency):
-    """
-    Returns a list with nested dictionaries (representing rows of the the table) to fill the goal status table in the template document.
-
-    :param agency: An Agency object representing the agency for which the top recurring challenges will be retrieved.
-    :return: A list of dictionaries used to render the goal status table.
-    """
-    table = []
-    previous_quarter, previous_year = utility.get_previous_quarter_and_year(agency.get_quarter(), agency.get_year())
-    quarters = [previous_quarter, agency.get_quarter()]
-    years = [previous_year, agency.get_year()]
-
-    for goal in agency.get_goals():
-        row = [goal]    # first column is filled with the goal name
-
-        # Loops first through the previous quarter/year, then the current quarter/year
-        for quarter, year in zip(quarters, years):
-            status = agency.get_goal_status(goal, quarter=quarter, year=year)
-
-            row.append(status)  # appends goal status as a new column
-
-        table.append({"cols": row})     # appends row to the table object
-
-    return table
-
-def get_challenge_count_table(agency):
-    """
-    Returns a list of dictionaries (representing rows of the the table) to fill the challenge count table in the template document.
-
-    :param agency: An Agency object representing the agency for which the top recurring challenges will be retrieved.
-    :return: A list of dictionaries used to render the challenge count table.
-    """
-    table = []
-
-    challenge_count_df = df_creator.get_challenge_count_by_quarter(agency.get_agency_df())
-    challenge_count_df = challenge_count_df.loc[(challenge_count_df["Quarter"] == agency.get_quarter()) & (challenge_count_df["Fiscal Year"] == agency.get_year())].sort_values(by="Count", ascending=False)
-
-    for challenge in challenge_count_df["Challenge"].unique():
-        count = challenge_count_df.loc[challenge_count_df["Challenge"] == challenge, "Count"].values[0]
-        
-        table.append({
-            "col": {
-                "name": challenge,
-                "count": count
-            }
-        })
-
-    return table
-
-def get_recs_table(agency, goal_name, tpl):
-    """
-    Returns a list of dictionaries (representing rows of the table) to fill the recommendations table in the APG breakdown template.
-
-    :param agency: An Agency object representing the agency for which challenge mitigation recommendations will be made.
-    :param goal_name: The goal from which suggestions will be made based on their challenges.
-    :return: A list of dictionaries used to render the recommendations table.
-    """
-    table = []
-
-    # Adds row based on every challenge the agency is facing in the current quarter
-    for challenge in agency.get_challenges(goal_name):
-        recs_df = get_recommendations_for_challenge(challenge)
-
-        rt = RichText()
-
-        for index, row in recs_df.iterrows():   # NOTE: this is not implemented in the text template spreadsheet because the hyperlink needs to be added to the recommendations
-            rec = row["Recommended Action"]
-            explanation = row['Explanation']
-            url = tpl.build_url_id(row["URL"])
-
-            rt.add(text_templates.get_rec_text_block(rec, explanation, url))
-            
-            if index != len(recs_df) - 1:   # add line breaks between all recommendations except for the last
-                rt.add("\n\n")
-        
-        table_row = {
-            "challenge": challenge,
-            "recs": rt
-        }
-
-        table.append(table_row)
-
-    return table
 
 def remove_trailing_paragraphs(docx):
     """
