@@ -161,6 +161,20 @@ class Agency():
 
         return self.get_agency_df().loc[(self.get_agency_df()["Quarter"] == quarter) & (self.get_agency_df()["Fiscal Year"] == year) & (self.get_agency_df()["Goal Name"] == goal_name)]
 
+    def get_common_apgs_theme_challenge(self, theme, challenge):
+        """
+        Given a passed theme and challenge, returns a DataFrame with each row being a unique instance of an APG team with the same theme and challenge.
+
+        :param theme: The theme for which common APG teams will be retrieved.
+        :param challenge: The challenge for which common APG teams will be revealed.
+        :return: A DataFrame where each row is a unique instance of an APG team within the passed theme that is addressing the passed challenge in the current quarter.
+        """
+        common_agencies_df = self.get_df().loc[(self.get_df()["Quarter"] == self.get_quarter()) & (self.get_df()["Fiscal Year"] == self.get_year())]    # retrieves slice of DataFrame for current year and quarter
+        common_agencies_df = common_agencies_df.loc[(common_agencies_df[theme] == "Yes") & (common_agencies_df[challenge] == "Yes")]  # filters DataFrame for only agencies with common themes, challenges
+        common_agencies_df = common_agencies_df.loc[common_agencies_df["Agency Name"] != self.get_name()]   # filters the calling agency out of the DataFrame returned
+
+        return common_agencies_df
+
     def __handle_year_quarter_input(self, year, quarter):
         """
         Handles input values of year and quarter and returns either the raw values or machine-readable interpretations of input.
