@@ -30,7 +30,7 @@ def get_recommendations_for_challenge(challenge_name):
     :param challenge_name: The name of the challenge from which challenges will be retrieved.
     :return: A DataFrame with all of the recommendations based on the passed challenge name.
     """
-    return CHALLENGES_RECOMMENDATIONS_MAP_DF.loc[CHALLENGES_RECOMMENDATIONS_MAP_DF["Challenge Name"] == challenge_name]
+    return CHALLENGES_RECOMMENDATIONS_MAP_DF.loc[CHALLENGES_RECOMMENDATIONS_MAP_DF["Challenge Name"] == challenge_name].reset_index(drop=True)
 
 def __fill_placeholders(text, placeholders_dict):
     """

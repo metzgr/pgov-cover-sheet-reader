@@ -236,7 +236,7 @@ def get_recs_table(agency, goal_name, tpl):
 
     # Adds row based on every challenge the agency is facing in the current quarter
     for challenge in agency.get_challenges(goal_name):
-        recs_df = get_recommendations_for_challenge(challenge).reset_index()
+        recs_df = get_recommendations_for_challenge(challenge)
 
         rt = RichText()
 
