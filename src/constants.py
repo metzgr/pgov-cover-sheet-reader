@@ -5,33 +5,38 @@ Stores all of the constants that are needed for project-wide use.
 import pandas as pd
 
 """
-PATHS
+TEMPLATE PATHS
 """
+# .docx templates
 SUMMARY_TEMPLATE_PATH = "src/resources/templates/docx/Summary_Report_Template.docx"
 APG_BREAKDOWN_TEMPLATE_PATH = "src/resources/templates/docx/APG_Summary_Template.docx"
+
+# No-code spreadsheets
 TEXT_BLOCK_TEMPLATES_PATH = "src/resources/templates/excel/text_block_templates.xlsx"
 CHALLENGES_RECOMMENDATIONS_MAP_PATH = "src/resources/templates/excel/challenges_recommendations_map.xlsx"
 
 """
 DIRECTORIES
 """
+# Directory where visualizations are stored as they are created for the output document
 VIZ_DIRECTORY = "src/output/viz/images/"
 
-# A path to the directory in which cover sheets are stored (relative to the location of the project's root).
+# A path to the directory in which cover sheets are stored (relative to the location of the project's root)
 COVER_SHEET_DIRECTORY = "../cover_sheet/cover_sheets/"
 
 """
-COLUMN NAME LISTS
+COLUMN NAME LISTS: List including the names of related columns in the central data source
 """
+# List of challenges that can be reported in the cover sheet, correspond to column names in the data
 CHALLENGES_LIST = ["Hiring technical staff", "Inadequate technical solutions", "Challenge 3", "Challenge 4", "Challenge 5", "Challenge 6"]
 
-# List containing administration goals, which are also used as column names.
+# List containing administration themes/priorities, which are also used as column names in the data
 THEMES_LIST = ["Climate", "Equity", "Recovery"]
 
 """
 GOAL STATUSES
 """
-# A dictionary mapping each goal status to a rank
+# A dictionary mapping each goal status to a numeric rank
 STATUS_RANK_MAP = {
     "Ahead": 3,
     "On track": 2,
@@ -40,7 +45,7 @@ STATUS_RANK_MAP = {
 }
 
 """
-STYLING
+STYLING: Constants related to styling figures and output documents
 """
 # Maps each goal status to a hex color
 STATUS_COLOR_MAP = {
@@ -53,6 +58,7 @@ STATUS_COLOR_MAP = {
 """
 AGENCY NAMES/ABBREVIATIONS
 """
+# Maps agency full name to its abbreviation
 AGENCY_NAME_TO_ABBREVIATION = {
     "Department of Agriculture": "USDA", 
     "Department of Commerce": "DOC",
@@ -79,17 +85,18 @@ AGENCY_NAME_TO_ABBREVIATION = {
     "Small Business Administration": "SBA"
 }
 
+# Maps agency abbreviation to its full name
 AGENCY_ABBREVIATION_TO_NAME = {value: key for key, value in AGENCY_NAME_TO_ABBREVIATION.items()}
 
 """
-MARKDOWN REGEX
+MARKDOWN REGEX: Regular expressions used to interpret Markdown-formatted strings as bolded/italicized
 """
 BOLD_REGEX = "\*\*(.*?)\*\*"
 ITALICS_REGEX = "\*(.*?)\*"
 BOLD_ITALICS_REGEX = ""
 
 """
-NO-CODE SPREADSHEETS
+NO-CODE DATAFRAMES: DataFrames sourced from the no-code spreadsheets that are used to populate text fields in the output document
 """
 TEXT_BLOCK_TEMPLATES_DF = pd.read_excel(TEXT_BLOCK_TEMPLATES_PATH, skiprows=1)
 CHALLENGES_RECOMMENDATIONS_MAP_DF = pd.read_excel(CHALLENGES_RECOMMENDATIONS_MAP_PATH)
