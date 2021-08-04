@@ -14,7 +14,7 @@ import os
 from docx.shared import Inches
 from docx.enum.text import WD_BREAK
 from docx.text.paragraph import Paragraph
-from docxtpl import DocxTemplate, InlineImage
+from docxtpl import DocxTemplate, InlineImage, RichText
 import pandas as pd
 
 # Maps keywords within the template document to the values that they will be replaced by.
@@ -123,7 +123,7 @@ def create_summary_document(agency, output_filename, output_dir="src/output/docx
             "blockers_text": text_templates.get_blockers_text(agency, apg),
             "group_assistance_text": text_templates.get_group_help_text(agency, apg),
             "success_story": text_templates.get_success_story(agency, apg),
-            "recs_table": get_recs_table(agency, apg)
+            "recs_table": get_recs_table(agency, apg, tpl)
         }
 
         # Fill placeholders of image tags
@@ -224,7 +224,7 @@ def get_challenge_count_table(agency):
 
     return table
 
-def get_recs_table(agency, goal_name):
+def get_recs_table(agency, goal_name, tpl):
     """
     Returns a list of dictionaries (representing rows of the table) to fill the recommendations table in the APG breakdown template.
 
@@ -235,21 +235,26 @@ def get_recs_table(agency, goal_name):
     table = []
 
     for challenge in agency.get_challenges(goal_name):
-        table_row = {
-            "challenge": challenge,
-        }
+        recs_df = get_recommendations_for_challenge(challenge).reset_index()
 
-        recs_df = get_recommendations_for_challenge(challenge)
-        recs = []
+        rt = RichText()
 
         for index, row in recs_df.iterrows():
-            rec = {}
-            rec["name"] = row["Recommended Action"]
-            rec["explain"] = row["Explanation"]
-            
-            recs.append(rec)
+            rec = row["Recommended Action"]
+            explanation = row['Explanation']
+            url = tpl.build_url_id(row["URL"])
 
-        table_row["recs"] = recs
+            rt.add(rec, font="Roboto", url_id=url, color="#0000FF", underline=True) # adds recommended action with hyperlink
+            rt.add(f": {explanation}", font="Roboto")
+            
+            if index != len(recs_df) - 1:
+                rt.add("\n\n")
+        
+        table_row = {
+            "challenge": challenge,
+            "recs": rt
+        }
+
         table.append(table_row)
 
     return table
