@@ -11,6 +11,8 @@ from docx.table import _Cell, Table
 from docx.text.paragraph import Paragraph
 
 import xml.etree.ElementTree as ET
+from datetime import date
+import math
 
 def iter_block_items(parent):
     """
@@ -111,3 +113,29 @@ def get_trailing_blank_paragraphs(docx):
         lines_to_remove.append(reversed_block_items.pop(0))
 
     return lines_to_remove
+
+def get_current_fiscal_year():
+    """
+    Returns the current fiscal year. Note that the new fiscal year starts on October 1 of a calendar year: for instance, fiscal year 2021 started on October 1, 2020.
+
+    :return: The current fiscal year.
+    """
+    fiscal_year = date.today().year
+    
+    if date.today().month < 10:
+        fiscal_year = fiscal_year - 1
+
+    return fiscal_year
+
+def get_current_fiscal_quarter():
+    """
+    Returns the current fiscal month. Note that the first fiscal quarter begins on October 1 - the start of a new fiscal year.
+
+    :return: The current fiscal quarter.
+    """
+    month = date.today().month
+
+    if month >= 10:
+        return 1
+    else:
+        return math.ceil(month / 3) + 1 
