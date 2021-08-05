@@ -1,7 +1,7 @@
 """
 Functions related to rendering string inputs in Markdown formatting (specifically in bolding/italicizing) in alternative formats.
 """
-from src.constants import BOLD_REGEX, ITALICS_REGEX
+from src.constants import BOLD_REGEX, ITALICS_REGEX, DEFAULT_FONT
 
 from docxtpl import RichText
 import re
@@ -32,7 +32,7 @@ def string_to_richtext(text):
         if text_snippet in italics_items: 
             italic = True
             
-        rt.add(text_snippet, bold=bold, italic=italic, font="Roboto")
+        rt.add(text_snippet, bold=bold, italic=italic, font=DEFAULT_FONT)
     
     return rt
 
