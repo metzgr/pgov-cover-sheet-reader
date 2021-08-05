@@ -7,6 +7,7 @@ import src.utility as utility
 import src.output.data.df_creator as df_creator
 from src.output.text.processing.excel import get_richtext_from_variable
 import src.output.text.processing.excel as excel
+from src.constants import DEFAULT_FONT
 
 from docxtpl import RichText
 import numpy as np
@@ -57,19 +58,19 @@ def get_goal_status_breakdown_bullets(agency):
         current_goal_status = agency.get_goal_status(goal_name)
         previous_goal_status = agency.get_goal_status(goal_name, quarter="previous")
 
-        rt.add(str(goal_name), bold=True, font="Roboto")   # bolds the goal name at the beginning of the line
-        rt.add(f"'s team identified the status of the goal as {current_goal_status.lower()} this quarter, ", font="Roboto")
+        rt.add(str(goal_name), bold=True, font=DEFAULT_FONT)   # bolds the goal name at the beginning of the line
+        rt.add(f"'s team identified the status of the goal as {current_goal_status.lower()} this quarter, ", font=DEFAULT_FONT)
 
         # the next section of the line is conditional based on whether the goal status has stayed the same, progressed or regressed
         if current_goal_status == previous_goal_status:
-            rt.add(f"remaining consistent at its reported status of {previous_goal_status.lower()} last quarter.", font="Roboto")
+            rt.add(f"remaining consistent at its reported status of {previous_goal_status.lower()} last quarter.", font=DEFAULT_FONT)
         elif utility.goal_is_progressing(current_goal_status, previous_goal_status):
-            rt.add(f"progressing from a status of {previous_goal_status.lower()} last quarter.", font="Roboto")
+            rt.add(f"progressing from a status of {previous_goal_status.lower()} last quarter.", font=DEFAULT_FONT)
         else:   # goal is regressing
-            rt.add(f"dropping from a status of {previous_goal_status.lower()} reported last quarter.", font="Roboto")
+            rt.add(f"dropping from a status of {previous_goal_status.lower()} reported last quarter.", font=DEFAULT_FONT)
         
         if i != len(goals_list) - 1:
-            rt.add("\a", font="Roboto")    # adds a paragraph break following each goal status statement (except for the final one)
+            rt.add("\a", font=DEFAULT_FONT)    # adds a paragraph break following each goal status statement (except for the final one)
 
     return __process_template_output(rt)
 
@@ -109,16 +110,16 @@ def get_challenge_summary_text(agency):
 
             # Operations for if there are more than one most common challenges
             if j != 0:
-                rt.add(" and ", font="Roboto")  # adds connecting word for multiple challenges
+                rt.add(" and ", font=DEFAULT_FONT)  # adds connecting word for multiple challenges
                 challenge = challenge.lower()   # keeps the first challenge in the list uppercase, all others lowercase
 
-            rt.add(challenge, bold=True, font="Roboto") 
+            rt.add(challenge, bold=True, font=DEFAULT_FONT) 
 
         if key == "most common":
-            rt.add(" were the most commonly reported challenges across the agency's APG teams.", font="Roboto")
+            rt.add(" were the most commonly reported challenges across the agency's APG teams.", font=DEFAULT_FONT)
             rt.add("\n\n")    # line break in between most common and least common challenges
         else:
-            rt.add(" were the least commonly reported challenges across the agency's APG teams.", font="Roboto")
+            rt.add(" were the least commonly reported challenges across the agency's APG teams.", font=DEFAULT_FONT)
 
     return __process_template_output(rt)
 
@@ -180,8 +181,8 @@ def get_group_help_text(agency, apg_name):
             
             header_text = name.replace(" help", "")     # creates header name from the column name via removing the "help" indicator of column
 
-            rt.add(f"{header_text}:", bold=True, font="Roboto")
-            rt.add(f" {value}", font="Roboto")
+            rt.add(f"{header_text}:", bold=True, font=DEFAULT_FONT)
+            rt.add(f" {value}", font=DEFAULT_FONT)
 
     return __process_template_output(rt)
 
@@ -202,19 +203,19 @@ def get_apg_challenges_bullets(agency, apg_name, tpl):
     for i in range(len(challenges_list)):
         challenge = challenges_list[i]
 
-        rt.add(f"{challenge}", font="Roboto")
+        rt.add(f"{challenge}", font=DEFAULT_FONT)
 
         recs = excel.get_recommendations_for_challenge(challenge)  # retrieves all recommendations for the given challenge
         
         if len(recs):
-            rt.add(" — consider the following: ", font="Roboto")    # transition text
+            rt.add(" — consider the following: ", font=DEFAULT_FONT)    # transition text
             
             for j in range(len(recs)):
                 rec = recs[j]
-                rt.add(f"{rec['Recommended Action']}", font="Roboto", url_id=tpl.build_url_id(rec["URL"]), color="#0000FF", underline=True) # adds recommended action with hyperlink
+                rt.add(f"{rec['Recommended Action']}", font=DEFAULT_FONT, url_id=tpl.build_url_id(rec["URL"]), color="#0000FF", underline=True) # adds recommended action with hyperlink
 
                 if j != len(recs) - 1:
-                    rt.add(", ", font="Roboto")     # adds commas to separate challenges
+                    rt.add(", ", font=DEFAULT_FONT)     # adds commas to separate challenges
 
         if i != len(challenges_list) - 1:
             rt.add("\a")    # adds a paragraph break following each challenge (except for the final one)
@@ -260,8 +261,8 @@ def get_rec_text_block(rec, explanation, url):
     """
     rt = RichText()
 
-    rt.add(rec, font="Roboto", url_id=url, color="#0000FF", underline=True) # adds recommended action with hyperlink
-    rt.add(f": {__process_template_output(explanation)}", font="Roboto")    # processes explanation to catch NaN values
+    rt.add(rec, font=DEFAULT_FONT, url_id=url, color="#0000FF", underline=True) # adds recommended action with hyperlink
+    rt.add(f": {__process_template_output(explanation)}", font=DEFAULT_FONT)    # processes explanation to catch NaN values
 
     return rt
 

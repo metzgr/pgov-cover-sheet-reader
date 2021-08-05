@@ -55,6 +55,9 @@ STATUS_COLOR_MAP = {
     "Blocked": "#FA935B"
 }
 
+# The default font used in the output document
+DEFAULT_FONT = "Roboto"
+
 """
 AGENCY NAMES/ABBREVIATIONS
 """
