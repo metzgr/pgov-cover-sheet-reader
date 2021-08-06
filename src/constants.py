@@ -5,6 +5,11 @@ Stores all of the constants that are needed for project-wide use.
 import pandas as pd
 
 """
+CENTRAL DATABASE
+"""
+DATABASE_PATH = "../dummy_cover_sheet_data.csv"
+
+"""
 TEMPLATE PATHS
 """
 # .docx templates
