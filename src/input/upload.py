@@ -28,7 +28,15 @@ def update_database(database_path, new_data_df):
         if create_new_columns:
             database = database.append(new_data_df)     # appends new data with new columns, which are set at values of NaN for all previous entries
         else:
+            # Retrieving list of columns in both database and new data
             common_cols = (new_data_df.columns & database.columns).tolist()
+            
+            # Initiating the addition of some of the columns in the new data, but not all
+            if handle_yes_no_input("Would you like to add some, but not all, of the above listed columns to the database? Enter Y/N: "):
+                for column in different_columns:
+                    if handle_yes_no_input(f"Would you like to add the \"{column}\" column? Enter Y/N: "):
+                        common_cols.append(column)  # add the selected column to the list of columns to be used
+            
             common_slice = new_data_df.loc[:, common_cols]  # only selects columns from new data DataFrame that are in database, no new columns added
             
             database = database.append(common_slice)
