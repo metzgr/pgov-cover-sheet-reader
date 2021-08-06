@@ -20,8 +20,22 @@ def update_database(database_path, new_data_df):
         for column in different_columns:
             added_cols_str += f"\t\"{column}\"\n"
 
-        print(added_cols_str)
+        # Console prompt asking user whether or not they want to add new columns to database
+        added_cols_str += "Would you like to add all of these columns to the database? Enter Y/N: "
+        create_new_columns = input(added_cols_str)
 
-    database = database.append(new_data_df)
+        # Handling bad input
+        while create_new_columns not in ["Y", "N"]:
+            create_new_columns = input(f"\"{create_new_columns}\" is not a valid input. Please enter \"Y\" or \"N\": ")
+
+        if create_new_columns == "Y":
+            database = database.append(new_data_df)     # appends new data with new columns, which are set at values of NaN for all previous entries
+        elif create_new_columns == "N":
+            common_cols = (new_data_df.columns & database.columns).tolist()
+            common_slice = new_data_df.loc[:, common_cols]  # only selects columns from new data DataFrame that are in database, no new columns added
+            
+            database = database.append(common_slice)
+    else:   # if all columns in new data are in database
+        database = database.append(new_data_df)
 
     database.to_csv(database_path, index=False)
