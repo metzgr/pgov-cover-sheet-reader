@@ -33,7 +33,7 @@ def get_recurring_challenges_count(df):
         for goal in agency_goals:
             for challenge in CHALLENGES_LIST:
                 # gets the index of the last time the challenge wasn't reported, i.e., the number of consecutive quarters it was reported
-                consecutive_reports = (sorted_df.loc[sorted_df["Goal Name"] == goal].reset_index(drop=True)[challenge] == "Off").idxmax() 
+                consecutive_reports = (sorted_df.loc[sorted_df["Goal Name"] == goal].reset_index(drop=True)[challenge] == 0).idxmax() 
                 data.append({
                     "Agency Name": agency, 
                     "Goal Name": goal,
@@ -57,13 +57,13 @@ def get_challenge_count_by_quarter(df):
 
         data_df = data_df.groupby(["Agency Name", "Fiscal Year", "Quarter", challenge]).size().reset_index().rename(columns={0: "Count"})
 
-        # Error handling: groupby will not create any rows of "Yes" values if the agency never identified the given challenge. Checking to see if data_df only contains unchecked challenges
-        if len(data_df.loc[(data_df[challenge] == "Yes")]) == 0 and len(data_df.loc[(data_df[challenge] == "Off")]) == len(data_df):
+        # Error handling: groupby will not create any rows with value of 1 if the agency never identified the given challenge. Checking to see if data_df only contains unchecked challenges
+        if len(data_df.loc[(data_df[challenge] == 1)]) == 0 and len(data_df.loc[(data_df[challenge] == 0)]) == len(data_df):
             # Converts the count of the unchecked challenges to its inverse: a count of all the times the challenge was checked.
-            data_df[challenge] = "Yes"
+            data_df[challenge] = 1
             data_df["Count"] = 0
         else:
-            data_df = data_df.loc[(data_df[challenge] == "Yes")]
+            data_df = data_df.loc[(data_df[challenge] == 1)]
         
         # Change column with challenge name to general "Challenge" column, filled with the unique challenge name
         data_df[challenge] = challenge

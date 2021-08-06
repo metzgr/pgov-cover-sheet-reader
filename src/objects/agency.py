@@ -137,7 +137,7 @@ class Agency():
         :param goal_name: The name of the APG from which the challenges reported will be returned.
         :return: A list of the challenges reported by the passed goal team.
         """
-        return self.get_apg_row(goal_name)[CHALLENGES_LIST].columns[(self.get_apg_row(goal_name)[CHALLENGES_LIST] == "Yes").all()].tolist()     # list of challenge columns that are in the affirmative
+        return self.get_apg_row(goal_name)[CHALLENGES_LIST].columns[(self.get_apg_row(goal_name)[CHALLENGES_LIST] == 1).all()].tolist()     # list of challenge columns that are in the affirmative
 
     def get_themes(self, goal_name):
         """
@@ -146,7 +146,7 @@ class Agency():
         :param goal_name: The name of the APG from which the challenges reported will be returned.
         :return: A list of the themes connected to the the passed goal.
         """
-        return self.get_apg_row(goal_name)[THEMES_LIST].columns[(self.get_apg_row(goal_name)[THEMES_LIST] == "Off").all()].tolist()
+        return self.get_apg_row(goal_name)[THEMES_LIST].columns[(self.get_apg_row(goal_name)[THEMES_LIST] == 0).all()].tolist()
 
     def get_apg_row(self, goal_name, year=None, quarter=None):
         """
@@ -170,7 +170,7 @@ class Agency():
         :return: A DataFrame where each row is a unique instance of an APG team within the passed theme that is addressing the passed challenge in the current quarter.
         """
         common_agencies_df = self.get_df().loc[(self.get_df()["Quarter"] == self.get_quarter()) & (self.get_df()["Fiscal Year"] == self.get_year())]    # retrieves slice of DataFrame for current year and quarter
-        common_agencies_df = common_agencies_df.loc[(common_agencies_df[theme] == "Yes") & (common_agencies_df[challenge] == "Yes")]  # filters DataFrame for only agencies with common themes, challenges
+        common_agencies_df = common_agencies_df.loc[(common_agencies_df[theme] == 1) & (common_agencies_df[challenge] == 1)]  # filters DataFrame for only agencies with common themes, challenges
         common_agencies_df = common_agencies_df.loc[common_agencies_df["Agency Name"] != self.get_name()]   # filters the calling agency out of the DataFrame returned
 
         return common_agencies_df
