@@ -22,15 +22,12 @@ def update_database(database_path, new_data_df):
 
         # Console prompt asking user whether or not they want to add new columns to database
         added_cols_str += "Would you like to add all of these columns to the database? Enter Y/N: "
-        create_new_columns = input(added_cols_str)
+        
+        create_new_columns = handle_yes_no_input(added_cols_str)
 
-        # Handling bad input
-        while create_new_columns not in ["Y", "N"]:
-            create_new_columns = input(f"\"{create_new_columns}\" is not a valid input. Please enter \"Y\" or \"N\": ")
-
-        if create_new_columns == "Y":
+        if create_new_columns:
             database = database.append(new_data_df)     # appends new data with new columns, which are set at values of NaN for all previous entries
-        elif create_new_columns == "N":
+        else:
             common_cols = (new_data_df.columns & database.columns).tolist()
             common_slice = new_data_df.loc[:, common_cols]  # only selects columns from new data DataFrame that are in database, no new columns added
             
@@ -39,3 +36,18 @@ def update_database(database_path, new_data_df):
         database = database.append(new_data_df)
 
     database.to_csv(database_path, index=False)
+
+def handle_yes_no_input(prompt):
+    """
+    Error checks yes/no input, returns true or false depending on the input of the user.
+
+    :param prompt: The prompt used to retrieve a Y/N answer from the user.
+    :return: TRUE if the user enters "Y", FALSE if the user enters "N".
+    """
+    user_input = input(prompt).upper()
+
+    # Handling bad input
+    while user_input not in ["Y", "N"]:
+        user_input = input(f"\"{user_input}\" is not a valid input. Please enter \"Y\" or \"N\": ")
+
+    return user_input == "Y"
