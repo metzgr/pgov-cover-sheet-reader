@@ -213,11 +213,6 @@ def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="
     ax.axhline(1.5, color="white")
     ax.axhline(2.5, color="white")
 
-    # Lines dividing fiscal years
-    ax.axvline(3.5, color="white", linestyle="--", dashes=[6,9], linewidth=3)
-    ax.axvline(7.5, color="white", linestyle="--", dashes=[6,9], linewidth=3)
-    ax.axvline(11.5, color="white", linestyle="--", dashes=[6,9], linewidth=3)
-
     status_ranked = pd.Series([STATUS_RANK_MAP[status] for status in list(apg_status_df["Status"])])    # List of numerical ranking of APG statuses in chronological order, needed to correctly order statuses on y-axis
 
     # Create plot
