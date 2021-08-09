@@ -186,7 +186,7 @@ def create_challenges_area_chart(agency, dir=DEFAULT_DIRECTORY, name="challenges
 
 def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="goal_status_over_time"):
     """
-    Creates a plot displaying the goal status over time of the passed APG.
+    Creates a plot displaying the goal status of the passed APG over the last four quarters.
 
     :param agency: The Agency object from which the plot will be created.
     :param apg_name: The name of the APG that will be represented in the created plot.
@@ -194,6 +194,9 @@ def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="
     :param name: The file name that the figure will be saved to.
     """
     apg_status_df = agency.get_agency_df()
+    
+    # Formatting DataFrame
+    apg_status_df = apg_status_df.loc[((apg_status_df["Fiscal Year"] == agency.get_year() - 1) & (apg_status_df["Quarter"] > agency.get_quarter())) | ((apg_status_df["Fiscal Year"] == agency.get_year()) & (apg_status_df["Quarter"] <= agency.get_quarter()))]   # filter for only the previous four quarters
     apg_status_df = apg_status_df.loc[apg_status_df["Goal Name"] == apg_name].sort_values(by=["Fiscal Year","Quarter"])     # sort in chronological order
     apg_status_df["Quarter/Year"] = apg_status_df["Quarter"] + " " + apg_status_df["Fiscal Year"].astype(str)
 
