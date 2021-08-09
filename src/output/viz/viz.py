@@ -217,8 +217,9 @@ def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="
 
     # Create plot
     plt.plot(apg_status_df["Quarter/Year"], status_ranked, marker="o", markersize=16)
+    plt.ylim(min(STATUS_RANK_MAP.values()) - 0.5, max(STATUS_RANK_MAP.values()) + 0.5)
     plt.suptitle("Goal Status Over Time")
-    plt.xticks(rotation=90, fontsize=24)
+    plt.xticks(fontsize=24)
     y_ticks  = [item[0] for item in sorted(STATUS_RANK_MAP.items(), key=lambda item: item[1])]  # orders keys based on their values in ascending order
     plt.yticks(np.arange(len(y_ticks)), y_ticks, fontsize=24)     # restore string status names, overwrite numerical ranks
 
