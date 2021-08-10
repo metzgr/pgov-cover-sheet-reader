@@ -261,7 +261,8 @@ def get_rec_text_block(rec, explanation, url):
     """
     rt = RichText()
 
-    rt.add(rec, font=DEFAULT_FONT, url_id=url, color="#0000FF", underline=True) # adds recommended action with hyperlink
+    rt.add("Consider ", bold=True, font=DEFAULT_FONT)
+    rt.add(rec, font=DEFAULT_FONT, url_id=url, color="#0000FF", underline=True, bold=True) # adds recommended action with hyperlink
     rt.add(f": {__process_template_output(explanation)}", font=DEFAULT_FONT)    # processes explanation to catch NaN values
 
     return rt
