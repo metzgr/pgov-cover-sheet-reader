@@ -198,7 +198,7 @@ def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="
     # Formatting DataFrame
     apg_status_df = apg_status_df.loc[((apg_status_df["Fiscal Year"] == agency.get_year() - 1) & (apg_status_df["Quarter"] > agency.get_quarter())) | ((apg_status_df["Fiscal Year"] == agency.get_year()) & (apg_status_df["Quarter"] <= agency.get_quarter()))]   # filter for only the previous four quarters
     apg_status_df = apg_status_df.loc[apg_status_df["Goal Name"] == apg_name].sort_values(by=["Fiscal Year","Quarter"])     # sort in chronological order
-    apg_status_df["Quarter/Year"] = apg_status_df["Quarter"] + " " + apg_status_df["Fiscal Year"].astype(str)
+    apg_status_df["Quarter/Year"] = apg_status_df["Quarter"] + " " + apg_status_df["Fiscal Year"].astype(int).astype(str)
 
     font = {
         'family' : 'sans-serif',
