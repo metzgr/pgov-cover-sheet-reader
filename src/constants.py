@@ -33,7 +33,7 @@ COVER_SHEET_DIRECTORY = "../cover_sheet/cover_sheets/"
 COLUMN NAME LISTS: List including the names of related columns in the central data source
 """
 # List of challenges that can be reported in the cover sheet, correspond to column names in the data
-CHALLENGES_LIST = ["Hiring technical staff", "Inadequate technical solutions", "Challenge 3", "Challenge 4", "Challenge 5", "Challenge 6"]
+CHALLENGES_LIST = ["Hiring technical staff in-house", "Inadequate technology", "Challenge 3", "Challenge 4", "Challenge 5", "Challenge 6"]
 
 # List containing administration themes/priorities, which are also used as column names in the data
 THEMES_LIST = ["Climate", "Equity", "Recovery"]
