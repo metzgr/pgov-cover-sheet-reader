@@ -174,7 +174,7 @@ def create_challenges_area_chart(agency, dir=DEFAULT_DIRECTORY, name="challenges
 
     # Editing the display of the plot
     quarter_list = [f"{quarter} {year}" for year in challenge_count_df["Fiscal Year"].unique() for quarter in challenge_count_df["Quarter"].unique()]  # a list of all quarters stored in DataFrame
-    plt.ylabel("# of occurrences", fontsize=24)
+    plt.ylabel("Count of APGs reporting challenge", fontsize=24, labelpad=20)
     plt.xticks([i for i in range(len(quarter_list))], quarter_list, fontsize=24, rotation=90)
     plt.yticks(fontsize=24)
     ax.grid(False)
