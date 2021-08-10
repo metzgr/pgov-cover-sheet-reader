@@ -186,7 +186,7 @@ def create_challenges_area_chart(agency, dir=DEFAULT_DIRECTORY, name="challenges
 
 def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="goal_status_over_time"):
     """
-    Creates a plot displaying the goal status over time of the passed APG.
+    Creates a plot displaying the goal status of the passed APG over the last four quarters.
 
     :param agency: The Agency object from which the plot will be created.
     :param apg_name: The name of the APG that will be represented in the created plot.
@@ -194,8 +194,11 @@ def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="
     :param name: The file name that the figure will be saved to.
     """
     apg_status_df = agency.get_agency_df()
+    
+    # Formatting DataFrame
+    apg_status_df = apg_status_df.loc[((apg_status_df["Fiscal Year"] == agency.get_year() - 1) & (apg_status_df["Quarter"] > agency.get_quarter())) | ((apg_status_df["Fiscal Year"] == agency.get_year()) & (apg_status_df["Quarter"] <= agency.get_quarter()))]   # filter for only the previous four quarters
     apg_status_df = apg_status_df.loc[apg_status_df["Goal Name"] == apg_name].sort_values(by=["Fiscal Year","Quarter"])     # sort in chronological order
-    apg_status_df["Quarter/Year"] = apg_status_df["Quarter"] + " " + apg_status_df["Fiscal Year"].astype(str)
+    apg_status_df["Quarter/Year"] = apg_status_df["Quarter"] + " " + apg_status_df["Fiscal Year"].astype(int).astype(str)
 
     font = {
         'family' : 'sans-serif',
@@ -210,21 +213,17 @@ def create_goal_status_over_time(agency, apg_name, dir=DEFAULT_DIRECTORY, name="
     ax.axhline(1.5, color="white")
     ax.axhline(2.5, color="white")
 
-    # Lines dividing fiscal years
-    ax.axvline(3.5, color="white", linestyle="--", dashes=[6,9], linewidth=3)
-    ax.axvline(7.5, color="white", linestyle="--", dashes=[6,9], linewidth=3)
-    ax.axvline(11.5, color="white", linestyle="--", dashes=[6,9], linewidth=3)
-
     status_ranked = pd.Series([STATUS_RANK_MAP[status] for status in list(apg_status_df["Status"])])    # List of numerical ranking of APG statuses in chronological order, needed to correctly order statuses on y-axis
 
     # Create plot
     plt.plot(apg_status_df["Quarter/Year"], status_ranked, marker="o", markersize=16)
+    plt.ylim(min(STATUS_RANK_MAP.values()) - 0.5, max(STATUS_RANK_MAP.values()) + 0.5)
     plt.suptitle("Goal Status Over Time")
-    plt.xticks(rotation=90, fontsize=24)
+    plt.xticks(fontsize=30)
     y_ticks  = [item[0] for item in sorted(STATUS_RANK_MAP.items(), key=lambda item: item[1])]  # orders keys based on their values in ascending order
     plt.yticks(np.arange(len(y_ticks)), y_ticks, fontsize=24)     # restore string status names, overwrite numerical ranks
 
-    ax.margins(y=0.15)
+    ax.margins(x=0.15, y=0.15)
     ax.grid(False)  # turns off the seaborn plot
 
     # Exporting figure
