@@ -25,16 +25,10 @@ def read_cover_sheet(document):
             if block.text in HEADER_MAP.keys():     # if the paragraph holds one of the headers used to indicate that text can be inputted from user
                 header = block.text
         else:   # if block is Table object
-            if header:  # if table comes directly after a header
-                text_input = None
-                for row in block.rows: 
-                    for cell in row.cells:
-                        for paragraph in cell.paragraphs: 
-                            if text_input:  # allows for multiple paragraphs in input
-                                text_input = "{} {}".format(text_input, paragraph.text)
-                            else:
-                                text_input = paragraph.text
-                data[HEADER_MAP[header]] = text_input
+            if header:  # if table comes directly after a recognized header
+                table_data = get_list_from_table(block)
+
+                data[HEADER_MAP[header]] = " ".join(table_data)
                 header = None
             else:
                 for row in block.rows:
