@@ -35,6 +35,21 @@ VIZ_DIRECTORY = "src/output/viz/images/"
 COVER_SHEET_DIRECTORY = "../cover_sheet/cover_sheets/"
 
 """
+COVER SHEET READING
+"""
+# Maps headers on cover sheet to columns in the data - i.e., when the cover sheet reader comes across the header in the key, the data is stored to a column with the value as the column name
+HEADER_MAP = {
+    "What is blocking you?": "Blockers",
+    "Add your own tags": "Tags",
+    "How can the White House help?": "White House help",
+    "How can other agencies help?": "Other agencies help",
+    "How can Congress help?": "Congress help",
+    "How can industry help?": "Industry help",
+    "How can the third sector (non-profits and non-governmental organizations) help?": "Third sector help",
+    "How can academia help?": "Academia help"
+}
+
+"""
 COLUMN NAME LISTS: List including the names of related columns in the central data source
 """
 # List of challenges that can be reported in the cover sheet, correspond to column names in the data
