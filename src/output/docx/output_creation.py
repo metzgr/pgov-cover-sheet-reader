@@ -14,12 +14,6 @@ from docx.shared import Inches
 from docx.enum.text import WD_BREAK
 from docxtpl import DocxTemplate, InlineImage
 
-# Maps keywords within the template document to the values that they will be replaced by.
-REPLACEMENT_MAP = {
-    "example string adjective": "incredibly",
-    "blocking text": "These are some blockers that were custom-placed into the document. Nice job!"
-}
-
 def replace_placeholder_images(tpl, placeholder_map):
     """
     Replaces all of the placeholder images of the passed DocxTemplate object with relevant figures.
