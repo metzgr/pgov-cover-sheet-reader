@@ -7,7 +7,7 @@ import src.output.text.text_templates as text_templates
 import src.output.data.df_creator as df_creator
 import src.output.viz.viz as viz
 import src.output.docx.tables as tables
-from src.constants import VIZ_DIRECTORY, SUMMARY_TEMPLATE_PATH, APG_BREAKDOWN_TEMPLATE_PATH
+from src.constants import VIZ_DIRECTORY, SUMMARY_TEMPLATE_PATH, APG_BREAKDOWN_TEMPLATE_PATH, OUTPUT_DIR
 
 import os
 from docx.shared import Inches
@@ -57,7 +57,7 @@ def create_visuals(agency):
         goal = goals[i]
         viz.create_goal_status_over_time(agency, goal, name=f"goal_status_over_time_{i}")
 
-def create_summary_document(agency, output_filename, output_dir="src/output/docx/summary_reports/"):
+def create_summary_document(agency, output_filename, output_dir=OUTPUT_DIR):
     """
     Creates a summary document for the passed agency, year and quarter.
 

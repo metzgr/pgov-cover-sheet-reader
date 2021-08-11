@@ -10,6 +10,11 @@ CENTRAL DATABASE
 DATABASE_PATH = "../dummy_cover_sheet_data.csv"
 
 """
+OUTPUT PATH
+"""
+OUTPUT_DIR = "src/output/docx/summary_reports/"
+
+"""
 TEMPLATE PATHS
 """
 # .docx templates
