@@ -96,3 +96,22 @@ def get_cover_sheets(path=None):
         return None
 
     return cover_sheets
+
+def get_list_from_table(table):
+    """
+    Given a passed table, returns a list with each element representing the data held in a cell of the table. Parses through the table from top to bottom, going left to right in each row.
+
+    :param table: A Table element retrieved from a Table in a Word document containing data.
+    :return: A list containing all the data from the table.
+    """
+    text_input = []
+
+    for row in table.rows: 
+        for cell in row.cells:
+            paragraphs = []
+            for paragraph in cell.paragraphs:
+                paragraphs.append(paragraph.text)
+            
+            text_input.append("\n".join(paragraphs))    # separate each paragraph by a line break
+
+    return text_input
