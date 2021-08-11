@@ -3,8 +3,8 @@ File to be run to generate summary reports for the most recent quarter
 """
 import src.output.docx.output_creation as output_creation
 from src.objects.agency import Agency
-from src.input.cover_sheet_reading import process_cover_sheets, get_cover_sheets
-from src.input.upload import update_database
+from src.input.cover_sheets.reading import process_cover_sheets, get_cover_sheets
+from src.input.cover_sheets.upload import update_database
 import pandas as pd
 
 from src.constants import AGENCY_ABBREVIATION_TO_NAME, DATABASE_PATH

@@ -3,25 +3,12 @@ Functions realted to scraping the data from an incoming cover sheet.
 """
 
 import src.utility as utility
-from src.constants import COVER_SHEET_DIRECTORY
+from src.constants import COVER_SHEET_DIRECTORY, HEADER_MAP
 
 from docx import Document
 from docx.text.paragraph import Paragraph
 import pandas as pd
 import os
-
-# Maps headers on cover sheet to columns in the data
-HEADER_MAP = {
-    "What is blocking you?": "Blockers",
-    "Add your own tags": "Tags",
-    "How can the White House help?": "White House help",
-    "How can other agencies help?": "Other agencies help",
-    "How can Congress help?": "Congress help",
-    "How can industry help?": "Industry help",
-    "How can the third sector (non-profits and non-governmental organizations) help?": "Third sector help",
-    "How can academia help?": "Academia help"
-}
-
 
 def read_cover_sheet(document):
     """
