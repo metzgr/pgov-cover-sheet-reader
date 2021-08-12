@@ -3,8 +3,8 @@ Stores all of the function that enable the dynamic filling of tables in the summ
 """
 
 import src.utility as utility
-import src.output.data.df_creator as df_creator
-import src.output.text.text_templates as text_templates
+import src.output.dataframe.transformations as df_transformations
+import src.output.text.templates as text_templates
 from src.output.text.processing.excel import get_recommendations_for_challenge
 
 from docxtpl import RichText
@@ -43,7 +43,7 @@ def get_challenge_count_table(agency):
     """
     table = []
 
-    challenge_count_df = df_creator.get_challenge_count_by_quarter(agency.get_agency_df())
+    challenge_count_df = df_transformations.get_challenge_count_by_quarter(agency.get_agency_df())
     challenge_count_df = challenge_count_df.loc[(challenge_count_df["Quarter"] == agency.get_quarter()) & (challenge_count_df["Fiscal Year"] == agency.get_year())].sort_values(by="Count", ascending=False)
 
     for challenge in challenge_count_df["Challenge"].unique():

@@ -1,10 +1,10 @@
 """
-Includes functions that take key information and format it in a client-friendly string that can be used in summary reports.
+This file includes text "templates", or functions that dynamically fill sentences given a passed amount of information. Includes functions that take key information and format it in a client-friendly string or RichText object that can be used in summary reports.
 """
 
 import src.objects.agency as agency
 import src.utility as utility
-import src.output.data.df_creator as df_creator
+import src.output.dataframe.transformations as df_transformations
 from src.output.text.processing.excel import get_richtext_from_variable
 import src.output.text.processing.excel as excel
 from src.constants import DEFAULT_FONT
@@ -83,7 +83,7 @@ def get_challenge_summary_text(agency):
     """
     rt = RichText()
 
-    challenges_df = df_creator.get_challenge_count_by_quarter(agency.get_agency_df())   # retrieve challenge count df
+    challenges_df = df_transformations.get_challenge_count_by_quarter(agency.get_agency_df())   # retrieve challenge count df
     challenges_df = challenges_df.loc[  # filter for agency year and quarter
         (challenges_df["Quarter"] == agency.get_quarter()) & 
         (challenges_df["Fiscal Year"] == agency.get_year()
