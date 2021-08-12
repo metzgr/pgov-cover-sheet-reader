@@ -18,12 +18,12 @@ OUTPUT_DIR = "src/output/docx/summary_reports/"
 TEMPLATE PATHS
 """
 # .docx templates
-SUMMARY_TEMPLATE_PATH = "src/resources/templates/docx/Summary_Report_Template.docx"
-APG_BREAKDOWN_TEMPLATE_PATH = "src/resources/templates/docx/APG_Summary_Template.docx"
+SUMMARY_TEMPLATE_PATH = "src/templates/docx/Summary_Report_Template.docx"
+APG_BREAKDOWN_TEMPLATE_PATH = "src/templates/docx/APG_Summary_Template.docx"
 
 # No-code spreadsheets
-TEXT_BLOCK_TEMPLATES_PATH = "src/resources/templates/excel/text_block_templates.xlsx"
-CHALLENGES_RECOMMENDATIONS_MAP_PATH = "src/resources/templates/excel/challenges_recommendations_map.xlsx"
+TEXT_BLOCK_TEMPLATES_PATH = "src/templates/excel/text_block_templates.xlsx"
+CHALLENGES_RECOMMENDATIONS_MAP_PATH = "src/templates/excel/challenges_recommendations_map.xlsx"
 
 """
 DIRECTORIES
