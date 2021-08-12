@@ -118,3 +118,22 @@ def checkbox_in_row(row):
     :return: TRUE if a checkbox is in the row, FALSE otherwise.
     """
     return any([checkbox in row_element for row_element in row for checkbox in ["☒", "☐"]])
+
+def get_checkbox_index(row, is_checked):
+    """
+    Given a list of data from a row, return the index of first occurrence the passed check type. Returns -1 if the check type is not present in the list.
+
+    :param row: A list of data from a row within a Word document table.
+    :param is_checked: Boolean corresponding to whether the desired index is of checked checkboxes (true) or unchecked checkboxes (unchecked).
+    :return: The index of the list that contains the specified checkbox type if it is present. Otherwise, return -1.
+    """
+    if is_checked:
+        checkbox = "☒"
+    else:
+        checkbox = "☐"
+
+    for id, cell_text in enumerate(row):
+        if checkbox in cell_text:
+            return id   # returns the ID if the specified checkbox is found
+    
+    return -1   # returns -1 if the row is looped through and no checkbox is found
