@@ -21,16 +21,17 @@ def read_cover_sheet(document):
     header = None
 
     for block in utility.iter_block_items(document):
-        if isinstance(block, Paragraph):
+        if isinstance(block, Paragraph):    # handling of paragraphs
             if block.text in HEADER_MAP.keys():     # if the paragraph holds one of the headers used to indicate that text can be inputted from user
-                header = block.text
+                header = block.text     # stores text as a header
         else:   # if block is Table object
             if header:  # if table comes directly after a recognized header
                 table_data = get_list_from_table(block)
 
+                # Storing of data under the mapped column name, resetting header to read more data
                 data[HEADER_MAP[header]] = " ".join(table_data)
                 header = None
-            else:
+            else:   # for tables that do not come directly after headers
                 for row in block.rows:
                     row_text = []
                     for cell in row.cells:
