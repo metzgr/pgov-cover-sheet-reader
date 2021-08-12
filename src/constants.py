@@ -5,9 +5,11 @@ Stores all of the constants that are needed for project-wide use.
 import pandas as pd
 
 """
-CENTRAL DATABASE
+CONFIG: Need to be changed based on the user's local environment in order to run the project
 """
 DATABASE_PATH = "../dummy_cover_sheet_data.csv"
+# A path to the directory in which cover sheets are stored (relative to the location of the project's root)
+COVER_SHEET_DIRECTORY = "../cover_sheet/cover_sheets/"
 
 """
 OUTPUT PATH
@@ -30,9 +32,6 @@ DIRECTORIES
 """
 # Directory where visualizations are stored as they are created for the output document
 VIZ_DIRECTORY = "src/output/viz/images/"
-
-# A path to the directory in which cover sheets are stored (relative to the location of the project's root)
-COVER_SHEET_DIRECTORY = "../cover_sheet/cover_sheets/"
 
 """
 COVER SHEET READING
