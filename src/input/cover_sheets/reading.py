@@ -39,10 +39,10 @@ def read_cover_sheet(document):
                             row_text.append(paragraph.text)     # collects all paragraphs in a given cell into a list
 
                     # storing of checkboxes in data field - continues until all checkboxes are retrieved from cell
-                    while checkbox_in_row(row_text):
+                    while __checkbox_in_row(row_text):
                         # Retrieves index of the first checked and unchecked checkboxes
-                        checked_index = get_checkbox_index(row_text, True)
-                        unchecked_index = get_checkbox_index(row_text, False)
+                        checked_index = __get_checkbox_index(row_text, True)
+                        unchecked_index = __get_checkbox_index(row_text, False)
 
                         index = max(checked_index, unchecked_index)     # retrives the maximum index value, meaning index -1 is never selected
                         checkbox_value = 1 if index == checked_index else 0
@@ -52,6 +52,8 @@ def read_cover_sheet(document):
                         data[column_title] = checkbox_value   # stores a 1 if box is checked, else 0
     
     return data
+
+# DOCUMENT RETRIEVAL METHODS
 
 def process_cover_sheets(cover_sheets_list):
     """
@@ -87,6 +89,8 @@ def get_cover_sheets(path=None):
 
     return cover_sheets
 
+# DATA READING METHODS
+
 def get_list_from_table(table):
     """
     Given a passed table, returns a list with each element representing the data held in a cell of the table. Parses through the table from top to bottom, going left to right in each row.
@@ -106,7 +110,7 @@ def get_list_from_table(table):
 
     return text_input
 
-def checkbox_in_row(row):
+def __checkbox_in_row(row):
     """
     Given a list of data from a row, return TRUE if there is a checkbox in the row, FALSE otherwise.
 
@@ -115,7 +119,7 @@ def checkbox_in_row(row):
     """
     return any([checkbox in row_element for row_element in row for checkbox in ["☒", "☐"]])
 
-def get_checkbox_index(row, is_checked):
+def __get_checkbox_index(row, is_checked):
     """
     Given a list of data from a row, return the index of first occurrence the passed check type. Returns -1 if the check type is not present in the list.
 
