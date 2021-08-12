@@ -4,7 +4,7 @@ Stores all of the function that enable the dynamic filling of tables in the summ
 
 import src.utility as utility
 import src.output.data.df_creator as df_creator
-import src.output.text.text_templates as text_templates
+import src.output.text.templates as text_templates
 from src.output.text.processing.excel import get_recommendations_for_challenge
 
 from docxtpl import RichText

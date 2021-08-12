@@ -1,5 +1,5 @@
 """
-Includes functions that take key information and format it in a client-friendly string that can be used in summary reports.
+This file includes text "templates", or functions that dynamically fill sentences given a passed amount of information. Includes functions that take key information and format it in a client-friendly string or RichText object that can be used in summary reports.
 """
 
 import src.objects.agency as agency
