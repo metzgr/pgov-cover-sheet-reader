@@ -38,7 +38,6 @@ def read_cover_sheet(document):
                             row_text.append(paragraph.text)     # collects all paragraphs in a given cell into a list
 
                     # storing of checkboxes in data field - continues until all checkboxes are retrieved from cell
-                    while any([i in ["☒", "☐"] for i in row_text]):
                         try:
                             checked_index = row_text.index("☒")
                         except:
@@ -48,6 +47,7 @@ def read_cover_sheet(document):
                             unchecked_index = row_text.index("☐")
                         except:
                             unchecked_index = -1
+                    while checkbox_in_row(row_text):
 
                         index = max(checked_index, unchecked_index)
                         checkbox = row_text.pop(index)
@@ -109,3 +109,12 @@ def get_list_from_table(table):
             text_input.append("\n".join(paragraphs))    # separate each paragraph by a line break
 
     return text_input
+
+def checkbox_in_row(row):
+    """
+    Given a list of data from a row, return TRUE if there is a checkbox in the row, FALSE otherwise.
+
+    :param row: A list of data from a row within a Word document table.
+    :return: TRUE if a checkbox is in the row, FALSE otherwise.
+    """
+    return any([checkbox in row_element for row_element in row for checkbox in ["☒", "☐"]])
