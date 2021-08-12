@@ -13,7 +13,7 @@ import os
 
 from src.constants import CHALLENGES_LIST, STATUS_RANK_MAP, STATUS_COLOR_MAP
 import src.utility as utility
-import src.output.data.df_creator as df_creator
+import src.output.dataframe.transformations as df_transformations
 
 from src.constants import VIZ_DIRECTORY as DEFAULT_DIRECTORY
 
@@ -40,7 +40,7 @@ def create_goal_summary_small_multiples(agency, dir=DEFAULT_DIRECTORY, names=["s
     if not all([isinstance(name, str) for name in names]):
         raise Exception("All items in the 'names' argument must be stings")
 
-    goal_stauts_count_df = df_creator.get_status_count_groupby_agency_year_quarter(agency.get_agency_df())
+    goal_stauts_count_df = df_transformations.get_status_count_groupby_agency_year_quarter(agency.get_agency_df())
 
     # Create ordered hierarchy of statuses
     status_ordered = CategoricalDtype(
@@ -107,7 +107,7 @@ def create_challenges_reported_in_quarter(agency, dir=DEFAULT_DIRECTORY, name="c
     :param name: The file name that the figure will be saved to.
     """
     # Retrieve DataFrame, filter for only this quarter
-    challenge_count_df = df_creator.get_challenge_count_by_quarter(agency.get_agency_df())
+    challenge_count_df = df_transformations.get_challenge_count_by_quarter(agency.get_agency_df())
     challenge_count_df = challenge_count_df.loc[(challenge_count_df["Quarter"] == agency.get_quarter()) & (challenge_count_df["Fiscal Year"] == agency.get_year())].sort_values(by="Count", ascending=False)
 
     font = {
@@ -148,7 +148,7 @@ def create_challenges_area_chart(agency, dir=DEFAULT_DIRECTORY, name="challenges
     :param name: The file name that the figure will be saved to.
     """
     # Retrieve DataFrame, sort values in chronological order
-    challenge_count_df = df_creator.get_challenge_count_by_quarter(agency.get_agency_df())
+    challenge_count_df = df_transformations.get_challenge_count_by_quarter(agency.get_agency_df())
     challenge_count_df = challenge_count_df.sort_values(by=["Fiscal Year", "Quarter"])
 
     data = {}

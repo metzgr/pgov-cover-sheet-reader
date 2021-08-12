@@ -4,7 +4,7 @@ All of the functions related to generating an output document using the template
 
 import src.utility as utility
 import src.output.text.templates as text_templates
-import src.output.data.df_creator as df_creator
+import src.output.dataframe.transformations as df_transformations
 import src.output.viz.viz as viz
 import src.output.docx.tables as tables
 from src.constants import VIZ_DIRECTORY, SUMMARY_TEMPLATE_PATH, APG_BREAKDOWN_TEMPLATE_PATH, OUTPUT_DIR
@@ -164,7 +164,7 @@ def get_top_recurring_challenges(agency, num_challenges=2):
     :param num_challenges: The number of top recurring challenges that should be returned. 2 by default.
     :return: A DataFrame with the most frequent recurring challenges for the passed agency.
     """
-    df = df_creator.get_recurring_challenges_count(agency.get_agency_df())
+    df = df_transformations.get_recurring_challenges_count(agency.get_agency_df())
     df = df.sort_values("Count", ascending=False)
 
     return df.reset_index(drop=True).head(num_challenges)
