@@ -1,9 +1,9 @@
 """
-Maps keywords imbedded in template document (keys) to what they will be replaced with in the rendered output document (values). Note that each keyword is identified as "{{keyword_name}}" within the template document.
+All of the functions related to generating an output document using the template documents. Maps keywords imbedded in template document (keys) to what they will be replaced with in the rendered output document (values). Note that each keyword is identified as "{{keyword_name}}" within the template document.
 """
 
 import src.utility as utility
-import src.output.text.text_templates as text_templates
+import src.output.text.templates as text_templates
 import src.output.data.df_creator as df_creator
 import src.output.viz.viz as viz
 import src.output.docx.tables as tables
