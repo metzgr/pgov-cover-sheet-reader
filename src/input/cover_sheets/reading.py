@@ -38,22 +38,17 @@ def read_cover_sheet(document):
                             row_text.append(paragraph.text)     # collects all paragraphs in a given cell into a list
 
                     # storing of checkboxes in data field - continues until all checkboxes are retrieved from cell
-                        try:
-                            checked_index = row_text.index("☒")
-                        except:
-                            checked_index = -1
-
-                        try:
-                            unchecked_index = row_text.index("☐")
-                        except:
-                            unchecked_index = -1
                     while checkbox_in_row(row_text):
+                        # Retrieves index of the first checked and unchecked checkboxes
+                        checked_index = get_checkbox_index(row_text, True)
+                        unchecked_index = get_checkbox_index(row_text, False)
 
-                        index = max(checked_index, unchecked_index)
-                        checkbox = row_text.pop(index)
-                        column_title = row_text.pop(index)
+                        index = max(checked_index, unchecked_index)     # retrives the maximum index value, meaning index -1 is never selected
+                        checkbox_value = 1 if index == checked_index else 0
+                        row_text.pop(index)     # removes element with checkbox that is being added to data
+                        column_title = row_text.pop(index)  # removes element in row directly after checkbox, which is assumed to be the title of the checkbox field
 
-                        data[column_title] = 1 if checkbox == "☒" else 0   # stores a 1 if box is checked, else 0
+                        data[column_title] = checkbox_value   # stores a 1 if box is checked, else 0
     
     return data
 
