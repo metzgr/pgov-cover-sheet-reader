@@ -267,6 +267,20 @@ def get_rec_text_block(rec, explanation, url):
 
     return rt
 
+def __list_to_str(input_list):
+    """
+    Converts the passed list to a client-readable string in the format "{item 1}, {item 2} and {item 3}"
+
+    :param input_list: A list of items
+    :return: A a client-readable string representing the passed list.
+    """
+    output_list = None
+
+    if len(input_list) > 1:
+        return ", ".join(input_list[:-1]) + f" and {input_list[-1]}"
+    elif len(input_list) == 1:
+        return input_list[0]
+    
 def __process_template_output(output_text):
     """
     Processes template output object and returns a version of it that is suitable for use in the output file. Please use this function to wrap any data that is intended to be rendered in the output document.
