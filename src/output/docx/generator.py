@@ -117,7 +117,9 @@ def create_summary_document(agency, output_filename, output_dir=OUTPUT_DIR):
             "recs_table": tables.get_recs_table(agency, apg, tpl),
             "theme_challenges_tables": [
                 {"challenge": challenge, "table": tables.get_common_challenges_theme_table(agency, apg, challenge)} for challenge in agency.get_challenges(apg)     # creates a dictionary for each challenge that the APG reported this quarter
-            ]
+            ],
+            "cap_goals_list": text_templates.get_cap_goals_list(agency, apg),
+            "outcomes_list": text_templates.get_outcomes_list(agency, apg)
         }
 
         # Fill placeholders of image tags
