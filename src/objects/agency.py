@@ -2,7 +2,7 @@
 Holds definition of Agency class and its associated methods.
 """
 
-from src.constants import CHALLENGES_LIST, THEMES_LIST, AGENCY_NAME_TO_ABBREVIATION, AGENCY_ABBREVIATION_TO_NAME
+from src.constants import OUTCOMES_LIST, THEMATIC_MAPPING_DF, CHALLENGES_LIST, THEMES_LIST, CAP_GOALS_LIST, AGENCY_NAME_TO_ABBREVIATION, AGENCY_ABBREVIATION_TO_NAME
 import src.utility as utility
 
 import pandas as pd
@@ -143,10 +143,32 @@ class Agency():
         """
         Returns a list of the themes connected to the passed goal name.
 
-        :param goal_name: The name of the APG from which the challenges reported will be returned.
+        :param goal_name: The name of the APG from which the related themes will be returned.
         :return: A list of the themes connected to the the passed goal.
         """
         return self.get_apg_row(goal_name)[THEMES_LIST].columns[(self.get_apg_row(goal_name)[THEMES_LIST] == 0).all()].tolist()
+
+    def get_cap_goals(self, goal_name):
+        """
+        Returns a list of the CAP goals connected to the passed goal name.
+
+        :param goal_name: The name of the APG from which the related CAP goals will be returned.
+        :return: A list of the CAP goals connected to the the passed goal.
+        """
+        thematic_mapping_row = THEMATIC_MAPPING_DF.loc[THEMATIC_MAPPING_DF["Goal Name"] == goal_name]
+
+        return thematic_mapping_row[CAP_GOALS_LIST].columns[(thematic_mapping_row[CAP_GOALS_LIST] == 1).all()].tolist()
+
+    def get_outcomes(self, goal_name):
+        """
+        Returns a list of the outcomes connected to the passed goal name.
+
+        :param goal_name: The name of the APG from which the related outcomes will be returned.
+        :return: A list of the outcomes connected to the the passed goal.
+        """
+        thematic_mapping_row = THEMATIC_MAPPING_DF.loc[THEMATIC_MAPPING_DF["Goal Name"] == goal_name]
+
+        return thematic_mapping_row[OUTCOMES_LIST].columns[(thematic_mapping_row[OUTCOMES_LIST] == 1).all()].tolist()
 
     def get_apg_row(self, goal_name, year=None, quarter=None):
         """
