@@ -8,6 +8,7 @@ import pandas as pd
 CONFIG: Need to be changed based on the user's local environment in order to run the project
 """
 DATABASE_PATH = "../dummy_cover_sheet_data.csv"
+THEMATIC_MAPPING_PATH = "../apg_thematic_mapping.xlsx"
 # A path to the directory in which cover sheets are stored (relative to the location of the project's root)
 COVER_SHEET_DIRECTORY = "../cover_sheet/cover_sheets/"
 
@@ -56,6 +57,12 @@ CHALLENGES_LIST = ["Hiring technical staff in-house", "Inadequate technology", "
 
 # List containing administration themes/priorities, which are also used as column names in the data
 THEMES_LIST = ["Climate", "Equity", "Recovery"]
+
+# List containing the names of all CAP goals
+CAP_GOALS_LIST = ['CAP Goal 1', 'CAP Goal 2', 'CAP Goal 3', 'CAP Goal 4']
+
+# List containing the names of all APG outcomes
+OUTCOMES_LIST = ['Outcome A', 'Outcome B', 'Outcome C', 'Outcome D', 'Outcome E', 'Outcome F', 'Outcome G']
 
 """
 GOAL STATUSES
@@ -127,3 +134,8 @@ NO-CODE DATAFRAMES: DataFrames sourced from the no-code spreadsheets that are us
 """
 TEXT_BLOCK_TEMPLATES_DF = pd.read_excel(TEXT_BLOCK_TEMPLATES_PATH, skiprows=1)
 CHALLENGES_RECOMMENDATIONS_MAP_DF = pd.read_excel(CHALLENGES_RECOMMENDATIONS_MAP_PATH)
+
+"""
+THEMATIC MAPPING DATAFRAME: DataFrame mapping each APG to CAP goals, themes, outcomes, etc.
+"""
+THEMATIC_MAPPING_DF = pd.read_excel(THEMATIC_MAPPING_PATH, skiprows=1)

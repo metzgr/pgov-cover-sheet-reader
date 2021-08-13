@@ -267,6 +267,44 @@ def get_rec_text_block(rec, explanation, url):
 
     return rt
 
+def get_cap_goals_list(agency, goal_name):
+    """
+    Given the passed agency, returns all of the CAP goals that are related to it in a readable string.
+
+    :param agency: An Agency object representing a CFO Act agency at a given point in time.
+    :param goal_name: The name of the goal for which the challenge has been repeatedly reported.
+    :return: A readable string respresenting the list of CAP goals associated with the passed agency.
+    """
+    cap_goals = agency.get_cap_goals(goal_name)
+
+    return __list_to_str(cap_goals)
+
+def get_outcomes_list(agency, goal_name):
+    """
+    Given the passed agency, returns a list of related outcomes in a readable string.
+
+    :param agency: An Agency object representing a CFO Act agency at a given point in time.
+    :param goal_name: The name of the goal for which the challenge has been repeatedly reported.
+    :return: A readable string respresenting the list of outcomes associated with the passed agency.
+    """
+    outcomes = agency.get_outcomes(goal_name)
+
+    return __list_to_str(outcomes)
+
+def __list_to_str(input_list):
+    """
+    Converts the passed list to a client-readable string in the format "{item 1}, {item 2} and {item 3}"
+
+    :param input_list: A list of items
+    :return: A a client-readable string representing the passed list.
+    """
+    output_list = None
+
+    if len(input_list) > 1:
+        return ", ".join(input_list[:-1]) + f" and {input_list[-1]}"
+    elif len(input_list) == 1:
+        return input_list[0]
+    
 def __process_template_output(output_text):
     """
     Processes template output object and returns a version of it that is suitable for use in the output file. Please use this function to wrap any data that is intended to be rendered in the output document.
