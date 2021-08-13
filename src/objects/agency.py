@@ -155,9 +155,7 @@ class Agency():
         :param goal_name: The name of the APG from which the related CAP goals will be returned.
         :return: A list of the CAP goals connected to the the passed goal.
         """
-        thematic_mapping_row = THEMATIC_MAPPING_DF.loc[THEMATIC_MAPPING_DF["Goal Name"] == goal_name]
-
-        return thematic_mapping_row[CAP_GOALS_LIST].columns[(thematic_mapping_row[CAP_GOALS_LIST] == 1).all()].tolist()
+        return self.__get_affirmative_thematic_columns(goal_name, CAP_GOALS_LIST)
 
     def get_outcomes(self, goal_name):
         """
@@ -166,9 +164,7 @@ class Agency():
         :param goal_name: The name of the APG from which the related outcomes will be returned.
         :return: A list of the outcomes connected to the the passed goal.
         """
-        thematic_mapping_row = THEMATIC_MAPPING_DF.loc[THEMATIC_MAPPING_DF["Goal Name"] == goal_name]
-
-        return thematic_mapping_row[OUTCOMES_LIST].columns[(thematic_mapping_row[OUTCOMES_LIST] == 1).all()].tolist()
+        return self.__get_affirmative_thematic_columns(goal_name, OUTCOMES_LIST)
 
     def get_apg_row(self, goal_name, year=None, quarter=None):
         """
@@ -196,6 +192,18 @@ class Agency():
         common_agencies_df = common_agencies_df.loc[common_agencies_df["Agency Name"] != self.get_name()]   # filters the calling agency out of the DataFrame returned
 
         return common_agencies_df
+
+    def __get_affirmative_thematic_columns(self, goal_name, column_list):
+        """
+        For the passed goal, returns a list of the names of the columns in the affirmative from the list of columns passed that are included in the thematic mapping DataFrame.
+
+        :param goal_name: The name of the APG for which a list of columns in the affirmative will be returned.
+        :param column_list: A list of column names that are included in the thematic mapping DataFrame. Most commonly used as a group of related columns such as CAP goals, outcomes or themes.
+        :return: A list of the names of the columns in the affirmative among the passed list.
+        """
+        thematic_mapping_row = THEMATIC_MAPPING_DF.loc[THEMATIC_MAPPING_DF["Goal Name"] == goal_name]
+
+        return thematic_mapping_row[column_list].columns[(thematic_mapping_row[column_list] == 1).all()].tolist()
 
     def __handle_year_quarter_input(self, year, quarter):
         """
