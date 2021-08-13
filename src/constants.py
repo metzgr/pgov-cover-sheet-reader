@@ -58,6 +58,12 @@ CHALLENGES_LIST = ["Hiring technical staff in-house", "Inadequate technology", "
 # List containing administration themes/priorities, which are also used as column names in the data
 THEMES_LIST = ["Climate", "Equity", "Recovery"]
 
+# List containing the names of all CAP goals
+CAP_GOALS_LIST = ['CAP Goal 1', 'CAP Goal 2', 'CAP Goal 3', 'CAP Goal 4']
+
+# List containing the names of all APG outcomes
+OUTCOMES_LIST = ['Outcome A', 'Outcome B', 'Outcome C', 'Outcome D', 'Outcome E', 'Outcome F', 'Outcome G']
+
 """
 GOAL STATUSES
 """
