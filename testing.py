@@ -9,4 +9,4 @@ from src.constants import DATABASE_PATH
 
 if __name__ == "__main__":
     sba = Agency(pd.read_csv(DATABASE_PATH), "SBA", "Q4", 2020)
-    docx_generator.create_summary_document(sba, "SBA_output")
+    docx_generator.create_summary_document(sba, "testing_output")
