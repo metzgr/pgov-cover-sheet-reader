@@ -187,10 +187,10 @@ class Agency():
         :param challenge: The challenge for which common APG teams will be revealed.
         :return: A DataFrame where each row is a unique instance of an APG team within the passed theme that is addressing the passed challenge in the current quarter.
         """
-        common_theme_agencies = THEMATIC_MAPPING_DF.loc[(THEMATIC_MAPPING_DF[theme] == 1) & (THEMATIC_MAPPING_DF["Agency Name"] != self.get_name()), "Agency Name"].tolist()
+        common_theme_apgs = THEMATIC_MAPPING_DF.loc[(THEMATIC_MAPPING_DF[theme] == 1) & (THEMATIC_MAPPING_DF["Agency Name"] != self.get_name()), "Goal Name"].tolist()
 
         common_agencies_df = self.get_df().loc[(self.get_df()["Quarter"] == self.get_quarter()) & (self.get_df()["Fiscal Year"] == self.get_year())]    # retrieves slice of DataFrame for current year and quarter
-        common_agencies_df = common_agencies_df.loc[(common_agencies_df["Agency Name"].isin(common_theme_agencies)) & (common_agencies_df[challenge] == 1)]  # filters DataFrame for only agencies with common themes, challenges
+        common_agencies_df = common_agencies_df.loc[(common_agencies_df["Goal Name"].isin(common_theme_apgs)) & (common_agencies_df[challenge] == 1)]  # filters DataFrame for only agencies with common themes, challenges
 
         return common_agencies_df
 
