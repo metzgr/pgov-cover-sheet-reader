@@ -7,8 +7,8 @@ import pandas as pd
 """
 CONFIG: Need to be changed based on the user's local environment in order to run the project
 """
-DATABASE_PATH = "../dummy_cover_sheet_data.csv"
-THEMATIC_MAPPING_PATH = "../apg_thematic_mapping.xlsx"
+DATABASE_PATH = "./admin/Dummy Data/dummy_cover_sheet_data.csv"
+THEMATIC_MAPPING_PATH = "./admin/Dummy Data/apg_thematic_mapping.xlsx"
 # A path to the directory in which cover sheets are stored (relative to the location of the project's root)
 COVER_SHEET_DIRECTORY = "../cover_sheet/cover_sheets/"
 
