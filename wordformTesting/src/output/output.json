@@ -1,0 +1,480 @@
+{
+    "apgCoverSheet_DOC.docx": {
+        "": "",
+        "goal_nickname": "Global Broadband",
+        "agency_acronym_1": "DOC",
+        "agency_acronym_2": "DOD",
+        "performance_period": "FY24",
+        "Version": "1.0",
+        "goal_title": "Global Broadband",
+        "goal_subtitle": "Goal Subtitle",
+        "goal_description": "Goal Description test",
+        "achievments": {
+            "1": {
+                "achievement_title": "Achievement 1 Title",
+                "achievement_subtitle": "Achievement 1 subtitle",
+                "achievement_footnote": "Achievement 1 footnote test"
+            },
+            "2": {
+                "achievement_title": "Achievement 2 title testing",
+                "achievement_subtitle": "Testing achievement 2 subtitle",
+                "achievement_footnote": "Achievement 2 footnote"
+            },
+            "3": {
+                "achievement_title": " ",
+                "achievement_subtitle": " ",
+                "achievement_footnote": " "
+            },
+            "4": {
+                "achievement_title": " ",
+                "achievement_subtitle": " ",
+                "achievement_footnote": " "
+            },
+            "5": {
+                "achievement_title": " ",
+                "achievement_subtitle": " ",
+                "achievement_footnote": " "
+            }
+        },
+        "people": {
+            "1": {
+                "honorific": "Ambassador",
+                "first_name": "John",
+                "last_name": "Smith",
+                "middle_initial": "T.",
+                "title": "Mr.",
+                "division": "USPTO",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "2": {
+                "honorific": "Col.",
+                "first_name": "James",
+                "last_name": "Madison",
+                "middle_initial": " ",
+                "title": "Mr.",
+                "division": "DOD",
+                "subdivision": " ",
+                "deputy": "X"
+            },
+            "3": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "4": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "middle_initial": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "5": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "middle_initial": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "6": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "middle_initial": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "7": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "middle_initial": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "8": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "middle_initial": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "9": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "middle_initial": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "10": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "middle_initial": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            }
+        },
+        "kpi": {
+            "1": {
+                "achievement_number": "1",
+                "metric_title": "Indicator 1 Title",
+                "start_value": "0",
+                "target_value": "10",
+                "direction": "Increase",
+                "current_value": "5",
+                "as_of_date": "March 19, 2024",
+                "update_frequency": "Quarterly",
+                "subtitle_metrics": " "
+            },
+            "2": {
+                "achievement_number": "2",
+                "metric_title": "Indicator 2 Title",
+                "start_value": "5",
+                "target_value": "100",
+                "direction": "Increase",
+                "current_value": "75",
+                "as_of_date": "March 19, 2024",
+                "update_frequency": "Annually",
+                "subtitle_metrics": " "
+            }
+        },
+        "projects": {
+            "1": {
+                "project_title": "Strategy 1 title",
+                "project_subtitle": "Strategy 1 subtitle",
+                "milestones": {
+                    "1": {
+                        "milestone": "Milestone 1 title",
+                        "status": "In Progress",
+                        "footnote": " "
+                    },
+                    "2": {
+                        "milestone": "Milestone 2 title",
+                        "status": "Complete",
+                        "footnote": "Testing footnote"
+                    },
+                    "3": {
+                        "milestone": " ",
+                        "status": " ",
+                        "footnote": " "
+                    },
+                    "4": {
+                        "milestone": " ",
+                        "status": " ",
+                        "footnote": " "
+                    },
+                    "5": {
+                        "milestone": " ",
+                        "status": " ",
+                        "footnote": " "
+                    }
+                }
+            }
+        },
+        "national_defense": "X",
+        "immigration": "",
+        "agriculture": "",
+        "veterans": "X",
+        "environment": "",
+        "administration_of_justice": "",
+        "cybersecurity": "",
+        "infrastructure": "",
+        "native_american_and_tribal_communities": "",
+        "economy": "",
+        "transportation": "",
+        "community_and_regional_development": "",
+        "commerce_and_trade": "",
+        "health": "X",
+        "workers": "",
+        "public_safety": "X",
+        "education": "",
+        "international_affairs": "",
+        "housing": "",
+        "science_and_technology": "X",
+        "social_services": "",
+        "space": "",
+        "income_security": "",
+        "artificial_intelligence": "",
+        "medicaid": "",
+        "medicare": "",
+        "social_security": "X",
+        "contracting": "",
+        "data_management": "X",
+        "grants": "",
+        "customer_experience": "X",
+        "federal_personnel": "",
+        "regulatory_compliance": "",
+        "other_topics": " ",
+        "fiscal_year": "FY24",
+        "fiscal_quarter": "Q1",
+        "bottom_line": "Went great",
+        "summary": "Summary test",
+        "ahead": "X",
+        "on_track": "",
+        "delayed": "",
+        "blocked": "",
+        "goal_status_notes": " "
+    },
+    "apgCoverSheet_DOJ.docx": {
+        "": "",
+        "goal_nickname": "Testing Goal",
+        "agency_acronym_1": "DOJ",
+        "agency_acronym_2": " ",
+        "performance_period": "FY24",
+        "Version": "1.0",
+        "goal_title": "Testing goal",
+        "goal_subtitle": "Goal Subtitle",
+        "goal_description": "Goal Description test",
+        "achievments": {
+            "1": {
+                "achievement_title": "Achievement 1 Title",
+                "achievement_subtitle": "Achievement 1 subtitle",
+                "achievement_footnote": "Achievement 1 footnote test"
+            },
+            "2": {
+                "achievement_title": "Achievement 2 title testing",
+                "achievement_subtitle": "Testing achievement 2 subtitle",
+                "achievement_footnote": "Achievement 2 footnote"
+            },
+            "3": {
+                "achievement_title": " ",
+                "achievement_subtitle": " ",
+                "achievement_footnote": " "
+            },
+            "4": {
+                "achievement_title": " ",
+                "achievement_subtitle": " ",
+                "achievement_footnote": " "
+            },
+            "5": {
+                "achievement_title": " ",
+                "achievement_subtitle": " ",
+                "achievement_footnote": " "
+            }
+        },
+        "people": {
+            "1": {
+                "honorific": "Ambassador",
+                "first_name": "John",
+                "last_name": "Smith",
+                "middle_initial": "T.",
+                "title": "Mr.",
+                "division": "USPTO",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "2": {
+                "honorific": "Col.",
+                "first_name": "James",
+                "last_name": "Madison",
+                "middle_initial": " ",
+                "title": "Mr.",
+                "division": "DOD",
+                "subdivision": " ",
+                "deputy": "X"
+            },
+            "3": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "4": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "middle_initial": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "5": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "middle_initial": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "6": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "middle_initial": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "7": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "middle_initial": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "8": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "middle_initial": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "9": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "middle_initial": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            },
+            "10": {
+                "honorific": " ",
+                "first_name": " ",
+                "last_name": " ",
+                "middle_initial": " ",
+                "title": " ",
+                "division": " ",
+                "subdivision": " ",
+                "deputy": ""
+            }
+        },
+        "kpi": {
+            "1": {
+                "achievement_number": "1",
+                "metric_title": "Indicator 1 Title",
+                "start_value": "0",
+                "target_value": "10",
+                "direction": "Increase",
+                "current_value": "5",
+                "as_of_date": "March 19, 2024",
+                "update_frequency": "Quarterly",
+                "subtitle_metrics": " "
+            },
+            "2": {
+                "achievement_number": "2",
+                "metric_title": "Indicator 2 Title",
+                "start_value": "5",
+                "target_value": "100",
+                "direction": "Increase",
+                "current_value": "75",
+                "as_of_date": "March 19, 2024",
+                "update_frequency": "Annually",
+                "subtitle_metrics": " "
+            }
+        },
+        "projects": {
+            "1": {
+                "project_title": "Strategy 1 title",
+                "project_subtitle": "Strategy 1 subtitle",
+                "milestones": {
+                    "1": {
+                        "milestone": "Milestone 1 title",
+                        "status": "In Progress",
+                        "footnote": " "
+                    },
+                    "2": {
+                        "milestone": "Milestone 2 title",
+                        "status": "Complete",
+                        "footnote": "Testing footnote"
+                    },
+                    "3": {
+                        "milestone": " ",
+                        "status": " ",
+                        "footnote": " "
+                    },
+                    "4": {
+                        "milestone": " ",
+                        "status": " ",
+                        "footnote": " "
+                    },
+                    "5": {
+                        "milestone": " ",
+                        "status": " ",
+                        "footnote": " "
+                    }
+                }
+            }
+        },
+        "national_defense": "X",
+        "immigration": "",
+        "agriculture": "",
+        "veterans": "X",
+        "environment": "",
+        "administration_of_justice": "",
+        "cybersecurity": "",
+        "infrastructure": "",
+        "native_american_and_tribal_communities": "",
+        "economy": "",
+        "transportation": "",
+        "community_and_regional_development": "",
+        "commerce_and_trade": "",
+        "health": "X",
+        "workers": "",
+        "public_safety": "X",
+        "education": "",
+        "international_affairs": "",
+        "housing": "",
+        "science_and_technology": "X",
+        "social_services": "",
+        "space": "",
+        "income_security": "",
+        "artificial_intelligence": "",
+        "medicaid": "",
+        "medicare": "",
+        "social_security": "X",
+        "contracting": "",
+        "data_management": "X",
+        "grants": "",
+        "customer_experience": "X",
+        "federal_personnel": "",
+        "regulatory_compliance": "",
+        "other_topics": " ",
+        "fiscal_year": "FY24",
+        "fiscal_quarter": "Q1",
+        "bottom_line": "Went great",
+        "summary": "Summary test",
+        "ahead": "X",
+        "on_track": "",
+        "delayed": "",
+        "blocked": "",
+        "goal_status_notes": " "
+    }
+}
