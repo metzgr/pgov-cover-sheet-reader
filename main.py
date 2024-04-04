@@ -11,8 +11,8 @@ from src.constants import AGENCY_ABBREVIATION_TO_NAME, DATABASE_PATH
 
 if __name__ == "__main__":
     # Read cover sheet files
-    new_cover_sheets = get_cover_sheets()   # retrieves newly published cover sheets
-    new_cover_sheets_df = process_cover_sheets(new_cover_sheets)    # creates DataFrame using newly retrieved cover sheets  
+    #new_cover_sheets = get_cover_sheets()   # retrieves newly published cover sheets
+    #new_cover_sheets_df = process_cover_sheets(new_cover_sheets)    # creates DataFrame using newly retrieved cover sheets  
     # update_database(DATABASE_PATH, new_cover_sheets_df)     # uncomment this line to initiate the reading of cover sheets and storage into the database
 
     # Create summary reports
